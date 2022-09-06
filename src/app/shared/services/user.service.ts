@@ -31,6 +31,10 @@ export class UserService {
     }));
   }
 
+  register(registerInfor: IAuthInfo) {
+    return this.httpClient.post<IAuthResponse>(this.baseUrl + 'register', registerInfor);
+  }
+
   public saveSession(result: AuthResultModel) {
     localStorage.setItem("jwt", result.token);
     localStorage.setItem("refreshToken", result.refreshToken);
