@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { OwnerRepositoryService } from 'src/app/shared/services/owner-repository.service';
-import { Owner } from 'src/app/_interfaces/owner.model';
+import { Owner } from 'src/app/models/owner.model';
 
 @Component({
   selector: 'app-owner-list',

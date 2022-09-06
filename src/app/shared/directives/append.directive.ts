@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
-import { Owner } from '../../_interfaces/owner.model';
+import { Owner } from '../../models/owner.model';
 @Directive({
   selector: '[appAppend]'
 })

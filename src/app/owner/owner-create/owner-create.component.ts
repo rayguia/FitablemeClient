@@ -5,7 +5,7 @@ import { ErrorHandlerService } from './../../shared/services/error-handler.servi
 import { OwnerRepositoryService } from './../../shared/services/owner-repository.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Owner } from 'src/app/_interfaces/owner.model';
+import { Owner } from 'src/app/models/owner.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OwnerForCreation } from 'src/app/_interfaces/ownerForCreation.model';
 import { ModalOptions, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';

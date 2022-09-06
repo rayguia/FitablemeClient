@@ -1,11 +1,13 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map} from 'rxjs';
+import {map, pipe} from 'rxjs';
 
 import {IAuthInfo} from '../../_interfaces/IAuthInfo';
 import {IApiUser} from '../../_interfaces/IApiUser';
+import {AuthResultModel} from '../../models/auth.result.model';
 import {UserModel} from '../../models/user.model';
 import {environment} from '../../../environments/environment';
+import {IAuthResponse} from "../../_interfaces/IAuthenticateResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +23,12 @@ export class UserService {
   }
 
   auth(authInfo: IAuthInfo) {
-    return this.httpClient.post<IApiUser>(this.baseUrl + 'login', authInfo)
-      .pipe(map((iApiUser: IApiUser) => {
-        const user: UserModel = this.iApiUserToUserModel(iApiUser);
-        this._user = user;
-        this.saveSession(this._user);
-        return this._user;
-      }));
+    return this.httpClient.post<IAuthResponse>(this.baseUrl + 'login', authInfo)
+    pipe(map((iApiAuthResponse: IAuthResponse) => {
+      const result: AuthResultModel = this.iApiToAuthResponseModel(iApiAuthResponse);
+      localStorage.setItem("jwt", result.token);
+      localStorage.setItem("refreshToken", result.refreshToken);
+    }));
   }
 
   public saveSession(user: UserModel) {
@@ -57,26 +58,12 @@ export class UserService {
     }
   }
 
-  public iApiUserToUserModel(iApiUser: IApiUser) {
-    return new UserModel(
-      iApiUser.UserId,
-      iApiUser.Email,
-      iApiUser.UserName,
-      iApiUser.Gender,
-      iApiUser.Photo,
-      iApiUser.TimeZone,
-      iApiUser.Password,
-      iApiUser.Token,
-      iApiUser.RefreshToken,
-      iApiUser.IsDeleted,
-      iApiUser.IsLocked,
-      iApiUser.Online,
-      iApiUser.Commission,
-      iApiUser.Featured,
-      iApiUser.AcceptedTerms,
-      iApiUser.EmailValidated,
-      iApiUser.Role,
-      iApiUser.Priority,
+
+  public iApiToAuthResponseModel(iApiAuthResponse: IAuthResponse) {
+    return new AuthResultModel(
+      iApiAuthResponse.success,
+      iApiAuthResponse.token,
+      iApiAuthResponse.refreshToken
     );
   }
 }

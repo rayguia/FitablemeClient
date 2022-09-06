@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Owner } from './../../_interfaces/owner.model';
+import { Owner } from '../../models/owner.model';
 import { OwnerRepositoryService } from 'src/app/shared/services/owner-repository.service';
 import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';

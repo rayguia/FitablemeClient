@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ErrorHandlerService } from './../../shared/services/error-handler.service';
 import { OwnerRepositoryService } from './../../shared/services/owner-repository.service';
-import { Owner } from './../../_interfaces/owner.model';
+import { Owner } from '../../models/owner.model';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, ModalOptions, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';

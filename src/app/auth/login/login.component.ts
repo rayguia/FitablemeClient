@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, NgForm} from '@angular/forms';
-import { Router } from '@angular/router';
-import { IAuthenticatedResponse } from '../../_interfaces/IAuthenticateResponse';
-import { LoginModel } from '../../_interfaces/login.model';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
+import {LoginModel} from '../../models/login.model';
+import {UserService} from "../../shared/services/user.service";
+import {AuthResultModel} from "../../models/auth.result.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,12 @@ import { LoginModel } from '../../_interfaces/login.model';
 })
 export class LoginComponent implements OnInit {
   invalidLogin: boolean;
-  credentials: LoginModel = {username:'', password:''};
+  credentials: LoginModel = {Email: '', Password: ''};
   loginForm: FormGroup
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router,
+              private userService: UserService,
+              private toastrService: ToastrService) {
     this.loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl('')
@@ -26,11 +29,21 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login(): void {
+  login() {
     if (!this.loginForm.valid)
       return;
+    this.credentials.Email = this.loginForm.get('username').value;
+    this.credentials.Password = this.loginForm.get('password').value;
 
-
+    this.userService.auth(this.credentials).subscribe( {
+      next: (result: AuthResultModel) => {
+        if (result.token && result.refreshToken)
+          this.router.navigate(['/home']);
+      },
+      error: () =>  {
+        this.toastrService.error('Invalid credentials');
+      }
+    });
     console.log('login...');
     console.log('email', this.loginForm.get('username').value)
     console.log('password', this.loginForm.get('password').value)

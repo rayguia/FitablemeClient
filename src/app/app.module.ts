@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { OwnerModule } from './owner/owner.module';
@@ -33,7 +33,6 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     CollapseModule.forRoot(),
     OwnerModule,
@@ -45,7 +44,11 @@ export function tokenGetter() {
         allowedDomains: ["localhost:5000"],
         disallowedRoutes: []
       }
-    })
+    }),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    }),
+    BrowserAnimationsModule,
   ],
   providers: [DatePipe,AuthGuard],
   bootstrap: [AppComponent]

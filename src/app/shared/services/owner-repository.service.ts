@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotFoundError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { Owner } from 'src/app/_interfaces/owner.model';
+import { Owner } from 'src/app/models/owner.model';
 import { OwnerForCreation } from 'src/app/_interfaces/ownerforcreation.model';
 import { OwnerForUpdate } from 'src/app/_interfaces/ownerforupdate';
 import { EnvironmentUrlService } from './environment-url.service';

@@ -1,4 +1,4 @@
-import { Account } from "./account.model";
+import { Account } from "../_interfaces/account.model";
 
 export interface Owner{
   id: string;

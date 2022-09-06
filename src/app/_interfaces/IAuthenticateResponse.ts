@@ -1,4 +1,5 @@
-export interface IAuthenticatedResponse {
+export interface IAuthResponse {
+  success: string;
   token: string;
   refreshToken: string;
 }
