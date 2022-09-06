@@ -1,16 +1,56 @@
-<div class="container">
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-    <h2 class="form-signin-heading">Login</h2>
-      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
-      <br/>
-      <label for="username" class="sr-only">Email address</label>
-      <input type="email" id="username" name="username" [(ngModel)]="credentials.username"
-        class="form-control" placeholder="User Name" required>
-      <br/>
-      <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" [(ngModel)]="credentials.password"
-        class="form-control" placeholder="Password" required>
-      <br/>
-      <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Log in</button>
-  </form>
+<div class="d-flex flex-column align-items-center justify-content-center"
+style="margin-top: 80px;">
+  <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
+  <div class="col">
+    <span class="text-style" style="color: #246BFD;">Enjoy your artists performance and much more!</span>
+  </div>
 </div>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+  <div class="d-flex flex-column align-items-center" style="margin-top: 50px;">
+    <div class="row mt-3" style="width: 35%;">
+      <input type="email" id="username" name="username" formControlName="username"
+             class="form-control border" placeholder="User Name" required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <input type="password" id="password" name="password" formControlName="password"
+             class="form-control border" placeholder="Password" required>
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <button class="btn btn-lg btn-primary border" [disabled]="!loginForm.valid"
+              type="submit">
+        Log in
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="d-flex flex-column align-items-center" style="margin-top: 20px;">
+  <div class="text-style">
+    <a style="color: #246BFD; cursor: pointer">Forgot your password?</a>
+  </div>
+  <div class="text-style" style="margin-top: 10px;color: #246BFD; cursor: pointer">
+    <a>Register for new user.</a>
+  </div>
+</div>
+
+
+
+<!--<div class="container">-->
+<!--  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">-->
+<!--    <h2 class="form-signin-heading">Login</h2>-->
+<!--      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>-->
+<!--      <br/>-->
+<!--      <label for="username" class="sr-only">Email address</label>-->
+<!--      <input type="email" id="username" name="username" [(ngModel)]="credentials.username"-->
+<!--        class="form-control" placeholder="User Name" required>-->
+<!--      <br/>-->
+<!--      <label for="password" class="sr-only">Password</label>-->
+<!--      <input type="password" id="password" name="password" [(ngModel)]="credentials.password"-->
+<!--        class="form-control" placeholder="Password" required>-->
+<!--      <br/>-->
+<!--      <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Log in</button>-->
+<!--  </form>-->
+<!--</div>-->

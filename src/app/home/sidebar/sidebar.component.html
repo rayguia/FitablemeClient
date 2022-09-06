@@ -1,0 +1,95 @@
+  <div class="flex-row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div id="left-menu" class="sidebar-sticky">
+        <ul class="nav flex-column">
+<!--          <li class="nav-item" style="margin-left: 25px;">-->
+<!--            <img src="../../../assets/images/fitableme-f.png"-->
+<!--                 width="50px" height="50px" alt="Click here for more options...">-->
+<!--          </li>-->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home/content"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-house icon-margin"></i>
+              <span class="span-style">Inicio</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home/profile"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-person-badge icon-margin"></i>
+              <span class="span-style">Editar Perfil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home/message"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-chat-left icon-margin"></i>
+              <span class="span-style">Mensajes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/translations"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-bell icon-margin"></i>
+              <span class="span-style">Notificaciones</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/translations"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-camera-video icon-margin"></i>
+              <span class="span-style">Streams</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/translations"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-blockquote-left icon-margin"></i>
+              <span class="span-style">Posts</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/groups"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-bookmark-check icon-margin"></i>
+              <span class="span-style">Suscripciones</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/groups"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-credit-card icon-margin"></i>
+              <span class="span-style">Pagos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/groups"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-question-circle icon-margin"></i>
+              <span class="span-style">Ayuda</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/groups"
+               [routerLinkActive]="['active']"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i style="font-size: 1.3rem;" class="bi bi-box-arrow-left icon-margin"></i>
+              <span class="span-style">Salir</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-5">
+      <router-outlet></router-outlet>
+    </main>
+  </div>

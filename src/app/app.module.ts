@@ -5,17 +5,19 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { MenuComponent } from './menu/menu.component';
-import { NotFoundComponent } from './error-pages/not-found/not-found.component';
-import { OwnerModule } from './owner/owner.module';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
+
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { OwnerModule } from './owner/owner.module';
 import { AuthGuard } from './Guards/auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { ProfileComponent } from './home/profile/profile.component';
+import { MessageComponent } from './home/message/message.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -23,11 +25,10 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    MenuComponent,
     NotFoundComponent,
-    InternalServerComponent
-
+    InternalServerComponent,
+    ProfileComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

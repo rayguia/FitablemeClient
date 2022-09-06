@@ -1,4 +1,4 @@
-export interface AuthenticatedResponse{
+export interface IAuthenticatedResponse {
   token: string;
   refreshToken: string;
 }
