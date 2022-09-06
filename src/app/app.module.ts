@@ -6,9 +6,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { DatePipe } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
@@ -37,18 +39,20 @@ export function tokenGetter() {
     CollapseModule.forRoot(),
     OwnerModule,
     AuthModule,
+    NgSelectModule,
     FormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5000"],
+        allowedDomains: ["localhost:3000"],
         disallowedRoutes: []
       }
     }),
     ToastrModule.forRoot({
       positionClass: 'toast-top-right'
     }),
-    BrowserAnimationsModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [DatePipe,AuthGuard],
   bootstrap: [AppComponent]

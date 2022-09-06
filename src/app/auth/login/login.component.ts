@@ -5,6 +5,7 @@ import {LoginModel} from '../../models/login.model';
 import {UserService} from "../../shared/services/user.service";
 import {AuthResultModel} from "../../models/auth.result.model";
 import {ToastrService} from "ngx-toastr";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private userService: UserService,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService,
+              private spinnerService: NgxSpinnerService) {
     this.loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl('')
@@ -29,18 +31,22 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login() {
+  async login() {
     if (!this.loginForm.valid)
       return;
+    await this.spinnerService.show();
     this.credentials.Email = this.loginForm.get('username').value;
     this.credentials.Password = this.loginForm.get('password').value;
 
     this.userService.auth(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {
         if (result.token && result.refreshToken)
+          this.userService.saveSession(result);
+          this.spinnerService.hide();
           this.router.navigate(['/home']);
       },
       error: () =>  {
+        this.spinnerService.hide();
         this.toastrService.error('Invalid credentials');
       }
     });

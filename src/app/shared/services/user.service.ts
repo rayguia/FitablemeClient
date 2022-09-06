@@ -31,9 +31,11 @@ export class UserService {
     }));
   }
 
-  public saveSession(user: UserModel) {
-    sessionStorage.setItem('fitableme-user', JSON.stringify(user));
-    this.onUserUpdated.emit(user);
+  public saveSession(result: AuthResultModel) {
+    localStorage.setItem("jwt", result.token);
+    localStorage.setItem("refreshToken", result.refreshToken);
+    // sessionStorage.setItem('fitableme-user', JSON.stringify(user));
+    // this.onUserUpdated.emit(user);
   }
 
   public isAuth() {

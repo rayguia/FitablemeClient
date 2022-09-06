@@ -1,0 +1,82 @@
+<div class="d-flex flex-column align-items-center justify-content-center"
+     style="margin-top: 30px;">
+  <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
+  <div class="col">
+    <span class="text-style" style="color: #246BFD;">Enjoy your artists performance and much more!</span>
+  </div>
+</div>
+
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <div class="d-flex flex-column align-items-center" style="margin-top: 50px;">
+    <div class="row mt-3" style="width: 35%;">
+      <input type="email" id="username" name="username" formControlName="username"
+             class="form-control border" placeholder="User Name" required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <input type="password" id="password" name="password" formControlName="password"
+             class="form-control border" placeholder="Password" required>
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword"
+             class="form-control border" placeholder="Repeat password" required>
+    </div>
+    <div style="font-family: 'Montserrat regular'; color: #c72d2d;"
+      *ngIf="registerForm.errors?.passwordNoMatch &&
+                      registerForm.controls['password'].touched &&
+                      registerForm.controls['confirmPassword'].valid">
+      Las_contrasenas_tiene_que_ser_iguales
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <select class="form-select mb-3 border" required aria-label=".form-select-lg example">
+        <option selected>Gender</option>
+        <option value="1">M</option>
+        <option value="2">F</option>
+        <option value="3">B</option>
+      </select>
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <label for="exampleFormControlTextarea1" style="font-family: 'Montserrat regular'">
+        Fitableme App Terms.
+      </label>
+      <textarea class="form-control" style="font-family: 'Montserrat regular'"
+                id="exampleFormControlTextarea1" readonly rows="5" cols="3">
+      Mattis rhoncus urna neque viverra justo nec. Nec ullamcorper sit amet risus nullam eget.
+        At urna condimentum mattis pellentesque id nibh tortor. Elit ut aliquam purus sit.
+        Cras adipiscing enim eu turpis egestas pretium aenean pharetra.
+        Aliquet porttitor lacus luctus accumsan tortor posuere ac ut consequat.
+        Eros in cursus turpis massa tincidunt dui ut ornare. Non diam phasellus vestibulum lorem.
+        Commodo viverra maecenas accumsan lacus. Molestie nunc non blandit massa enim nec dui.
+        Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh.
+        Et malesuada fames ac turpis egestas maecenas pharetra convallis posuere.
+        Dictumst quisque sagittis purus sit amet volutpat consequat mauris nunc.
+        Amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus.
+      </textarea>
+    </div>
+    <div class="form-check mt-3">
+      <input class="form-check-input" required type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Do you accept terms?
+      </label>
+    </div>
+    <div class="row mt-3" style="width: 35%;">
+      <button class="btn btn-lg btn-primary border"
+              [disabled]="!registerForm.valid"
+              type="submit">
+        Register
+      </button>
+      <button class="btn btn-lg btn-primary border mt-3" type="submit" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>
+
+<!--<div class="d-flex flex-column align-items-center" style="margin-top: 20px;">-->
+<!--  <div class="text-style">-->
+<!--    <a style="color: #246BFD; cursor: pointer">Forgot your password?</a>-->
+<!--  </div>-->
+<!--  <div class="text-style" style="margin-top: 10px;color: #246BFD; cursor: pointer">-->
+<!--    <a>Register for new user.</a>-->
+<!--  </div>-->
+<!--</div>-->
