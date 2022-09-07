@@ -27,7 +27,6 @@ export function tokenGetter() {
     MenuComponent,
     NotFoundComponent,
     InternalServerComponent
-
   ],
   imports: [
     BrowserModule,

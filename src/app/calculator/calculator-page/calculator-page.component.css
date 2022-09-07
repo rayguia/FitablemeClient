@@ -1,0 +1,12 @@
+.labelInformation{
+  font-size: 14px !important;
+  font-weight: 700;
+    opacity: 0.5;
+}
+.carDescription{
+    text-align: right;
+    font-size: 45px;
+    font-weight: 700;
+    opacity: 0.6;
+}
+

@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
   isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("jwt");
   if (token && !this.jwtHelper.isTokenExpired(token)){
-    console.log(this.jwtHelper.decodeToken(token))
+    //console.log(this.jwtHelper.decodeToken(token))
     return true;
   }
   return false;

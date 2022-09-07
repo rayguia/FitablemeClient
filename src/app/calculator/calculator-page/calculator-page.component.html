@@ -1,0 +1,294 @@
+
+
+<div class="container">
+
+  <tabset>
+    <tab heading="Calculator" id="tab1"><div class="py-5">
+
+      <div class="container px-0">
+        <div class="row">
+          <div class="col-12 py-2" style="text-align: right;">
+            <button type="button" id="save" class="btn btn-success mx-2" (click)="executeCalculatorCreation()">Save</button>
+            <button type="button" id="clean" class="btn btn-primary" (click)="cleanCalculator()">Clean Calculator</button>
+          </div>
+          <div class="col-12">
+            <accordion [isAnimated]="true">
+              <accordion-group heading="Car Information">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <span class="input-group-text labelInformation" id="vin1">VIN:</span>
+                          <input [(ngModel)]="calculatorObject.vin" (ngModelChange)="getCarBumberInfo($event)" type="text" class="form-control" placeholder="VIN" aria-label="VIN" aria-describedby="vin1">
+                          <button  ngDefaultControl  class="btn btn-outline-secondary" type="button" id="vin">
+
+                            <svg (click)="pasteVin()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <span class="input-group-text labelInformation" id="loteNumber1">LOTE NUMBER:</span>
+                          <input  [(ngModel)]="calculatorObject.loteNumber" type="text" class="form-control" placeholder="Lote Number" aria-label="Lote Number" aria-describedby="loteNumber">
+                          <button ngDefaultControl class="btn btn-outline-secondary" type="button" id="loteNumber">
+
+                            <svg (click)="pasteLoteNumber()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <span class="input-group-text labelInformation" id="autionDate">AUTION DATE:</span>
+                          <input  [(ngModel)]="calculatorObject.autionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="autionDate">
+                          <button  ngDefaultControl class="btn btn-outline-secondary" type="button" id="autionDate1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16">
+                              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <label class="input-group-text labelInformation" for="type">TYPE</label>
+                        <select [(ngModel)]="calculatorObject.type" class="form-select" id="type">
+                          <option>Wholesale</option>
+                          <option>Retail</option>
+                        </select>
+                      </div>
+                      </div>
+
+                    </div>
+                    <div class="col-12 col-md-6">
+                       <h6 class="carDescription">{{this.calculatorObject.year}}</h6>
+                       <h6 class="carDescription">{{this.calculatorObject.make}} {{this.calculatorObject.model}}</h6>
+                       <h6 class="carDescription">${{maxAmountToOffer}}</h6>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text labelInformation" id="link">LINK:</span>
+                        <input  [(ngModel)]="calculatorObject.link" type="text" class="form-control" placeholder="Link" aria-label="Link" aria-describedby="link">
+                        <button  ngDefaultControl  class="btn btn-outline-secondary" type="button" id="link1">
+
+                          <svg (click)="pasteLink()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                            <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </accordion-group>
+            </accordion>
+          </div>
+          <div class="col-12 col-md-6">
+            <accordion [isAnimated]="true">
+              <accordion-group heading="Market value">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <span class="input-group-text labelInformation" id="salePrice">$</span>
+                          <input [(ngModel)]="calculatorObject.marketValue" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Sale Price" aria-label="Sale Estimate" aria-describedby="salePrice">
+                          <button
+                          onclick="window.open('https://www.kbb.com/car-prices/', '_blank')"
+                          ngDefaultControl  class="btn btn-outline-secondary" type="button" id="salePrice1">
+                             Get Estimate
+                          </button>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <label class="input-group-text labelInformation" for="type">TITLE:</label>
+                          <select [(ngModel)]="calculatorObject.titleType" (ngModelChange)="changeSalePrice($event)" class="form-select" id="title">
+                            <option>Clean Title</option>
+                            <option>Salvage</option>
+                          </select>
+                        </div>
+                        </div>
+                      </div>
+                      Final Sale Price:
+                      <h6>${{calculatorObject.marketValueFinal}}</h6>
+                    </div>
+                  </div>
+
+              </accordion-group>
+            </accordion>
+          </div>
+
+
+
+
+
+
+          <div class="col-12 col-md-6">
+            <accordion [isAnimated]="true">
+              <accordion-group heading="Earnings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <label class="input-group-text labelInformation" for="type">EARNINGS %:</label>
+                          <select [(ngModel)]="calculatorObject.earningPercent" (ngModelChange)="changeSalePrice($event)" class="form-select" id="earningPercent">
+                            <option value="5">5%</option>
+                            <option value="10">10%</option>
+                            <option value="15">15%</option>
+                            <option value="20">20%</option>
+                            <option value="25">25%</option>
+                            <option value="30">30%</option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      </div>
+                       Final Earning:
+                      <h6>${{calculatorObject.earningsAmount}}</h6>
+                    </div>
+                  </div>
+
+              </accordion-group>
+            </accordion>
+          </div>
+
+
+
+
+
+          <div class="col-12 col-md-6">
+            <accordion [isAnimated]="true">
+              <accordion-group heading="FEES">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <label class="input-group-text labelInformation" for="buyFees">BUY FEE %:</label>
+                          <select [(ngModel)]="calculatorObject.buyAutionName" (ngModelChange)="changeSalePrice($event)" class="form-select" id="buyFees">
+                            <option value="Copart">Copart</option>
+                            <option value="IAAI">IAAI</option>
+                          </select>
+                          <label class="input-group-text" for="buyFees">${{calculatorObject.buyAutionAmount}}</label>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <label class="input-group-text labelInformation" for="saleFees">SALE FEE $:</label>
+                          <select [(ngModel)]="calculatorObject.saleAutionAmount" (ngModelChange)="changeSalePrice($event)" class="form-select" id="saleFees">
+                            <option value="400">Manheim-$400</option>
+                            <option value="100">Other-$100</option>
+                            <option value="0">None-$0</option>
+                          </select>
+                          <label class="input-group-text" for="saleFees">${{calculatorObject.saleAutionAmount}}</label>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-12">
+                        <div class="input-group input-group-lg mb-3">
+                          <span class="input-group-text labelInformation" id="floorplan">FLOORPLAN: $</span>
+                          <input [(ngModel)]="calculatorObject.floorplanAmount" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Floorplan" aria-label="floorplan" aria-describedby="floorplan">
+
+                        </div>
+                      </div>
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+
+              </accordion-group>
+            </accordion>
+          </div>
+
+
+
+          <div class="col-12 col-md-6">
+            <accordion [isAnimated]="true">
+              <accordion-group heading="EXPENSES">
+                <div class="container">
+                  <div class="row">
+
+                    <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text labelInformation" id="fix">Fix: $</span>
+                        <input [(ngModel)]="calculatorObject.fixPrice" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Fix" aria-label="Fix" aria-describedby="fixPrice">
+
+                      </div>
+                    </div>
+
+
+                    <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text labelInformation" id="towing">TRANSPORT: $</span>
+                        <input [(ngModel)]="calculatorObject.transportPrice" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Transport" aria-label="Transport" aria-describedby="Transport">
+
+                      </div>
+                    </div>
+
+
+                    <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text labelInformation" id="taxTitle">TAX/TITLE: $</span>
+                        <input [(ngModel)]="calculatorObject.taxTitle" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Tax/Title" aria-label="taxTitle" aria-describedby="taxTitle">
+
+                      </div>
+                    </div>
+
+                    <div class="form-group col-12">
+                      <div class="input-group input-group-lg mb-3">
+                        <span class="input-group-text labelInformation" id="otherExpenses">OTHERS: $</span>
+                        <input [(ngModel)]="calculatorObject.others" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Other expenses" aria-label="otherExpenses" aria-describedby="otherExpenses">
+
+                      </div>
+                    </div>
+
+                  </div>
+                  </div>
+
+              </accordion-group>
+            </accordion>
+          </div>
+
+
+
+
+          <div class="col-12 py-2" style="text-align: right;">
+            <button type="button" id="save" class="btn btn-success mx-2" (click)="executeCalculatorCreation()">Save</button>
+            <button type="button" id="clean" class="btn btn-primary" (click)="cleanCalculator()">Clean Calculator</button>
+          </div>
+        </div>
+      </div>
+
+     </div>
+     </tab>
+    <tab heading="History">
+
+      <app-calculator-list></app-calculator-list>
+    </tab>
+
+  </tabset>
+</div>
+
+

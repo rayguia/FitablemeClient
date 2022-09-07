@@ -4,6 +4,8 @@ import { ErrorModalComponent } from './modals/error-modal/error-modal.component'
 import { SuccessModalComponent } from './modals/success-modal/success-modal.component';
 import { AppendDirective } from './directives/append.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
+
 
 
 
@@ -12,7 +14,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   declarations: [
     ErrorModalComponent,
     SuccessModalComponent,
-    AppendDirective
+    AppendDirective,
+    ConfirmModalComponent
   ],
   exports:[
     ErrorModalComponent,
@@ -22,6 +25,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   imports: [
     CommonModule,
     ModalModule.forRoot()
+
   ]
 })
 export class SharedModule { }

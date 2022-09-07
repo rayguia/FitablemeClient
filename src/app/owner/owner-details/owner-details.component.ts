@@ -35,6 +35,6 @@ export class OwnerDetailsComponent implements OnInit {
     });
   };
   printToConsole = (param: Account) => {
-    console.log('Account parameter from the child component', param);
+    //console.log('Account parameter from the child component', param);
   };
 }

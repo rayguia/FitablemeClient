@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'owner', loadChildren: () => import('./owner/owner.module').then(m => m.OwnerModule),canActivate:[AuthGuard] },
+  { path: 'calculator', loadChildren: () => import('./calculator/calculator.module').then(m => m.CalculatorModule),canActivate:[AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
 
 
