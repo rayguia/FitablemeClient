@@ -19,6 +19,6 @@
 }
 
 .ng-invalid.ng-touched:not(form):not(#loginForm) {
-  border-bottom: 2px solid #a94442 !important; /* red */
+  border-bottom: 2px solid #ec0f31 !important; /* red */
 }
 
