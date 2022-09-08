@@ -39,13 +39,17 @@ export class CalculatorListComponent implements OnInit {
       }
     })
   }
+  openLink(link:string,newPage:boolean){
+    console.log("link",link);
 
-  public getSpences(calculation:Calculator){
+    window.open(link, '_blank')
+  }
+  public getCalculation(calculation:Calculator){
 
-return 0;
-    // return calculation.towingPrice +
-    //  calculation.fixPrice + calculation.manheimFees + calculation.floorplanFees +
-    //  calculation.copartFees;
+
+    return calculation.buyAutionAmount + calculation.saleAutionAmount +
+     calculation.floorplanAmount + calculation.fixPrice + calculation.transportPrice +
+     calculation.taxTitle + calculation.others;
 
   }
   public getCarculationDetails = (cal:Calculator) => {

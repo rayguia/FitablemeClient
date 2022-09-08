@@ -10,11 +10,12 @@
             <th>Vin</th>
             <th>Lote Number</th>
             <th>Aution Date</th>
-            <th>Year</th>
-            <th>Car Name</th>
-            <th>Spences</th>
+            <th>Max Bid</th>
+            <th>Market Value</th>
+            <th>Investment</th>
             <th>Earnings</th>
-            <th>Link</th>
+            <th>Title</th>
+
             <th>Actions</th>
           </tr>
         </thead>
@@ -23,13 +24,14 @@
             <td>{{calculation.vin}}</td>
             <td>{{calculation.loteNumber}}</td>
             <td>{{calculation.autionDate | date: 'dd/MM/yyyy'}}</td>
-            <td>{{calculation.year}}</td>
-            <td>{{calculation.carName}}</td>
-            <td>{{getSpences(calculation)}}</td>
+            <td>{{calculation.maxAmountToOffer}}</td>
+            <td>{{calculation.marketValueFinal}}</td>
+            <td>{{getCalculation(calculation,'investment')}}</td>
             <td>{{calculation.earningsAmount}}</td>
-            <td>{{calculation.link}}</td>
+            <td>{{calculation.titleType}}</td>
+
             <td><button type="button" id="details" class="btn btn-primary"
-              (click)="getCarculationDetails(calculation)">Details</button></td>
+              (click)="openLink(calculation.link,true)">Details</button></td>
               <td><button type="button" id="update" class="btn btn-success"
                 (click)="redirectToUpdatePage(calculation)">Update</button></td>
                 <td><button type="button" id="delete" class="btn btn-danger"
