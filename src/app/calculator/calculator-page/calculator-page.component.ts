@@ -38,6 +38,7 @@ export class CalculatorPageComponent implements OnInit {
         year:null,
         make:"",
         model:"",
+        serie:"",
         type:"Wholesale",
         link:"",
         maxAmountToOffer:0,
@@ -101,15 +102,29 @@ export class CalculatorPageComponent implements OnInit {
 
     this.calculatorObject.vin = this.calculatorObject.vin.trim();
     if(this.calculatorObject.vin.length == 17){
-      const apiAddress: string = `http://api.carmd.com/v3.0/decode?vin=${this.calculatorObject.vin}`;
+
+      //const apiAddress: string = `http://api.carmd.com/v3.0/decode?vin=${this.calculatorObject.vin}`;
+
+      const apiAddress: string = `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${this.calculatorObject.vin}?format=json`;
       this.repositoryBumper.getCarInfoByVin(apiAddress)
       .subscribe({
         next: (response: any) => {
 
          console.log('response',response);
-         this.calculatorObject.year = response.data.year;
-         this.calculatorObject.make = response.data.make;
-         this.calculatorObject.model = response.data.model;
+
+
+         var yearMakeModelArray = response.Results.filter(x => x.Variable === 'Make' || x.Variable == 'Model'
+                                                        || x.Variable == 'Model Year' || x.Variable == 'Series');
+
+         console.log(yearMakeModelArray);
+
+
+
+         this.calculatorObject.year = yearMakeModelArray.find(x => x.Variable == 'Model Year').Value;
+         this.calculatorObject.make = yearMakeModelArray.find(x => x.Variable == 'Make').Value
+         this.calculatorObject.model = yearMakeModelArray.find(x => x.Variable == 'Model').Value
+         this.calculatorObject.serie = yearMakeModelArray.find(x => x.Variable == 'Series').Value
+
 
         },
         error: (err: HttpErrorResponse) => {

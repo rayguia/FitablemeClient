@@ -6,6 +6,7 @@ export interface Calculator{
   year:number;
   make?:string;
   model?:string;
+  serie?:string;
   type?:string;
   titleType?:string;
   link?:string;
