@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {MatFormFieldModule} from "@angular/material/form-field";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
@@ -52,7 +53,8 @@ export function tokenGetter() {
       positionClass: 'toast-top-right'
     }),
     NgxSpinnerModule,
-    BrowserAnimationsModule
+    MatFormFieldModule,
+    BrowserAnimationsModule,
   ],
   providers: [DatePipe,AuthGuard],
   bootstrap: [AppComponent]

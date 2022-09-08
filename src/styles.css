@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
 @import '~ngx-toastr/toastr.css';
-@import "~@ng-select/ng-select/themes/default.theme.css";
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @font-face {
   font-family: "Montserrat regular";
   src: local("montserrat-regular"), url('assets/font/montserrat-regular.ttf') format("truetype");
@@ -13,12 +12,5 @@
   src: local("montserrat-bold"), url('assets/font/montserrat-bold.ttf') format("truetype");
 }
 
-
-.ng-valid.ng-touched:not(form):not(#loginForm) {
-  border-bottom: 2px solid #42A948; /* green */
-}
-
-.ng-invalid.ng-touched:not(form):not(#loginForm) {
-  border-bottom: 2px solid #ec0f31 !important; /* red */
-}
-
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

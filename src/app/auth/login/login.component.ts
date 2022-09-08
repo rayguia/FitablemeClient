@@ -1,11 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoginModel} from '../../models/login.model';
 import {UserService} from "../../shared/services/user.service";
 import {AuthResultModel} from "../../models/auth.result.model";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
+import {ErrorStateMatcher} from "@angular/material/core";
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-login',
@@ -22,7 +30,7 @@ export class LoginComponent implements OnInit {
               private toastrService: ToastrService,
               private spinnerService: NgxSpinnerService) {
     this.loginForm = new FormGroup({
-      username: new FormControl(''),
+      username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('')
     });
   }
