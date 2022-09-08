@@ -12,7 +12,6 @@ import { RegisterComponent } from './register/register.component';
 import {NgSelectModule} from "@ng-select/ng-select";
 
 
-
 @NgModule({
   declarations: [
     LoginComponent,
