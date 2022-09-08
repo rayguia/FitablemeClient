@@ -32,14 +32,15 @@
     </div>
 
     <div class="d-flex flex-row justify-content-center align-items-center">
-      <div class="col col-md-8 col-lg-6 mt-3 text-center m-0">
-          <button (click)="login()" mat-raised-button color="primary">LogIn</button>
+      <div class="col col-md-8 col-lg-6 mt-1 text-center m-0">
+          <button (click)="login()" [disabled]="!loginForm.valid"
+                  mat-raised-button color="primary">LogIn</button>
       </div>
     </div>
   </div>
 </form>
 
-<div class="d-flex flex-column align-items-center" style="margin-top: 20px;">
+<div class="d-flex flex-column align-items-center mt-5">
   <div class="text-style">
     <a style="color: #246BFD; cursor: pointer">Forgot your password?</a>
   </div>
