@@ -1,15 +1,29 @@
-.text-style {
-  font-family: "Montserrat regular";
-  font-size: 1.2rem;
-}
-
-.border {
-  -webkit-border-radius: 25px;
-  -moz-border-radius: 25px;
-  border-radius: 25px;
-}
-
 .input-icons i {
   position: absolute;
 }
 
+/* Set top-lef and bottom-left corner radius */
+:host ::ng-deep .mat-form-field-outline-start {
+  border-radius: 15px 0 0 15px !important;
+  min-width: 15px !important;
+}
+
+/* Set top-right and bottom-right corner radius */
+:host ::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 15px 15px 0 !important;
+}
+
+h5 {
+  border-bottom: 1px solid #87767638;
+  line-height:0.1em;
+  margin:10px 50px 20px;
+}
+
+h5 span {
+  background:#fff;
+  padding:0 10px;
+}
+
+.i-external-login {
+  font-size: 2rem;
+}
