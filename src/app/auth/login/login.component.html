@@ -16,7 +16,7 @@ border-radius: 15px;">
 
 <form [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="col col-md-8 col-lg-6 mt-3 text-center">
+    <div class="col col-md-8 col-lg-6 mt-3 text-center w-75">
       <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
         <mat-label style="margin-left: 12px;">Email Address</mat-label>
         <input type="email" style="padding-left: 12px;"
@@ -27,7 +27,7 @@ border-radius: 15px;">
   </div>
 
   <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="col col-md-10 col-lg-6 mt-1 text-center">
+    <div class="col col-md-8 col-lg-6 mt-1 text-center w-75">
       <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
         <mat-label style="margin-left: 12px;">Password</mat-label>
         <input type="password" style="padding-left: 12px;"
@@ -38,7 +38,7 @@ border-radius: 15px;">
   </div>
 
   <div class="d-flex flex-row justify-content-center align-items-center">
-    <div class="col col-md-8 col-lg-6 mt-1 text-center">
+    <div class="col col-md-8 col-lg-6 mt-1 text-center w-75">
       <button (click)="login()" [disabled]="!loginForm.valid"
               class="primary-color button-style login-btn"
               mat-raised-button>
