@@ -37,6 +37,7 @@ export function tokenGetter() {
     OwnerModule,
     AuthModule,
     FormsModule,
+
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

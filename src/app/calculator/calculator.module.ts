@@ -11,6 +11,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -25,6 +33,13 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     FormsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatIconModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
   ]

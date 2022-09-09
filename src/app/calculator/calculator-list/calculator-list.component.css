@@ -1,0 +1,75 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-row {
+    width: 100%;
+    min-height: 12px;
+}
+
+.div-title {
+    text-align: center;
+    font-size: medium;
+    font-weight: bold;
+    padding: 4px;
+  }
+
+.mat-header-cell {
+    min-height: 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.mat-header-row {
+  width: 100%;
+  min-height: 10px;
+  padding: 0px 0px 0px 4px;
+}
+
+.mat-cell-column {
+    border-top: 1px solid crimson;
+}
+
+.mat-cell {
+    flex: 0 0 50px !important;
+    white-space: unset !important;
+    justify-content: left;
+    font-size: smaller;
+    padding: 0px 0px 0px 4px;
+    text-align: left;
+}
+
+.mat-cell-concession {
+    flex: 0 0 250px !important;
+    min-width: 250px !important;
+    white-space: unset !important;
+    justify-content: left;
+    font-size: smaller;
+    padding: 0px 0px 0px 4px;
+    text-align: left;
+    color: black;
+}
+
+.mat-row:nth-child(1n + 1) {
+    background-color: mat-color($accent, lighter);
+  }
+
+  .mat-row:not(:nth-child(2n + 1)) {
+    background-color: mat-color($primary, 300);
+  }
+
+.example-element-row:hover {
+  background: mat-color($accent, 800);
+}
+.example-element-row:active {
+  background: #efefef;
+}

@@ -7,6 +7,7 @@ import { BumperRepositoryService } from 'src/app/shared/services/bumper-reposito
 import { CalculatorRepositoryService } from 'src/app/shared/services/calculator-repository.service';
 import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { Calculator } from 'src/app/_interfaces/calculator.model';
+
 @Component({
   selector: 'app-calculator-page',
   templateUrl: './calculator-page.component.html',
@@ -18,12 +19,14 @@ export class CalculatorPageComponent implements OnInit {
    maxAmountToOffer:number = 0;
    errorMessage:string = '';
 
+
    bsModalRef?: BsModalRef;
   constructor(private repositoryBumper: BumperRepositoryService,
     private repository: CalculatorRepositoryService,
     private datePipe: DatePipe,
     private modal: BsModalService,
     private errorHandler: ErrorHandlerService) { }
+
 
   ngOnInit(): void {
 
@@ -62,6 +65,10 @@ export class CalculatorPageComponent implements OnInit {
 
 
   }
+
+
+
+
   executeCalculatorCreation = () => {
 
     this.datePipe.transform(this.calculatorObject.autionDate, 'yyyy-MM-dd');
