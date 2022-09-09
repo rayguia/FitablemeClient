@@ -30,9 +30,37 @@ h5 span {
 
 .login-btn {
   height: 44px;
-  width: 75%;
+  width: 100%;
   border-radius: 25px;
   color: #e5e5e5
 }
 
 
+@media screen and (min-width: 768px) {
+  .container {
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .container {
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+
+@media (min-width:1025px) {
+  .container {
+    margin-top: 20px;
+    width: 50%;
+  }
+}
+
+
+@media screen and (min-width: 1281px) {
+  .container {
+    margin-top: 20px;
+    width: 60%;
+  }
+}
