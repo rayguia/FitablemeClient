@@ -5,13 +5,13 @@
 /* Set top-lef and bottom-left corner radius */
 :host ::ng-deep .mat-form-field-outline-start {
   border-radius: 15px 0 0 15px !important;
-  min-width: 15px !important;
 }
 
 /* Set top-right and bottom-right corner radius */
 :host ::ng-deep .mat-form-field-outline-end {
   border-radius: 0 15px 15px 0 !important;
 }
+
 
 h5 {
   border-bottom: 1px solid #87767638;
@@ -27,3 +27,12 @@ h5 span {
 .i-external-login {
   font-size: 2rem;
 }
+
+.login-btn {
+  height: 44px;
+  width: 75%;
+  border-radius: 25px;
+  color: #e5e5e5
+}
+
+

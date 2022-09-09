@@ -1,58 +1,57 @@
-  <div class="d-flex flex-column align-items-center justify-content-center"
-       style="margin-top: 40px;">
-    <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
-    <div class="container">
-      <div class="d-flex flex-row">
-        <div class="col-12 justify-content-center align-items-center text-center">
-          <span class="font-family font-regular-size primary-color">Login to your account.</span>
-        </div>
+<div class="d-flex flex-column align-items-center justify-content-center"
+     style="margin-top: 40px;">
+  <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
+  <div class="container">
+    <div class="d-flex flex-row">
+      <div class="col-12 justify-content-center align-items-center text-center" style="margin-top: 15px;">
+          <span class="font-family font-middle-size primary-color">
+            Login to your account.
+          </span>
       </div>
     </div>
   </div>
-
-
+</div>
 
 <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div class="d-flex flex-row justify-content-center align-items-center">
-      <div class="col col-md-8 col-lg-6 mt-3 text-center">
-        <mat-form-field appearance="outline" class="m-0 w-75 input-styles">
-          <mat-label>Email Address</mat-label>
-          <input type="email" formControlName="username" matInput
-                 placeholder="enter username or email address...">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="d-flex flex-row justify-content-center align-items-center">
-      <div class="col col-md-8 col-lg-6 mt-1 text-center">
-        <mat-form-field appearance="outline" class="m-0 w-75 input-styles">
-          <mat-label>Password</mat-label>
-          <input type="password" style="border-radius: 30px;" class="input-styles" formControlName="password"
-                 matInput placeholder="enter your password...">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="d-flex flex-row justify-content-center align-items-center">
-      <div class="col col-md-8 col-lg-6 mt-1 text-center">
-        <button (click)="login()" [disabled]="!loginForm.valid"
-                class="primary-color button-style"
-                style="height: 44px;width: 75%;
-                border-radius: 25px;"
-                mat-raised-button>
-          Login
-        </button>
-      </div>
-    </div>
-</form>
-
-  <div class="d-flex flex-row justify-content-around mt-3">
-    <div class="col col-md-8 col-lg-6 text-center">
-      <a style="cursor: pointer; text-decoration: none;" routerLink="/auth/register"
-         class="primary-color font-family font-regular-size">Forgot the password?
-      </a>
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="col col-md-8 col-lg-6 mt-3 text-center">
+      <mat-form-field appearance="outline" class="m-0 w-75 input-styles">
+        <mat-label style="margin-left: 20px;">Email Address</mat-label>
+        <input type="email" formControlName="username" matInput
+               placeholder="enter username or email address...">
+      </mat-form-field>
     </div>
   </div>
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="col col-md-8 col-lg-6 mt-1 text-center">
+      <mat-form-field appearance="outline" class="m-0 w-75 input-styles">
+        <mat-label style="margin-left: 20px;">Password</mat-label>
+        <input type="password" style="border-radius: 30px;"
+               class="input-styles" formControlName="password"
+               matInput placeholder="enter your password...">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="col col-md-8 col-lg-6 mt-1 text-center">
+      <button (click)="login()" [disabled]="!loginForm.valid"
+              class="primary-color button-style login-btn"
+              mat-raised-button>
+        Log In
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="d-flex flex-row justify-content-around mt-3">
+  <div class="col col-md-8 col-lg-6 text-center">
+    <a style="cursor: pointer; text-decoration: none;" routerLink="/auth/register"
+       class="primary-color font-family font-regular-size">Forgot the password?
+    </a>
+  </div>
+</div>
 
 <div class="d-flex flex-row justify-content-center align-items-center">
   <div class="col col-md-8 col-lg-6 mt-3">
@@ -71,7 +70,7 @@
 </div>
 
 
-<div class="d-flex flex-row justify-content-around mt-5">
+<div class="d-flex flex-row justify-content-around mt-3">
   <div class="col col-md-8 col-lg-6 text-center">
     <span class="font-family font-regular-size">Already have an account?
       <a style="cursor: pointer; text-decoration: none;" routerLink="/auth/register"
