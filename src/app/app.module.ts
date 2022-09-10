@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { DatePipe } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
@@ -20,6 +21,7 @@ import { AuthGuard } from './Guards/auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './home/profile/profile.component';
 import { MessageComponent } from './home/message/message.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 export function tokenGetter() {
@@ -31,7 +33,8 @@ export function tokenGetter() {
     NotFoundComponent,
     InternalServerComponent,
     ProfileComponent,
-    MessageComponent
+    MessageComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -53,8 +56,10 @@ export function tokenGetter() {
       positionClass: 'toast-top-right'
     }),
     NgxSpinnerModule,
-    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [DatePipe,AuthGuard],
   bootstrap: [AppComponent]
