@@ -22,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './home/profile/profile.component';
 import { MessageComponent } from './home/message/message.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RecoverPassswordComponent } from './recover-passsword/recover-passsword.component';
 
 
 export function tokenGetter() {
@@ -34,7 +35,8 @@ export function tokenGetter() {
     InternalServerComponent,
     ProfileComponent,
     MessageComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RecoverPassswordComponent
   ],
   imports: [
     BrowserModule,

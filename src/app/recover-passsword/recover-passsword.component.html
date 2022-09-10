@@ -1,0 +1,74 @@
+<div class="container mt-5" style="
+border: 1px solid #ffffff;
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding: 25px 10px;
+    max-width: 500px;
+border-radius: 15px;">
+  <div class="d-flex flex-column align-items-center justify-content-center"
+       style="margin-top: 20px;">
+    <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
+    <div class="d-flex flex-row">
+      <div class="col-12 justify-content-center align-items-center text-center" style="margin-top: 15px;">
+          <span class="font-family font-middle-size primary-color" *ngIf="!codeIsValid">
+             Enter the code sent to your email address.
+          </span>
+        <span class="font-family font-middle-size primary-color" *ngIf="codeIsValid">
+            Set your new password.
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="codeForm" class="px-3" *ngIf="!codeIsValid">
+
+    <div class="d-flex flex-row justify-content-center
+    align-items-center">
+      <div class="col mt-3 text-center">
+        <mat-form-field hideRequiredMarker appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">Code</mat-label>
+          <input type="text" style="padding-left: 12px;"
+                 formControlName="code" matInput
+                 placeholder="enter code...">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-row justify-content-between">
+      <div class="col mt-1 text-end">
+        <button (click)="checkCode()" [disabled]="!codeForm.valid"
+                class="button primary-color button-style"
+                mat-raised-button>
+          Check code
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+  <form [formGroup]="setPasswordForm" class="px-3" *ngIf="codeIsValid">
+
+    <div class="d-flex flex-row justify-content-center
+    align-items-center">
+      <div class="col mt-3 text-center">
+        <mat-form-field hideRequiredMarker appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">New Password</mat-label>
+          <input type="email" style="padding-left: 12px;" required
+                 formControlName="password" matInput
+                 placeholder="enter new password...">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between">
+      <div class="col mt-1 text-end">
+        <button (click)="resetPassword()" [disabled]="!setPasswordForm.valid"
+                class="button primary-color button-style"
+                mat-raised-button>
+          Reset password
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>
+

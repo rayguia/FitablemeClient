@@ -5,6 +5,7 @@ import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { AuthGuard } from './Guards/auth.guard';
 import {HomeComponent} from "./home/home.component";
 import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {RecoverPassswordComponent} from "./recover-passsword/recover-passsword.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'owner', loadChildren: () => import('./owner/owner.module').then(m => m.OwnerModule),canActivate:[AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'recover-password', component: RecoverPassswordComponent },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: InternalServerComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
