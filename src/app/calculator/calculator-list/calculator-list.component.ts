@@ -66,7 +66,6 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
    isAllSelected() {
      const numSelected = this.selection.selected.length;
      const numRows = this.dataSource.data.length;
-     console.log('isAllSelected selection',this.selection);
 
      return numSelected === numRows;
    }
@@ -77,17 +76,14 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
        this.selection.clear();
        return;
      }
-     console.log('toggleAllRows selection',this.selection);
      this.selection.select(...this.dataSource.data);
    }
 
    /** The label for the checkbox on the passed row */
    checkboxLabel(row?: Calculator): string {
      if (!row) {
-      console.log('checkboxLabel no row selection',this.selection);
        return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
      }
-     console.log('checkboxLabel all selection',this.selection);
      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.calculatorId + 1}`;
    }
    /**End Select Section */
@@ -97,66 +93,12 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   }
 
 
-
-  // pageChange(){
-  //   this.paginator?.page.pipe(
-  //     switchMap(() => {
-  //       let currentPage = (this.paginator?.pageIndex ?? 0)+1;
-  //       return this.appService.getTodos(currentPage, (this.paginator?.pageSize ?? 0));
-  //     }),
-  //     map( result => {
-  //       if(!result){
-  //         return [];
-  //       }
-  //       this.totalRecords = result.totalCount;
-  //       return result.data;
-  //     })
-  //   )
-  //   .subscribe(data => {
-  //     this.todos = data;
-  //   });
-  // }
   ngAfterViewInit() {
 
-    //this.pageChange();
-    //this.initialLoad();
+
     this.getCalculators();
 
 
-
-    //this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
-
-    // If the user changes the sort order, reset back to the first page.
-    // this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    // merge(this.sort.sortChange, this.paginator.page)
-    //   .pipe(
-    //     startWith({}),
-    //     switchMap(() => {
-    //       this.isLoadingResults = true;
-    //       return this.exampleDatabase!.getRepoIssues(
-    //         this.sort.active,
-    //         this.sort.direction,
-    //         this.paginator.pageIndex,
-    //       ).pipe(catchError(() => observableOf(null)));
-    //     }),
-    //     map(data => {
-    //       // Flip flag to show that loading has finished.
-    //       this.isLoadingResults = false;
-    //       this.isRateLimitReached = data === null;
-
-    //       if (data === null) {
-    //         return [];
-    //       }
-
-    //       // Only refresh the result length if there is new data. In case of rate
-    //       // limit errors, we do not want to reset the paginator to zero, as that
-    //       // would prevent users from re-triggering requests.
-    //       this.resultsLength = data.total_count;
-    //       return data.items;
-    //     }),
-    //   )
-    //   .subscribe(data => (this.data = data));
   }
 
 
@@ -167,9 +109,6 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
       next: (cal: Calculator[]) => {
         this.calculators = cal
         this.dataSource = new MatTableDataSource(cal);
-        console.log('dataSourse View',this.dataSource);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
         this.isLoadingResults =false;
       },
       error: (err: HttpErrorResponse) => {
@@ -221,7 +160,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
 
   openLink(link:string,newPage:boolean){
-    console.log("link",link);
+
 
     window.open(link, '_blank')
   }
@@ -247,11 +186,12 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
     BsModalService
   }
-  showModalToDelete(calculator:Calculator){
+  showModalToDelete(calculator:any){
+    let text = this.selection.selected.length > 1 ? 'items' : 'item'
     const config: ModalOptions = {
       initialState: {
         modalHeaderText: 'Confirm',
-        modalBodyText: `Are you sure you want to remove it?`,
+        modalBodyText: `Are you sure you want to remove ${this.selection.selected.length} ${text}?`,
         okButtonText: 'Yes',
         cancelButtonText: 'Cancel'
       }
@@ -259,11 +199,11 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
     this.bsModalRef = this.modalService.show(ConfirmModalComponent, config);
     this.bsModalRef.content.deleteConfirmed.subscribe(_ => this.deleteCalculator(calculator));
   }
-  deleteCalculator = (calculator:Calculator) => {
+  deleteCalculator = (calculators:any) => {
 
-
-    const deleteUri: string = `api/calculator/${calculator.calculatorId}`;
-    this.repository.deleteCalculator(deleteUri)
+    var all = calculators == 'all' ? this.selection.selected : [calculators];
+    const deleteUri: string = `api/calculator/selected`;
+    this.repository.deleteCalculators(deleteUri,all)
     .subscribe({
       next: (_) => {
         const config: ModalOptions = {
@@ -274,21 +214,26 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
           }
         };
         this.bsModalRef = this.modalService.show(SuccessModalComponent, config);
-        this.bsModalRef.content.redirectOnOk.subscribe(_ => this.removeCalculatorFromList(calculator));
+        this.bsModalRef.content.redirectOnOk.subscribe(_ => this.removeCalculatorFromList(all));
       },
       error: (err: HttpErrorResponse) => this.errorHandler.handleError(err)
     })
   }
-  removeCalculatorFromList(calculator:Calculator){
-     console.log('after ok button');
-    //  var removeIndex = this.calculators.map(item => item.calculatorId).indexOf(calculator.calculatorId);
-    //      ~removeIndex && this.calculators.splice(removeIndex, 1);
-         var removeIndex = this.dataSource.data.map(item => item.calculatorId).indexOf(calculator.calculatorId);
-         ~removeIndex && this.dataSource.data.splice(removeIndex, 1);
-         this.dataSource._updateChangeSubscription();
+  removeCalculatorFromList(calculators:any[]){
+    var ids = [];
+    calculators.forEach(calculator => {
 
-         var removeIndexSelected = this.selection.selected.map(item => item.calculatorId).indexOf(calculator.calculatorId);
-         ~removeIndexSelected && this.selection.selected.splice(removeIndexSelected, 1);
+        ids.push(calculator.calculatorId)
+        var removeIndex = this.dataSource.data.map(item => item.calculatorId).indexOf(calculator.calculatorId);
+        ~removeIndex && this.dataSource.data.splice(removeIndex, 1);
+        this.dataSource._updateChangeSubscription();
+
+        // var removeIndexSelected = this.selection.selected.map(item => item.calculatorId).indexOf(calculator.calculatorId);
+        // ~removeIndexSelected && this.selection.selected.splice(removeIndexSelected, 1);
+      });
+
+      this.selection = new SelectionModel<Calculator>(true, []);
+
 
 
   }

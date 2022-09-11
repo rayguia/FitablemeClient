@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Calculator } from 'src/app/_interfaces/calculator.model';
 import { EnvironmentUrlService } from './environment-url.service';
@@ -23,7 +23,11 @@ export class CalculatorRepositoryService {
     return this.http.put(this.createCompleteRoute(route, this.envUrl.urlAddress), calculator, this.generateHeaders());
   }
   public deleteCalculator = (route: string) => {
-    return this.http.delete(this.createCompleteRoute(route, this.envUrl.urlAddress));
+    return this.http.delete(this.createCompleteRoute(route, this.envUrl.urlAddress),);
+  }
+  public deleteCalculators = (route: string, calculators: Calculator[]) => {
+
+    return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), calculators, this.generateHeaders());
   }
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;

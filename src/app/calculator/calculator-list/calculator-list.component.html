@@ -1,64 +1,31 @@
-<div class="row">
-  <a [routerLink]="['/owner/create']">New Car</a>
-</div> <br>
-<div class="row">
 
 
-    <div class="col-12 py-2" style="text-align: right;">
-      <button type="button" id="save" class="btn btn-success mx-2" (click)="exportExcel()">Export Excel</button>
+
+  <div class="container px-0" *ngIf="!isLoadingResults">
+
+    <div class="row">
+      <div class="col-8">
+
+        <mat-form-field appearance="standard">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+        </mat-form-field>
+
+        <button *ngIf="selection.selected.length > 0" type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
+                    (click)="showModalToDelete('all')">Delete Selected</button>
+      </div>
+
+
+      <div class="col-4 mt-3" style="text-align: right;">
+
+        <button type="button" id="save" class="btn btn-success " (click)="exportExcel()">Export Excel</button>
+      </div>
+
 
     </div>
 
 
-  <!-- <div class="col-md-12">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Vin</th>
-            <th>Lote Number</th>
-            <th>Aution Date</th>
-            <th>Max Bid</th>
-            <th>Market Value</th>
-            <th>Investment</th>
-            <th>Earnings</th>
-            <th>Title</th>
 
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let calculation of calculators" id="calculation.calculatorId">
-            <td>{{calculation.vin}}</td>
-            <td>{{calculation.loteNumber}}</td>
-            <td>{{calculation.autionDate | date: 'dd/MM/yyyy'}}</td>
-            <td>{{calculation.maxAmountToOffer}}</td>
-            <td>{{calculation.marketValueFinal}}</td>
-            <td>{{getCalculation(calculation,'investment')}}</td>
-            <td>{{calculation.earningsAmount}}</td>
-            <td>{{calculation.titleType}}</td>
-
-            <td><button type="button" id="details" class="btn btn-primary"
-              (click)="openLink(calculation.link,true)">Details</button></td>
-              <td><button type="button" id="update" class="btn btn-success"
-                (click)="redirectToUpdatePage(calculation)">Update</button></td>
-                <td><button type="button" id="delete" class="btn btn-danger"
-                  (click)="showModalToDelete(calculation)">Delete</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
-
-  <div class="col-12" *ngIf="!isLoadingResults">
-
-    <mat-form-field appearance="standard">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-    </mat-form-field>
-
-    <button *ngIf="selection.selected.length > 1" type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
-                (click)="showModalToDelete('all')">Delete Selected</button>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -137,26 +104,12 @@
             <button type="button" id="details" class="btn btn-primary"
             (click)="openLink(row.link,true)">Details</button>
 
-              <button type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
-                (click)="showModalToDelete(row)">Delete</button>
+              <!-- <button type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
+                (click)="showModalToDelete(row)">Delete</button> -->
 
           </td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-          <mat-cell *matCellDef="let row;">
-            <button type="button" id="details" class="btn btn-primary"
-            (click)="openLink(row.link,true)">Details</button>
-
-              <button type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
-                (click)="showModalToDelete(row)">Delete</button>
-          </mat-cell>
-        </ng-container> -->
-        <ng-container>
-
-
-        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headerTable"></tr>
         <tr mat-row *matRowDef="let row; columns: headerTable;"></tr>
@@ -167,8 +120,8 @@
         </tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[3,5]" aria-label="Select page of dataSource.filteredData"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[10,20,50,100]" aria-label="Select page of dataSource.filteredData"></mat-paginator>
     </div>
   </div>
 
-</div>
+
