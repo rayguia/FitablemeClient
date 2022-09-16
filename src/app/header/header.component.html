@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark px-2">
+
+  <div  *ngIf="isLogged" class="side-nav-button p-2 ma-3 text-light" (click)="sideNavToggleFunction()">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
+  <a href="" class="navbar-brand px-4">Header</a>
+
+  <div class="navbar-collapse">
+
+    <ul class="navbar-nav ma-auto">
+
+      <li class="nav-item dropdown">
+
+        <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Menu1</a>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li><a href="" class="dropdown-item">Child1</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+
+  <form action="" class="d-flex ma-5">
+    <input type="search" class="form-control ma-2" placeholder="Search">
+    <button class="btn btn-outline-light" type="submit">Search</button>
+  </form>
+
+
+  <div class="profile-logo dropstart">
+
+    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">Ray</button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+          <li routerLink="login" *ngIf="!isLogged"><a href="" class="dropdown-item">Sign Up</a></li>
+          <li routerLink="auth/login" *ngIf="!isLogged"><a href="" class="dropdown-item">Log In</a></li>
+          <li (click)="onLogout()" *ngIf="isLogged"><a href="" class="dropdown-item">Log Out</a></li>
+          <li routerLink="dashboard/profile" *ngIf="isLogged"><a href=""  class="dropdown-item">Your Profile</a></li>
+          <li routerLink="/dashboard" *ngIf="isLogged"><a href=""  class="dropdown-item">Dashboard</a></li>
+    </ul>
+
+  </div>
+
+</nav>

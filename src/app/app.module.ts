@@ -19,10 +19,12 @@ import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { OwnerModule } from './owner/owner.module';
 import { AuthGuard } from './Guards/auth.guard';
 import { AuthModule } from './auth/auth.module';
-import { ProfileComponent } from './home/profile/profile.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
 import { MessageComponent } from './home/message/message.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RecoverPassswordComponent } from './recover-passsword/recover-passsword.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent } from './header/header.component';
 
 
 export function tokenGetter() {
@@ -36,7 +38,9 @@ export function tokenGetter() {
     ProfileComponent,
     MessageComponent,
     ForgotPasswordComponent,
-    RecoverPassswordComponent
+    RecoverPassswordComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

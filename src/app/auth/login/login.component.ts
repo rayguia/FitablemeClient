@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LoginModel} from '../../models/login.model';
 import {UserService} from "../../shared/services/user.service";
 import {AuthResultModel} from "../../models/auth.result.model";
@@ -24,8 +24,10 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   credentials: LoginModel = {Email: '', Password: ''};
   loginForm: FormGroup
+  returnUrl: string;
 
   constructor(private router: Router,
+    private route: ActivatedRoute,
               private userService: UserService,
               private toastrService: ToastrService,
               private spinnerService: NgxSpinnerService) {
@@ -36,7 +38,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+       // get return url from route parameters or default to '/'
+       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   async login() {
@@ -51,7 +54,9 @@ export class LoginComponent implements OnInit {
         if (result.token && result.refreshToken)
           this.userService.saveSession(result);
           this.spinnerService.hide();
-          this.router.navigate(['/home']);
+          this.router.navigate([this.returnUrl]);
+
+          //this.router.navigate(['/dashboard']);
       },
       error: () =>  {
         this.spinnerService.hide();

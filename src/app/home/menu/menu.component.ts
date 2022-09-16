@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class MenuComponent implements OnInit {
 
   isCollapsed: boolean = false;
-  constructor(private jwtHelper: JwtHelperService, private router: Router) { }
+  constructor(private jwtHelper: JwtHelperService, private router: Router, private userService:UserService) { }
 
   ngOnInit(): void {
   }
@@ -25,11 +26,8 @@ export class MenuComponent implements OnInit {
   }
 
 
-  logOut = () => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("refreshToken");
-    this.router.navigate(["/"]);
-
+  onLogout(){
+    this.userService.logout();                      // {3}
   }
 
 }
