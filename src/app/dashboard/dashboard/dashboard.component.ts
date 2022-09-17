@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  sideNavStatus:boolean = false;
+  isLoggedIn$: Observable<boolean>;
+  isLogged:boolean = false                // {1}
 
-  ngOnInit(): void {
+  constructor(private userService: UserService) { }
+
+  async ngOnInit() {
+    this.isLogged = await this.userService.isLogged()
+    this.isLoggedIn$ = this.userService.isLoggedIn; // {2}
+  }
+
+  onLogout(){
+    this.userService.logout();                      // {3}
   }
 
 }

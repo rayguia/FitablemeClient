@@ -5,8 +5,10 @@ import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
-  { path:'', component: DashboardComponent },
-  { path:'profile', component: ProfileComponent }
+  { path:'', component: DashboardComponent, children:[
+    { path:'profile', component: ProfileComponent }
+  ] },
+
 
 ];
 

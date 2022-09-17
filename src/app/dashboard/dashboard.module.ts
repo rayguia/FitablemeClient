@@ -6,12 +6,17 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { HeaderComponent } from '../header/header.component';
 
 
 @NgModule({
   declarations: [
+
     ProfileComponent,
-    DashboardComponent
+    DashboardComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

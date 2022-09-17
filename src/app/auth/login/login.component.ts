@@ -24,13 +24,18 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   credentials: LoginModel = {Email: '', Password: ''};
   loginForm: FormGroup
-  returnUrl: string;
+  returnUrl: string = '/dashboard';
 
   constructor(private router: Router,
     private route: ActivatedRoute,
               private userService: UserService,
               private toastrService: ToastrService,
               private spinnerService: NgxSpinnerService) {
+
+
+                if(this.userService.isLogged()){
+                   this.router.navigate(['/dashboard']);
+                 }
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('')
@@ -39,7 +44,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
        // get return url from route parameters or default to '/'
-       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] !== '/' ? this.route.snapshot.queryParams['returnUrl'] : '/dashboard';
+
+
+
   }
 
   async login() {
@@ -54,6 +62,8 @@ export class LoginComponent implements OnInit {
         if (result.token && result.refreshToken)
           this.userService.saveSession(result);
           this.spinnerService.hide();
+          console.log('this.returnUrl',this.returnUrl);
+
           this.router.navigate([this.returnUrl]);
 
           //this.router.navigate(['/dashboard']);

@@ -39,8 +39,7 @@ export function tokenGetter() {
     MessageComponent,
     ForgotPasswordComponent,
     RecoverPassswordComponent,
-    SidebarComponent,
-    HeaderComponent
+
   ],
   imports: [
     BrowserModule,

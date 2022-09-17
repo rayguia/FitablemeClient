@@ -1,1 +1,12 @@
-<p>dashboard works!</p>
+<app-header (sideNavToggle)="sideNavStatus = $event"></app-header>
+
+  <main>
+    <app-sidebar [sideNavStatus]="sideNavStatus"
+    [ngClass]="{'app-sidebar-open':sideNavStatus}"
+    *ngIf="isLoggedIn$ | async"
+    style="border: 1px solid" class="black-border"></app-sidebar>
+
+    <div class="display-area" [ngClass]="{'display-area-shrink':sideNavStatus}">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
