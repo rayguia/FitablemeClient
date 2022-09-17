@@ -17,7 +17,8 @@ const routes: Routes = [
   {path: '', component:HomeComponent,canActivate:[AuthGuard]},
 
   { path: 'owner', loadChildren: () => import('./owner/owner.module').then(m => m.OwnerModule),canActivate:[AuthGuard] },
-  { path: 'dashboard', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),canActivate:[AuthGuard] },
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate:[AuthGuard] },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'recover-password', component: RecoverPassswordComponent },

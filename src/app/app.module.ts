@@ -25,6 +25,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RecoverPassswordComponent } from './recover-passsword/recover-passsword.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 export function tokenGetter() {
@@ -35,7 +36,6 @@ export function tokenGetter() {
     AppComponent,
     NotFoundComponent,
     InternalServerComponent,
-    ProfileComponent,
     MessageComponent,
     ForgotPasswordComponent,
     RecoverPassswordComponent,
@@ -48,6 +48,7 @@ export function tokenGetter() {
     HttpClientModule,
     CollapseModule.forRoot(),
     OwnerModule,
+    DashboardModule,
     AuthModule,
     NgSelectModule,
     FormsModule,

@@ -38,6 +38,9 @@ export class UserService {
   get isLoggedIn() {
     return this.loggedIn.asObservable(); // {2}
   }
+  setLogged(){
+    this.loggedIn.next(true);
+  }
 
   register(registerInfor: IAuthInfo) {
     return this.httpClient.post<IAuthResponse>(this.baseUrl + 'register', registerInfor);
@@ -57,7 +60,7 @@ export class UserService {
 
   public saveSession(result: AuthResultModel) {
     //this.setIsLogged(true)
-    //this.loggedIn.next(true);
+    this.loggedIn.next(true);
     localStorage.setItem("jwt", result.token);
     localStorage.setItem("refreshToken", result.refreshToken);
     //sessionStorage.setItem('fitableme-user', JSON.stringify(user));
@@ -67,36 +70,47 @@ export class UserService {
   logout() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("refreshToken");                         // {4}
-    //this.loggedIn.next(false);
+    this.loggedIn.next(false);
     //this.setIsLogged(false)
 
     this.router.navigate(['/']);
+    return false
   }
-  async isLogged(){
+  isLogged(){
 
 
     const token = localStorage.getItem("jwt");
     if (token && !this.jwtHelper.isTokenExpired(token)){
       console.log('true');
-      this.loggedIn.next(true);
+      // this.loggedIn.subscribe(x => {
+      //   if(!x){
+      //     this.loggedIn.next(true);
+      //   }
+      // })
+
       //this.userService.setIsLogged(true)
 
 
       return true;
     }
     console.log('false');
-    this.loggedIn.next(false);
+    // this.loggedIn.subscribe(x => {
+    //   if(x){
+    //     this.loggedIn.next(false);
+    //   }
+    // })
+    //this.loggedIn.next(false);
 
     return false;
-    const isRefreshSuccess = await this.tryRefreshingTokens(token);
-    if (!isRefreshSuccess) {
+    //const isRefreshSuccess = await this.tryRefreshingTokens(token);
+    //if (!isRefreshSuccess) {
       //this.userService.setIsLogged(false)
       //this.router.navigate(["auth/login"]);
         return false;
 
-    }
+    //}
 
-    return isRefreshSuccess;
+    //return isRefreshSuccess;
   }
   private async tryRefreshingTokens(token: string): Promise<boolean> {
     const refreshToken: string = localStorage.getItem("refreshToken");

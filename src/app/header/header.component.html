@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark px-2">
 
-  <div  *ngIf="isLogged" class="side-nav-button p-2 ma-3 text-light" (click)="sideNavToggleFunction()">
+  <div  *ngIf="isLoggedIn$ | async" class="side-nav-button p-2 ma-3 text-light" (click)="sideNavToggleFunction()">
     <i class="fa-solid fa-bars"></i>
   </div>
 
@@ -31,11 +31,13 @@
 
     <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">Ray</button>
     <ul class="dropdown-menu dropdown-menu-dark">
-          <li routerLink="login" *ngIf="!isLogged"><a href="" class="dropdown-item">Sign Up</a></li>
-          <li routerLink="auth/login" *ngIf="!isLogged"><a href="" class="dropdown-item">Log In</a></li>
-          <li (click)="onLogout()" *ngIf="isLogged"><a href="" class="dropdown-item">Log Out</a></li>
-          <li routerLink="dashboard/profile" *ngIf="isLogged"><a href=""  class="dropdown-item">Your Profile</a></li>
-          <li routerLink="/dashboard" *ngIf="isLogged"><a href=""  class="dropdown-item">Dashboard</a></li>
+          <li routerLink="auth/register" *ngIf="(isLoggedIn$ | async) == false"><a class="dropdown-item">Sign Up</a></li>
+          <li routerLink="auth/login" *ngIf="(isLoggedIn$ | async) == false"><a class="dropdown-item">Log In</a></li>
+
+          <li routerLink="dashboard" *ngIf="isLoggedIn$ | async"><a  class="dropdown-item">Dashboard</a></li>
+          <li routerLink="dashboard/profile" *ngIf="isLoggedIn$ | async"><a class="dropdown-item">Your Profile</a></li>
+          <li (click)="onLogout()" *ngIf="isLoggedIn$ | async"><a class="dropdown-item">Log Out</a></li>
+
     </ul>
 
   </div>
