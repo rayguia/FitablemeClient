@@ -7,6 +7,8 @@ import {HomeComponent} from "./home.component";
 import {MenuComponent} from "./menu/menu.component";
 import {ContentComponent} from "./content/content.component";
 import {HomeRoutingModule} from "./home-routing.module";
+import { HeaderComponent } from "../shared/header/header.component";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
 declarations: [
@@ -17,6 +19,7 @@ declarations: [
 ],
   imports: [
     HomeRoutingModule,
+    SharedModule,
     CommonModule,
     FormsModule
   ]

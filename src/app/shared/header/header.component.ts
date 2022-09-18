@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserService } from '../shared/services/user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() sideNavToggle = new EventEmitter<boolean>();
   isLoggedIn$: Observable<boolean>;
+  @Input() hideIconSidebar:boolean = false;
   menuStatus:boolean = false;
   isLogged:boolean =false;
 

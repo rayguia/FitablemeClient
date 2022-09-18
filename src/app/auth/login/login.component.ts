@@ -61,8 +61,12 @@ export class LoginComponent implements OnInit {
           this.userService.saveSession(result);
           this.spinnerService.hide();
           console.log('this.returnUrl',this.returnUrl);
+          if(this.returnUrl == undefined){
+            this.router.navigate(['dashboard']);
+          }else{
+            this.router.navigate([this.returnUrl]);
+          }
 
-          this.router.navigate([this.returnUrl]);
 
           //this.router.navigate(['/dashboard']);
       },

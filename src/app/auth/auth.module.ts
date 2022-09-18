@@ -10,12 +10,18 @@ import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RegisterComponent } from './register/register.component';
 import {NgSelectModule} from "@ng-select/ng-select";
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RecoverPassswordComponent } from './recover-passsword/recover-passsword.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgotPasswordComponent,
+    RecoverPassswordComponent,
+    AuthComponent,
   ],
   imports: [
     CommonModule,

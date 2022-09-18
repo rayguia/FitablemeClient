@@ -7,7 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { HeaderComponent } from '../header/header.component';
+import { HeaderComponent } from '../shared/header/header.component';
 
 
 @NgModule({
@@ -15,8 +15,7 @@ import { HeaderComponent } from '../header/header.component';
 
     ProfileComponent,
     DashboardComponent,
-    SidebarComponent,
-    HeaderComponent
+    SidebarComponent
   ],
   imports: [
     CommonModule,
