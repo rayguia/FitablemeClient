@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, Observable, take } from 'rxjs';
-import { UserService } from '../shared/services/user.service';
+import { UserService } from '../Components/shared/services/user.service';
 import { IAuthResponse } from '../_interfaces/IAuthenticateResponse';
 @Injectable({
   providedIn: 'root'
