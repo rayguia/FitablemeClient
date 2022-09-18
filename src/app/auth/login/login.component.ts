@@ -33,9 +33,7 @@ export class LoginComponent implements OnInit {
               private spinnerService: NgxSpinnerService) {
 
 
-                if(this.userService.isLogged()){
-                   this.router.navigate(['/dashboard']);
-                 }
+
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('')

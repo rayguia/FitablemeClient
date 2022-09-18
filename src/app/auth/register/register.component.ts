@@ -25,10 +25,6 @@ export class RegisterComponent implements OnInit {
               private userService: UserService,
               private toastrService: ToastrService) {
 
-
-                if(this.userService.isLogged()){
-                  this.router.navigate(['/dashboard']);
-                }
     this.registerForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl(''),
