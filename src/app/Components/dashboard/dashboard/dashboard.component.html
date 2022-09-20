@@ -8,5 +8,6 @@
 
     <div class="display-area" [ngClass]="{'display-area-shrink':sideNavStatus}">
       <router-outlet></router-outlet>
+      <p>{{ user | json }}</p>
     </div>
   </main>

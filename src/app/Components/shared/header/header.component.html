@@ -29,7 +29,7 @@
 
   <div class="profile-logo dropstart">
 
-    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">Ray</button>
+    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">{{ user.UserName}}</button>
     <ul class="dropdown-menu dropdown-menu-dark">
           <li routerLink="/auth/register" *ngIf="(isLoggedIn$ | async) == false"><a class="dropdown-item">Sign Up</a></li>
           <li routerLink="/auth/login" *ngIf="(isLoggedIn$ | async) == false"><a class="dropdown-item">Log In</a></li>

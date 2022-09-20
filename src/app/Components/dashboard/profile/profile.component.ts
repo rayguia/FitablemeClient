@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UserModel } from 'src/app/models/user.model';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  @Input() user: UserModel;
+  constructor(private userService: UserService) {
+
+    userService.getLoggedUser$.subscribe((user: UserModel) => {
+      //this check is required only if the initial user is null
+      if (!!user) {
+        console.log('from dashboard',user.UserName)
+        this.user = user;
+      }
+    });
+  }
 
   ngOnInit(): void {
+
+  }
+  changeUser(){
+    this.userService.setLoggedUser({...this.user,UserName:"NewUser"})
   }
 
 }

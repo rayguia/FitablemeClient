@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserModel } from 'src/app/models/user.model';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,10 +13,20 @@ export class HeaderComponent implements OnInit {
   @Output() sideNavToggle = new EventEmitter<boolean>();
   isLoggedIn$: Observable<boolean>;
   @Input() hideIconSidebar:boolean = false;
+  @Input() user: UserModel;
   menuStatus:boolean = false;
   isLogged:boolean =false;
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService) {
+
+    userService.getLoggedUser$.subscribe((user: UserModel) => {
+      //this check is required only if the initial user is null
+      if (!!user) {
+        console.log('from header',user.UserName)
+        this.user = user;
+      }
+    });
+   }
 
   async ngOnInit() {
     //this.isLoggedIn$ = this.userService.isLoggedIn;

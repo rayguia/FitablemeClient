@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoginModel} from '../../../models/login.model';
-import {UserService} from "../../shared/services/user.service";
-import {AuthResultModel} from "../../../models/auth.result.model";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ErrorStateMatcher} from "@angular/material/core";
+import { LoginModel } from 'src/app/models/login.model';
+import { UserService } from '../../shared/services/user.service';
+import { AuthResultModel } from 'src/app/models/auth.result.model';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {

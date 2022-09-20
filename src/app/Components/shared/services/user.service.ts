@@ -1,15 +1,14 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, map, Observable, pipe, take} from 'rxjs';
-
-import {IAuthInfo} from '../../../_interfaces/IAuthInfo';
-import {IApiUser} from '../../../_interfaces/IApiUser';
-import {AuthResultModel} from '../../../models/auth.result.model';
-import {UserModel} from '../../../models/user.model';
-import {environment} from '../../../../environments/environment';
-import {IAuthResponse} from "../../../_interfaces/IAuthenticateResponse";
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserModel } from 'src/app/models/user.model';
+import { environment } from 'src/environments/environment';
+import { IAuthInfo } from 'src/app/_interfaces/IAuthInfo';
+import { IAuthResponse } from 'src/app/_interfaces/IAuthenticateResponse';
+import { AuthResultModel } from 'src/app/models/auth.result.model';
+import { LocalService } from './local.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +20,21 @@ export class UserService {
   public onUserUpdated: EventEmitter<UserModel>;
   private loggedIn = new BehaviorSubject<boolean>(false);
 
+  private _userLogged$: BehaviorSubject<any> =
+    new BehaviorSubject<any>({});
+
+
+
+
+    get getLoggedUser$(): Observable<UserModel> { return this._userLogged$.asObservable(); }
+
+    get getLoggedUser(): UserModel { return this._userLogged$.getValue(); }
+
+
+
+
   constructor(private httpClient: HttpClient,private router: Router,private jwtHelper: JwtHelperService,
-    private http:HttpClient) {
+    private http:HttpClient, private localService:LocalService) {
     this.baseUrl = environment.apiUrl;
   }
 
@@ -38,8 +50,14 @@ export class UserService {
   get isLoggedIn() {
     return this.loggedIn.asObservable(); // {2}
   }
+  // get getLoggedUser() {
+  //   return this.userLogged.asObservable(); // {2}
+  // }
   setLogged(){
     this.loggedIn.next(true);
+  }
+  setLoggedUser(user:UserModel){
+    this._userLogged$.next(user);
   }
 
   register(registerInfor: IAuthInfo) {
@@ -63,15 +81,17 @@ export class UserService {
     this.loggedIn.next(true);
     localStorage.setItem("jwt", result.token);
     localStorage.setItem("refreshToken", result.refreshToken);
-    //sessionStorage.setItem('fitableme-user', JSON.stringify(user));
+    this.localService.setJsonValue('user',result.user)
+    //localStorage.setItem('session', JSON.stringify(result.user));
+    //this.userLogged.next(result.user)
     // this.onUserUpdated.emit(user);
   }
 
   logout() {
     localStorage.removeItem("jwt");
-    localStorage.removeItem("refreshToken");                         // {4}
+    localStorage.removeItem("refreshToken");
+    this.localService.clearToken()                       // {4}
     this.loggedIn.next(false);
-    //this.setIsLogged(false)
 
     this.router.navigate(['/']);
     return false
@@ -81,36 +101,18 @@ export class UserService {
 
     const token = localStorage.getItem("jwt");
     if (token && !this.jwtHelper.isTokenExpired(token)){
-      console.log('true');
-      // this.loggedIn.subscribe(x => {
-      //   if(!x){
-      //     this.loggedIn.next(true);
-      //   }
-      // })
-
-      //this.userService.setIsLogged(true)
-
+      //this.userLogged.next(this.localService.getJsonValue('user'))
+      console.log('user',this.localService.getJsonValue('user'));
+      let user = this.localService.getJsonValue('user');
+      this._userLogged$.next(user)
 
       return true;
     }
-    console.log('false');
-    // this.loggedIn.subscribe(x => {
-    //   if(x){
-    //     this.loggedIn.next(false);
-    //   }
-    // })
-    //this.loggedIn.next(false);
-
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("refreshToken");
+    this.localService.clearToken()
     return false;
-    //const isRefreshSuccess = await this.tryRefreshingTokens(token);
-    //if (!isRefreshSuccess) {
-      //this.userService.setIsLogged(false)
-      //this.router.navigate(["auth/login"]);
-        return false;
 
-    //}
-
-    //return isRefreshSuccess;
   }
   private async tryRefreshingTokens(token: string): Promise<boolean> {
     const refreshToken: string = localStorage.getItem("refreshToken");
@@ -139,55 +141,35 @@ export class UserService {
     return isRefreshSuccess;
   }
 
-  public isAuth() {
-    const loggedUser: UserModel = this.getLoggedUser();
-    if (loggedUser === null) {
-      return false;
-    }
-    return true;
-  }
-  // private checkIsLogged(){
-
-  //   var resutl = false;
-
-  //   this.loggedIn.subscribe(event => resutl = event);
-
-  //   return resutl;
-
-
-  //      return this.isLoggedIn         // {1}
-  //     .pipe(
-  //       take(1),                              // {2}
-  //       map((isLoggedIn: boolean) => {         // {3}
-  //         if (!isLoggedIn){
-  //           //this.router.navigate(['/login']);  // {4}
-  //           return false;
-  //         }
-  //         return true;
-  //       })
-  //     )
+  // public isAuth() {
+  //   const loggedUser: UserModel = this.getLoggedUser();
+  //   if (loggedUser === null) {
+  //     return false;
+  //   }
+  //   return true;
   // }
 
-  public getLoggedUser(): UserModel {
-    if (this._user) {
-      return this._user;
-    } else {
-      const sessionInfo = sessionStorage.getItem('fitableme-user');
-      if (sessionInfo !== null && sessionInfo !== undefined) {
-        this._user = Object.setPrototypeOf(JSON.parse(sessionInfo), UserModel.prototype);
-        return this._user;
-      } else {
-        return null;
-      }
-    }
-  }
+  // public getLoggedUser(): UserModel {
+  //   if (this._user) {
+  //     return this._user;
+  //   } else {
+  //     const sessionInfo = sessionStorage.getItem('fitableme-user');
+  //     if (sessionInfo !== null && sessionInfo !== undefined) {
+  //       this._user = Object.setPrototypeOf(JSON.parse(sessionInfo), UserModel.prototype);
+  //       return this._user;
+  //     } else {
+  //       return null;
+  //     }
+  //   }
+  // }
 
 
   public iApiToAuthResponseModel(iApiAuthResponse: IAuthResponse) {
     return new AuthResultModel(
       iApiAuthResponse.success,
       iApiAuthResponse.token,
-      iApiAuthResponse.refreshToken
+      iApiAuthResponse.refreshToken,
+      iApiAuthResponse.user
     );
   }
 }
