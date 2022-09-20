@@ -5,7 +5,6 @@ export interface IApiUser {
   Gender: string;
   Photo: string;
   TimeZone: string;
-  Password: string;
   Token: string;
   RefreshToken: string;
   IsDeleted: boolean;

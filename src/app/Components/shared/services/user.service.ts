@@ -81,7 +81,10 @@ export class UserService {
     this.loggedIn.next(true);
     localStorage.setItem("jwt", result.token);
     localStorage.setItem("refreshToken", result.refreshToken);
-    this.localService.setJsonValue('user',result.user)
+    let usr:UserModel = result.user;
+    this.setLoggedUser(usr)
+    this.localService.setJsonValue('user',usr)
+
     //localStorage.setItem('session', JSON.stringify(result.user));
     //this.userLogged.next(result.user)
     // this.onUserUpdated.emit(user);
@@ -92,7 +95,7 @@ export class UserService {
     localStorage.removeItem("refreshToken");
     this.localService.clearToken()                       // {4}
     this.loggedIn.next(false);
-
+    this.setLoggedUser(null)
     this.router.navigate(['/']);
     return false
   }
