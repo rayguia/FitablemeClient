@@ -4,7 +4,7 @@
     <app-sidebar [sideNavStatus]="sideNavStatus"
     [ngClass]="{'app-sidebar-open':sideNavStatus}"
     *ngIf="isLoggedIn$ | async"
-    style="border: 1px solid" class="black-border"></app-sidebar>
+    ></app-sidebar>
 
     <div class="display-area" [ngClass]="{'display-area-shrink':sideNavStatus}">
       <router-outlet></router-outlet>
