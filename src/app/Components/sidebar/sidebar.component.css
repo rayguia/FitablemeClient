@@ -27,6 +27,7 @@
 .nav-list-open .nav-list-item:hover{
   background-color: rgba(116 , 185, 253, 0.3);
   border-radius: 10px;
+  cursor: pointer;
 }
 .nav-list-item i{
   font-size: 20px;
@@ -47,4 +48,9 @@ a{
   text-decoration: none;
   /* color: white; */
   color: #0170bc;
+  cursor: pointer;
 }
+li i{
+  cursor: pointer;
+}
+
