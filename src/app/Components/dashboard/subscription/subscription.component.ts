@@ -33,7 +33,7 @@ export class SubscriptionComponent implements OnInit {
     private errorHandler: ErrorHandlerService,) { }
 
   ngOnInit(): void {
-    this.getMySubscriptions();
+    //this.getMySubscriptions();
   }
   private getMySubscriptions = () => {
     const apiAddress: string = 'usersubscription';

@@ -4,9 +4,9 @@ export class AuthResultModel {
 
   constructor(
     public success: string,
-    public token: string,
-    public refreshToken: string,
-    public user:UserModel
+    public data:any,
+    public message:string,
+    
   ) {
   }
 }

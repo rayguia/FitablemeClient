@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   genders = [''];
-  credentials: LoginModel = {Email: '', Password: ''};
+  credentials: LoginModel = {email: '', password: ''};
   // selectedGender: string;
 
   constructor(private router: Router,
@@ -43,13 +43,13 @@ export class RegisterComponent implements OnInit {
       return;
 
     await this.spinnerService.show();
-    this.credentials.Email = this.registerForm.get('username').value;
-    this.credentials.Password = this.registerForm.get('password').value;
+    this.credentials.email = this.registerForm.get('username').value;
+    this.credentials.password = this.registerForm.get('password').value;
 
     this.userService.register(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {
         console.log('result', result);
-        if (result.token && result.refreshToken)
+        if (result.success)
         this.spinnerService.hide();
         this.toastrService.success('User register completed!, please log in.');
         this.awaitForRedirection(5000, '/auth/login');

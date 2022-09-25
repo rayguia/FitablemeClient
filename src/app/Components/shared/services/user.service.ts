@@ -40,11 +40,11 @@ export class UserService {
 
   auth(authInfo: IAuthInfo) {
     return this.httpClient.post<IAuthResponse>(this.baseUrl + 'login', authInfo)
-    pipe(map((iApiAuthResponse: IAuthResponse) => {
-      const result: AuthResultModel = this.iApiToAuthResponseModel(iApiAuthResponse);
-      localStorage.setItem("jwt", result.token);
-      localStorage.setItem("refreshToken", result.refreshToken);
-    }));
+    // pipe(map((iApiAuthResponse: IAuthResponse) => {
+    //   const result: AuthResultModel = this.iApiToAuthResponseModel(iApiAuthResponse);
+    //   localStorage.setItem("jwt", result.token);
+    //   localStorage.setItem("refreshToken", result.refreshToken);
+    // }));
   }
   //New to use
   get isLoggedIn() {
@@ -79,9 +79,9 @@ export class UserService {
   public saveSession(result: AuthResultModel) {
     //this.setIsLogged(true)
     this.loggedIn.next(true);
-    localStorage.setItem("jwt", result.token);
-    localStorage.setItem("refreshToken", result.refreshToken);
-    let usr:UserModel = result.user;
+    localStorage.setItem("jwt", result.data.token);
+    //localStorage.setItem("refreshToken", result.data);
+    let usr:UserModel = result.data.user;
     this.setLoggedUser(usr)
     this.localService.setJsonValue('user',usr)
 
@@ -89,10 +89,13 @@ export class UserService {
     //this.userLogged.next(result.user)
     // this.onUserUpdated.emit(user);
   }
+  getToken(){
+    return localStorage.getItem("jwt");
+  }
 
   logout() {
     localStorage.removeItem("jwt");
-    localStorage.removeItem("refreshToken");
+    //localStorage.removeItem("refreshToken");
     this.localService.clearToken()                       // {4}
     this.loggedIn.next(false);
     this.setLoggedUser(null)
@@ -103,7 +106,7 @@ export class UserService {
 
 
     const token = localStorage.getItem("jwt");
-    if (token && !this.jwtHelper.isTokenExpired(token)){
+    if (token){
       //this.userLogged.next(this.localService.getJsonValue('user'))
       console.log('user',this.localService.getJsonValue('user'));
       let user = this.localService.getJsonValue('user');
@@ -118,12 +121,13 @@ export class UserService {
 
   }
   private async tryRefreshingTokens(token: string): Promise<boolean> {
-    const refreshToken: string = localStorage.getItem("refreshToken");
-    if (!token || !refreshToken) {
-      return false;
-    }
+    // const refreshToken: string = localStorage.getItem("refreshToken");
+    // if (!token || !refreshToken) {
+    //   return false;
+    // }
 
-    const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
+    //const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
+    const credentials ='';
     let isRefreshSuccess: boolean;
 
     const refreshRes = await new Promise<IAuthResponse>((resolve, reject) => {
@@ -137,8 +141,8 @@ export class UserService {
       });
     });
 
-    localStorage.setItem("jwt", refreshRes.token);
-    localStorage.setItem("refreshToken", refreshRes.refreshToken);
+    localStorage.setItem("jwt", refreshRes.data.token);
+    //localStorage.setItem("refreshToken", refreshRes.refreshToken);
     isRefreshSuccess = true;
 
     return isRefreshSuccess;
@@ -170,9 +174,9 @@ export class UserService {
   public iApiToAuthResponseModel(iApiAuthResponse: IAuthResponse) {
     return new AuthResultModel(
       iApiAuthResponse.success,
-      iApiAuthResponse.token,
-      iApiAuthResponse.refreshToken,
-      iApiAuthResponse.user
+      iApiAuthResponse.data,
+      iApiAuthResponse.message
+     
     );
   }
 }

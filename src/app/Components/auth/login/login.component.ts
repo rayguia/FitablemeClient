@@ -22,7 +22,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent implements OnInit {
   invalidLogin: boolean;
-  credentials: LoginModel = {Email: '', Password: ''};
+  credentials: LoginModel = {email: '', password: ''};
   loginForm: FormGroup
   returnUrl: string = '/dashboard';
 
@@ -52,12 +52,12 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid)
       return;
     await this.spinnerService.show();
-    this.credentials.Email = this.loginForm.get('username').value;
-    this.credentials.Password = this.loginForm.get('password').value;
+    this.credentials.email = this.loginForm.get('username').value;
+    this.credentials.password = this.loginForm.get('password').value;
 
     this.userService.auth(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {
-        if (result.token && result.refreshToken)
+        if (result.success)
           this.userService.saveSession(result);
           this.spinnerService.hide();
           console.log('this.returnUrl',this.returnUrl);

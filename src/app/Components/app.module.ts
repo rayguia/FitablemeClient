@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { OwnerModule } from './owner/owner.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from '../Guards/auth.guard';
+import { TokenInterceptorService } from '../Interceptors/token-interceptor.service';
 
 
 export function tokenGetter() {
@@ -61,7 +62,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [DatePipe,AuthGuard],
+  providers: [DatePipe,AuthGuard,{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

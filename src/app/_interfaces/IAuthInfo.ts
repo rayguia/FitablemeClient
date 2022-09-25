@@ -1,4 +1,4 @@
 export interface IAuthInfo {
-  Email: string;
-  Password: string;
+  email: string;
+  password: string;
 }
