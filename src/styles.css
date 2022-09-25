@@ -109,8 +109,12 @@ app-sidebar{
   background-color: rgba(116 , 185, 253, 0.3);
 }
 .background-primary2{
-  background-color: "0572b5";
+  background-color: "#0572b5";
 }
+.background-blue-light{
+  background-color: aliceblue;    
+}
+
 
 
 

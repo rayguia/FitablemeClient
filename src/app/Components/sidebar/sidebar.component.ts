@@ -67,7 +67,7 @@ export class SidebarComponent implements OnInit {
       icon:'fa-solid fa-square-check',
       name:'subscriptions',
       onSelected: () => {
-        this.router.navigate(['/'])
+        this.router.navigate(['dashboard/subscription'])
       },
     },
     {

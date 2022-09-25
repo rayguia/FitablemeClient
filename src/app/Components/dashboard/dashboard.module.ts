@@ -8,6 +8,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../shared/header/header.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MysubscriptionComponent } from './subscription/mysubscription/mysubscription.component';
+import { MysubscribersComponent } from './subscription/mysubscribers/mysubscribers.component';
 
 
 @NgModule({
@@ -15,13 +19,17 @@ import { HeaderComponent } from '../shared/header/header.component';
 
     ProfileComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    SubscriptionComponent,
+    MysubscriptionComponent,
+    MysubscribersComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    MatTabsModule,
     BsDatepickerModule.forRoot()
   ]
 })
