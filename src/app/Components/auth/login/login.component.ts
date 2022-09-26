@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
        // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] !== '/' ? this.route.snapshot.queryParams['returnUrl'] : '/dashboard';
+      this.userService.removeLogged()
 
 
 

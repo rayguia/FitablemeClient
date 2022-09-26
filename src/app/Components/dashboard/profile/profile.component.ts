@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
     userService.getLoggedUser$.subscribe((user: UserModel) => {
       //this check is required only if the initial user is null
       if (!!user) {
-        console.log('from dashboard',user.UserName)
+        console.log('from dashboard',user)
         this.user = user;
       }
     });

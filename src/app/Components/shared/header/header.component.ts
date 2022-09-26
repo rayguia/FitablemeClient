@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     //console.log(this.isLoggedIn$);
    //this.isLogged = await this.userService.isLogged();
    this.isLoggedIn$ = this.userService.isLoggedIn; // {2}
-   console.log('isLogged',this.isLogged);
+   console.log('isLogged2',this.isLogged);
 
   }
 

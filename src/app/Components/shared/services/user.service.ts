@@ -94,29 +94,38 @@ export class UserService {
   }
 
   logout() {
+    this.removeLogged();
+    this.router.navigate(['/']);
+    return false
+  }
+  removeLogged(){
     localStorage.removeItem("jwt");
     //localStorage.removeItem("refreshToken");
     this.localService.clearToken()                       // {4}
     this.loggedIn.next(false);
     this.setLoggedUser(null)
-    this.router.navigate(['/']);
-    return false
   }
   isLogged(){
 
-
-    const token = localStorage.getItem("jwt");
-    if (token){
+    try {
+      const token = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)){
       //this.userLogged.next(this.localService.getJsonValue('user'))
-      console.log('user',this.localService.getJsonValue('user'));
+      console.log('from isLogged in userService token valid')
       let user = this.localService.getJsonValue('user');
       this._userLogged$.next(user)
 
       return true;
     }
+    console.log('from isLogged in userService token no valid')
     localStorage.removeItem("jwt");
-    localStorage.removeItem("refreshToken");
+    //localStorage.removeItem("refreshToken");
     this.localService.clearToken()
+    return false;
+      
+    } catch (error) {
+      return false
+    }
     return false;
 
   }

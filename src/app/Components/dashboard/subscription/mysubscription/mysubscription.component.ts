@@ -27,7 +27,7 @@ export class MysubscriptionComponent implements OnInit {
     this.repository.getMySubscription(apiAddress)
     .subscribe({
       next: (response: any) => {
-        if(response.subscriptions.length){
+        if(response.data.subscriptions.length){
           this.mySubscription = response.subscriptions[0];
         }        
       
