@@ -1,0 +1,141 @@
+<nav class="navbar navbar-expand background-primary px-2">
+
+  <div  *ngIf="(isLoggedIn$ | async) && !hideIconSidebar" class="side-nav-button p-2 ma-3 primary-color" (click)="sideNavToggleFunction()">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
+  <a href="" class="navbar-brand px-4">Header</a>
+
+  <!-- <div class="navbar-collapse">
+
+    <ul class="navbar-nav ma-auto">
+
+      <li class="nav-item dropdown">
+
+        <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Menu1</a>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li><a href="" class="dropdown-item">Child1</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div> -->
+
+
+  <!-- <form action="" class="d-flex ma-5">
+    <input type="search" class="form-control ma-2" placeholder="Search">
+    <button class="btn btn-outline-light" type="submit">Search</button>
+  </form> -->
+
+
+    <!-- Center elements -->
+
+    <!-- <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link">
+          <span><i class="bi bi-house" style="font-size: 1.5rem;"></i></span>
+          <span style="position: absolute;"
+                class="badge rounded-pill badge-notification bg-danger counters">1</span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1">
+
+        <a class="nav-link" role="button">
+          <i class="bi bi-chat-left" style="font-size: 1.5rem;"></i>
+          <span class="badge rounded-pill badge-notification bg-danger counters badge-counter">6</span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span style="position: absolute;">
+            <i class="bi bi-translate" style="font-size: 1.5rem;"></i>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span style="position: absolute;">
+            <i class="bi bi-camera-video" style="font-size: 1.5rem;"></i>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span>
+            <i class="bi bi-credit-card" style="font-size: 1.5rem;"></i>
+          </span>
+
+        </a>
+      </li>
+    </ul> -->
+
+    <!-- Center elements -->
+
+
+
+<div class="navbar-nav flex-row flex-end" style="position: absolute;right:60px">
+    <ul class="navbar-nav flex-row" style="align-items: center;">
+
+      <li class="nav-item">
+        <a class="nav-link">
+          <span><i class="bi bi-house" style="font-size: 1.5rem;"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger badge-counter">1</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link">
+          <span><i class="bi bi-bell icon-margin" style="font-size: 1.5rem;"></i></span>
+          <span  class="badge rounded-pill badge-notification bg-danger badge-counter">1</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link">
+          <span><i class="bi bi-chat-left icon-margin" style="font-size: 1.5rem;"></i></span>
+          <span  class="badge rounded-pill badge-notification bg-danger badge-counter">1</span>
+        </a>
+      </li>
+      </ul>
+
+
+      <div class="profile-logo dropstart">
+
+
+        <a class="nav-link dropdown-toggle circle-menu" role="button" data-bs-toggle="dropdown">
+          <!-- <img src="../../../assets/images/fitableme-f.png"
+                  width="30px" height="30px" loading="lazy"> -->
+            RG
+        </a>
+        <!-- <ul class="dropdown-menu dropdown-menu-dark"> -->
+          <ul class="dropdown-menu">
+
+              <li routerLink="/auth/register" *ngIf="(isLoggedIn$ | async) == false" >
+                <a class="dropdown-item py-2">Sign Up</a>
+              </li>
+              <li routerLink="/auth/login" *ngIf="(isLoggedIn$ | async) == false">
+                <a class="dropdown-item py-2">Log In</a>
+              </li>
+
+              <li routerLink="/dashboard" *ngIf="isLoggedIn$ | async">
+                  <a  class="dropdown-item py-2">Dashboard</a>
+                </li>
+              <li routerLink="/dashboard/profile" *ngIf="isLoggedIn$ | async">
+                <a class="dropdown-item py-2">Your Profile</a>
+              </li>
+              <li (click)="onLogout()" *ngIf="isLoggedIn$ | async">
+                <a class="dropdown-item py-2">Log Out</a>
+              </li>
+
+        </ul>
+
+  </div>
+
+</div>
+
+
+</nav>

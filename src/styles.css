@@ -2,3 +2,122 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+@import '~ngx-toastr/toastr.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html, body { height: 100%; }
+body {
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.font-family {
+  font-family: "Open Sans";
+}
+
+.font-regular-size {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.font-middle-size {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.font-large-size {
+  font-size: 24px;
+  font-weight: 600;
+}
+.primary-color {
+  color: #0170bc;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 100px white inset !important;
+}
+
+
+.button-style {
+  background-color: #004986;
+}
+
+.input-styles {
+  font-family: 'Open Sans';
+  font-size: 18px;
+  font-weight: 400;
+}
+
+
+
+
+app-header{
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  height: 4rem;
+  z-index: 2;
+}
+
+main{
+  position: absolute;
+  width: 100%;
+  top: 4rem;
+  z-index: 1;
+}
+
+app-sidebar{
+  position: absolute;
+  left: 0rem;
+  width: 60px;
+  height: calc(100vh - 4rem);
+  /* box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  background-color: rgba(34,34,34,1); */
+  background-color: rgba(116 , 185, 253, 0.3);
+  border-top: 1px solid white;
+  overflow-x: hidden;
+  white-space: nowrap;
+  transition: width 250ms ease-in;
+}
+
+.app-sidebar-open{
+  width: 250px;
+}
+
+.display-area{
+  position: absolute;
+  left: 60px;
+  width: calc(100% - 250px);
+  transition: left 250ms ease-in, width 250ms ease-in;
+}
+
+.display-area-shrink{
+  width: calc(100% - 250px);
+  left: 250px;
+}
+
+.badge-counter{
+  position: relative;
+  left: -10px;
+  top: -17px;
+}
+.circle-menu{
+  border: 1px solid;
+    border-radius: 20px;
+}
+
+.background-primary{
+  background-color: rgba(116 , 185, 253, 0.3);
+}
+.background-primary2{
+  background-color: "#0572b5";
+}
+.background-blue-light{
+  background-color: aliceblue;    
+}
+
+
+
+

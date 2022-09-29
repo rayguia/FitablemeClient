@@ -1,0 +1,15 @@
+.text-style {
+  font-family: "Montserrat regular";
+  font-size: 1rem;
+}
+
+.border {
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+}
+
+.input-icons i {
+  position: absolute;
+}
+

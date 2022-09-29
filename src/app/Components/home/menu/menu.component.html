@@ -1,0 +1,124 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="height: 50px;">
+  <div class="container-fluid justify-content-between">
+    <!-- Left elements -->
+    <div class="d-flex my-2 my-sm-0" style="margin-left: -6px;">
+      <!-- Search form -->
+      <form class="input-group w-auto my-auto d-none d-sm-flex">
+        <input class="form-control find-input"
+               placeholder="Search" style="border-radius: 10px; height: 30px;"
+               type="search">
+      </form>
+    </div>
+    <!-- Left elements -->
+
+    <!-- Center elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link">
+          <span><i class="bi bi-house" style="font-size: 1.5rem;"></i></span>
+          <span style="position: absolute;"
+                class="badge rounded-pill badge-notification bg-danger counters">1</span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span style="position: absolute;">
+            <i class="bi bi-translate" style="font-size: 1.5rem;"></i>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span style="position: absolute;">
+            <i class="bi bi-camera-video" style="font-size: 1.5rem;"></i>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" href="#">
+          <span>
+            <i class="bi bi-credit-card" style="font-size: 1.5rem;"></i>
+          </span>
+<!--          <span class="badge rounded-pill badge-notification bg-danger">2</span>-->
+        </a>
+      </li>
+    </ul>
+    <!-- Center elements -->
+
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link" role="button">
+          <i class="bi bi-chat-left" style="font-size: 1.5rem;"></i>
+          <span class="badge rounded-pill badge-notification bg-danger counters">6</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="#">Some news</a></li>
+          <li><a class="dropdown-item" href="#">Another news</a></li>
+          <li>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" role="button">
+          <i class="bi bi-bell icon-margin" style="font-size: 1.5rem;"></i>
+          <span class="badge rounded-pill badge-notification bg-danger counters">12</span>
+        </a>
+      </li>
+      <li class="nav-item me-4 me-lg-1" style="margin-left: 20px;">
+        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+          <img src="../../../assets/images/fitableme-f.png"
+               width="30px" height="30px" loading="lazy">
+          <!--          <strong class="d-none d-sm-block ms-1">Fitableme User</strong>-->
+        </a>
+      </li>
+    </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+<!-- Navbar -->
+
+
+
+
+
+<!--<div class="row">-->
+<!--  <div class="col">-->
+<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--      <div class="container-fluid">-->
+<!--        <a class="navbar-brand nav-link" [routerLink]="['/home']" routerLinkActive="active"-->
+<!--          [routerLinkActiveOptions]="{exact: true}">Account-Owner Home</a>-->
+<!--          <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"-->
+<!--          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseNav">-->
+<!--          <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="collapseNav" [collapse]="!isCollapsed" [isAnimated]="true">-->
+<!--          <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/owner/list']" routerLinkActive="active"-->
+<!--              [routerLinkActiveOptions]="{exact: true}">Owner Actions</a>-->
+<!--              &lt;!&ndash; <a class="nav-link" href="#"> </a> &ndash;&gt;-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" href="#">Account Actions </a>-->
+<!--            </li>-->
+
+<!--            <div *ngIf="isUserAuthenticated()" style="color:blue;">-->
+<!--              <h2>-->
+<!--                YOU ARE LOGGED IN-->
+<!--              </h2>-->
+<!--            </div>-->
+<!--            <li *ngIf="!isUserAuthenticated()"><a routerLink="auth/login">Login</a></li>-->
+<!--            <li *ngIf="isUserAuthenticated()"><a class="logout" (click)="logOut()">Log out</a></li>-->
+
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--</div>-->

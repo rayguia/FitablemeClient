@@ -1,0 +1,64 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-12 col-md-8 background-blue-light" style="padding: 50px;">
+
+
+      <mat-card *ngIf="mySubscription">
+
+        <div class="row">
+
+          <div class="col-12 col-md-6">
+            <div class="input-group mb-3">
+              <span class="input-group-text">$</span>
+              <input type="text" value="{{mySubscription.price}}" class="form-control" aria-label="Amount">
+              <span class="input-group-text">{{mySubscription.period}}</span>
+            </div>
+    
+            <mat-card-actions align="end">
+              <input class="btn btn-primary" type="button" value="Apply">   
+              <input class="btn btn-outline" type="button" value="Cancel">       
+            </mat-card-actions>
+
+            </div>
+
+
+          <div class="col-12 col-md-6">
+
+            <div class="d-flex">
+              <strong class="me-1">Description:  </strong>
+              <div> {{mySubscription.description}}</div>
+            </div>
+    
+            <div class="d-flex">
+              <strong  class="me-1">Name:  </strong>
+              <div>{{mySubscription.name}}</div>
+            </div>
+           
+            <div class="d-flex">
+              <strong  class="me-1">Updated:</strong>
+              <div>{{mySubscription.updated_at | date}}</div>
+            </div>
+          </div>
+
+
+        </div>
+       
+        
+        
+      </mat-card>
+
+      <mat-card *ngIf="!mySubscription">
+        <mat-card-title>Do you want to create a subscription to start earning</mat-card-title>       
+        <mat-card-actions align="end">
+          <button mat-button>Create Subscription</button>         
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      
+
+    </div>
+  </div>
+</div>

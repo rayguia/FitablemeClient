@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlAddress: 'http://localhost:5000'
+  apiUrl: 'http://local.fitableme.com/api/'
 };
 
 /*

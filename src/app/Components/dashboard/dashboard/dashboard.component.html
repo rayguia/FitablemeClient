@@ -1,0 +1,13 @@
+<app-header (sideNavToggle)="sideNavStatus = $event"></app-header>
+
+  <main>
+    <app-sidebar [sideNavStatus]="sideNavStatus"
+    [ngClass]="{'app-sidebar-open':sideNavStatus}"
+    *ngIf="isLoggedIn$ | async"
+    ></app-sidebar>
+
+    <div class="display-area" [ngClass]="{'display-area-shrink':sideNavStatus}">
+      <router-outlet></router-outlet>
+      <p style="margin-top:150px;">{{ user | json }}</p>
+    </div>
+  </main>

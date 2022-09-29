@@ -1,0 +1,11 @@
+.text-style {
+  font-family: "Montserrat regular";
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.border {
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+}

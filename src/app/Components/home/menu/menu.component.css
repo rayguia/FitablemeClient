@@ -1,0 +1,21 @@
+.active{
+  font-weight: bold;
+  font-style: italic;
+  color: #fff;
+}
+
+.navbar-nav .active {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+.counters {
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -5px;
+  position: absolute;
+}
+
+.find-input{
+  font-family: "Montserrat regular";
+  border: solid 1px rgba(145, 142, 138, 0.48);
+}

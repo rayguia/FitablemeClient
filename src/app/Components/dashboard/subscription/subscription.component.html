@@ -1,0 +1,56 @@
+<div class="container">
+
+   <div class="row">
+     <div class="col-12">
+      <h3>Subscriptions</h3>
+
+
+      <mat-tab-group>
+        <mat-tab label="My subscribers"> 
+        
+          <div class="">
+            <app-mysubscription></app-mysubscription>           
+          </div>  
+
+          <mat-tab-group>
+            <mat-tab label="All">     
+              <div *ngFor="let subscriber of mySubscribers">
+
+                   
+
+                  <div>{{subscriber.SubscriptionPeriodName}}</div>
+              </div>        
+              <!-- <app-mysubscribers *ngIf="allMySubscribers" ></app-mysubscribers>             -->
+            </mat-tab>
+            <mat-tab label="Active"> 
+              <!-- <app-mysubscribers *ngIf="activeMySubscribers"></app-mysubscribers>   -->
+            </mat-tab>
+            <mat-tab label="Expired">
+              <!-- <app-mysubscribers *ngIf="expiredMySubscribers"></app-mysubscribers> -->
+            </mat-tab>
+            <mat-tab label="Blocked">
+              <!-- <app-mysubscribers *ngIf="allMySubscribers"></app-mysubscribers> -->
+            </mat-tab>
+          </mat-tab-group>
+        
+        </mat-tab>
+        <mat-tab label="I am Subscribed"> 
+
+          <mat-tab-group>
+            <mat-tab label="Models"> Models </mat-tab>
+           
+          </mat-tab-group>
+
+        </mat-tab>
+       
+      </mat-tab-group>
+
+      
+     </div>
+
+   </div>
+   
+  
+
+</div>
+
