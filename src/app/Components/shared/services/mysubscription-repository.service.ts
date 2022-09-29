@@ -16,7 +16,7 @@ export class MySubscriptionRepositoryService {
   //   return this.http.get<Owner[]>(this.createCompleteRoute(route, this.envUrl.urlAddress));
   // }
   public getMySubscription = (route: string) => {
-    return this.http.get<ISubscriptionShow>(this.createCompleteRoute(route, this.envUrl.urlAddress));
+    return this.http.get<any>(this.createCompleteRoute(route, this.envUrl.urlAddress));
   }
   // public createOwner = (route: string, owner: OwnerForCreation) => {
   //   return this.http.post<Owner>(this.createCompleteRoute(route, this.envUrl.urlAddress), owner, this.generateHeaders());

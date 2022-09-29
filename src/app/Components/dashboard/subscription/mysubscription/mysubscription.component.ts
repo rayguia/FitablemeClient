@@ -28,7 +28,7 @@ export class MysubscriptionComponent implements OnInit {
     .subscribe({
       next: (response: any) => {
         if(response.data.subscriptions.length){
-          this.mySubscription = response.subscriptions[0];
+          this.mySubscription = response.data.subscriptions[0];
         }        
       
       },

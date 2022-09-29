@@ -1,6 +1,10 @@
 export interface ISubscriptionShow {
-  subscriptionId:number;
+  id:number;
   name:string;
+  description:string;
   price:number;
-  subscriptionStatus:string
+  status:string;
+  type:string;
+  period:string;
+  updated_at:Date;
 }
