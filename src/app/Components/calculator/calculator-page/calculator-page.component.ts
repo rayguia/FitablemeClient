@@ -2,11 +2,13 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
-import { BumperRepositoryService } from 'src/app/shared/services/bumper-repository.service';
-import { CalculatorRepositoryService } from 'src/app/shared/services/calculator-repository.service';
-import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
+
+
 import { Calculator } from 'src/app/_interfaces/calculator.model';
+import { SuccessModalComponent } from '../../shared/modals/success-modal/success-modal.component';
+import { BumperRepositoryService } from '../../shared/services/bumper-repository.service';
+import { CalculatorRepositoryService } from '../../shared/services/calculator-repository.service';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 
 @Component({
   selector: 'app-calculator-page',

@@ -2,12 +2,12 @@ import {AfterViewInit, Component, ViewChild, OnInit, OnChanges} from '@angular/c
 import {SelectionModel} from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
+
 import { Calculator } from 'src/app/_interfaces/calculator.model';
-import { CalculatorRepositoryService } from 'src/app/shared/services/calculator-repository.service';
+
 
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
-import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
+
 import { ConfirmModalComponent } from 'src/app/shared/modals/confirm-modal/confirm-modal.component';
 import * as XLSX from 'xlsx';
 
@@ -17,6 +17,9 @@ import {MatTableDataSource} from '@angular/material/table';
 
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { CalculatorRepositoryService } from '../../shared/services/calculator-repository.service';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
+import { SuccessModalComponent } from '../../shared/modals/success-modal/success-modal.component';
 
 
 @Component({
