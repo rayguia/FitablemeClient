@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ErrorHandlerService } from 'src/app/Components/shared/services/error-handler.service';
-import { MySubscribersRepositoryService } from '../../shared/services/mysubscribers-repository.service';
+import { MySubscribersRepositoryService } from '../../shared/services/mysubscribers-repository.service copy';
 import { IUserSubscription } from 'src/app/_interfaces/IUserSubscription';
 import { UserModel } from 'src/app/models/user.model';
 
