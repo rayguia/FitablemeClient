@@ -1,1 +1,41 @@
-<p>mysubscribers works!</p>
+<table class="table table-hover" *ngIf="!loading">
+
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Pay Date</th>
+      <th scope="col">Price</th>
+      <th scope="col">Period</th>
+      <th scope="col">Type</th>
+      <th scope="col">Created</th>
+    </tr>
+  </thead>
+  <tbody>
+
+      <!-- <div *ngFor="let subscriber of mySubscribers">
+
+
+ id:number;
+  subscription_period:string;
+  subscription_name:string;
+  subscription_type:string;
+  subscription_price:number;
+
+  created:Date;
+                  <div>{{subscriber.SubscriptionPeriodName}}</div>
+              </div> -->
+    <tr *ngFor="let subscriber of mySubscribers">
+      <td>{{subscriber.user_name}}</td>
+      <td>{{subscriber.status}}</td>
+      <td>{{subscriber.pay_day}}</td>
+      <td>{{subscriber.subscription_price}}</td>
+      <td>{{subscriber.subscription_period}}</td>
+      <td>{{subscriber.subscription_type}}</td>
+      <td>{{subscriber.created | date }}</td>
+
+    </tr>
+    </tbody>
+
+
+</table>

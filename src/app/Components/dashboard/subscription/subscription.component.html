@@ -6,51 +6,58 @@
 
 
       <mat-tab-group>
-        <mat-tab label="My subscribers"> 
-        
+        <mat-tab label="My subscribers">
+
           <div class="">
-            <app-mysubscription></app-mysubscription>           
-          </div>  
+            <app-mysubscription></app-mysubscription>
+          </div>
 
           <mat-tab-group>
-            <mat-tab label="All">     
-              <div *ngFor="let subscriber of mySubscribers">
-
-                   
-
-                  <div>{{subscriber.SubscriptionPeriodName}}</div>
-              </div>        
-              <!-- <app-mysubscribers *ngIf="allMySubscribers" ></app-mysubscribers>             -->
+            <mat-tab>
+               <ng-template mat-tab-label>
+                <span (click)="showStatus =''">All</span>
+              </ng-template>
+              <app-mysubscribers *ngIf="showStatus == ''" status=""></app-mysubscribers>
+              <!-- <app-mysubscribers  ></app-mysubscribers>             -->
             </mat-tab>
-            <mat-tab label="Active"> 
-              <!-- <app-mysubscribers *ngIf="activeMySubscribers"></app-mysubscribers>   -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span (click)="showStatus ='Active'">Active</span>
+              </ng-template>
+              <app-mysubscribers *ngIf="showStatus == 'Active'" status="Active"></app-mysubscribers>
             </mat-tab>
-            <mat-tab label="Expired">
-              <!-- <app-mysubscribers *ngIf="expiredMySubscribers"></app-mysubscribers> -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span (click)="showStatus ='Expired'">Expired</span>
+              </ng-template>
+              <app-mysubscribers *ngIf="showStatus == 'Expired'" status="Expired"></app-mysubscribers>
             </mat-tab>
-            <mat-tab label="Blocked">
-              <!-- <app-mysubscribers *ngIf="allMySubscribers"></app-mysubscribers> -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <span (click)="showStatus ='Blocked'">Blocked</span>
+              </ng-template>
+              <app-mysubscribers *ngIf="showStatus == 'Blocked'" status="Blocked"></app-mysubscribers>
             </mat-tab>
           </mat-tab-group>
-        
+
         </mat-tab>
-        <mat-tab label="I am Subscribed"> 
+        <mat-tab label="I am Subscribed">
 
           <mat-tab-group>
             <mat-tab label="Models"> Models </mat-tab>
-           
+
           </mat-tab-group>
 
         </mat-tab>
-       
+
       </mat-tab-group>
 
-      
+
      </div>
 
    </div>
-   
-  
+
+
 
 </div>
 
