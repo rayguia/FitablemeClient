@@ -11,6 +11,14 @@
             <button type="button" id="save" class="btn btn-success mx-2" (click)="executeCalculatorCreation()">Save</button>
             <button type="button" id="clean" class="btn btn-primary" (click)="cleanCalculator()">Clean Calculator</button>
           </div>
+          <div class="col-12 py-2">
+            <button type="button" id="offerup" class="btn btn-outline-secondary mx-2" (click)="openNewTab('offerup')">OfferUp</button>
+            <button type="button" id="ebay" class="btn btn-outline-secondary mx-2" (click)="openNewTab('ebay')">Ebay</button>
+               <button type="button" id="kbb" class="btn btn-outline-secondary mx-2" (click)="openNewTab('kbb')">KBB Get Price</button>
+               <button type="button" id="vincheck" class="btn btn-outline-secondary mx-2" (click)="openNewTab('vincheck')">VinCheck</button>
+
+
+          </div>
           <div class="col-12">
             <accordion [isAnimated]="true">
               <accordion-group heading="Car Information">
@@ -72,7 +80,8 @@
                        <h6 class="carDescription">{{this.calculatorObject.year}} {{this.calculatorObject.make}}</h6>
                        <h6 class="carDescription"> {{this.calculatorObject.model}} {{this.calculatorObject.serie}}</h6>
                        <!-- <h6 class="carDescription">{{this.calculatorObject.serie}}</h6> -->
-                       <h6 class="carDescription">${{maxAmountToOffer}}</h6>
+                       <h6 class="carDescription d-flex">Buy Price:<h6 class="carDescription" style="color: green;opacity: 1;
+                        margin-left: 10px;"> ${{maxAmountToOffer}}</h6></h6>
 
                     </div>
                   </div>
@@ -126,7 +135,7 @@
                         </div>
                       </div>
                       Final Sale Price:
-                      <h6>${{calculatorObject.marketValueFinal}}</h6>
+                      <h6 class="carDescription" style="color: green;">${{calculatorObject.marketValueFinal}}</h6>
                     </div>
                   </div>
 
@@ -259,7 +268,7 @@
 
                     <div class="form-group col-12">
                       <div class="input-group input-group-lg mb-3">
-                        <span class="input-group-text labelInformation" id="otherExpenses">OTHERS: $</span>
+                        <span class="input-group-text labelInformation" id="otherExpenses">PIECES: $</span>
                         <input [(ngModel)]="calculatorObject.others" (ngModelChange)="changeSalePrice($event)"  type="text" class="form-control" placeholder="Other expenses" aria-label="otherExpenses" aria-describedby="otherExpenses">
 
                       </div>

@@ -37,7 +37,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   //                          'Title Type','Buy Aution Amount','Buy Acution Fee Percent','Buy Aution Name', 'Sale Aution Amount','Sale Aution Percent','Sale Aution Amount',
   //                           'Floorplan Amount','Earnings Amount','Earning Percent','Fix Price','Transport Price','Tax Title','Others' ]
 
-  headerTable:string[] = ['select','calculatorId','vin' ,'loteNumber','autionDate','maxBid','marketValue','investment','earnings','title','actions']
+  headerTable:string[] = ['select','calculatorId','vin' ,'year','make','model' ,'loteNumber','autionDate','maxBid','marketValue','investment','earnings','title','actions']
 
 
   dataSource:MatTableDataSource<Calculator>;
