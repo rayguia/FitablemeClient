@@ -65,7 +65,9 @@ export class CalculatorPageComponent implements OnInit {
 
   }
 
-
+  newCalculator(){
+    this.router.navigate([`/calculator`]);
+  }
   cleanCalculator():Calculator{
     this.maxAmountToOffer = 0;
   return  this.calculatorObject ={

@@ -1,12 +1,248 @@
 
 <div class="container">
-<form>
+<div class="mt-4" style="background-color: white;
+padding: 50px;border-radius: 20px;">
 
     <div class="row">
-      <div class="col">
+      <div class="col-12 col-md-9 d-md-flex">
         <div><img src="./assets/images/car_header.webp" width="200" height="200" class="img-thumbnail" alt="car"></div>
-        <div></div>
+        <div style="max-height:100px ;">
+          <h6 class="carDescription">{{this.calculatorObject.year}} {{this.calculatorObject.make}} {{this.calculatorObject.model}} {{this.calculatorObject.serie}}</h6>
+        </div>
       </div>
+      <div class="col-12 col-md-3">
+
+         <div class="box-max-amount-to-offer">
+             <div class="box-text-title">Max To Offer</div>
+             <div class="box-text-amount">${{maxAmountToOffer}}</div>
+         </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+
+      <div class="form-group col-12 col-md-8">
+
+        <div class="row">
+             <div class="col-12 mb-3">
+
+                <label for="vin2" class="form-label">Vin</label>
+                <div class="input-group">
+                  <input id="vin2" [(ngModel)]="calculatorObject.vin" (ngModelChange)="getCarBumberInfo($event)" type="text" class="form-control" placeholder="VIN" aria-label="VIN" aria-describedby="vin1">
+                  <div class="input-group-prepend">
+
+                    <button  ngDefaultControl  class="btn btn-outline-secondary button-input-group" type="button" id="vin">
+
+                  <svg (click)="pasteVin()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                  </svg>
+                </button>
+                  </div>
+
+
+                </div>
+
+
+             </div>
+
+             <div class="col-12 col-md-6 mb-3">
+
+                <label for="loteNumber" class="form-label">Lote Number</label>
+                <div class="input-group">
+                <input  [(ngModel)]="calculatorObject.loteNumber" type="text" class="form-control" placeholder="Lote Number" aria-label="Lote Number" aria-describedby="loteNumber">
+                <button ngDefaultControl class="btn btn-outline-secondary button-input-group" type="button" id="loteNumber">
+
+                  <svg (click)="pasteLoteNumber()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                  </svg>
+                </button>
+              </div>
+             </div>
+
+
+             <div class="col-12 col-md-6 mb-3">
+
+              <label for="autionDate" class="form-label">Auction Date</label>
+              <div class="input-group">
+                <input  [(ngModel)]="calculatorObject.autionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="autionDate">
+
+              </div>
+            </div>
+
+            <div class="col-12 col-md-8 mb-3">
+
+              <label for="link" class="form-label">Link</label>
+              <div class="input-group">
+                <input  [(ngModel)]="calculatorObject.link" type="text" class="form-control" placeholder="Link" aria-label="Link" aria-describedby="link">
+                <button  ngDefaultControl  class="btn btn-outline-secondary button-input-group" type="button" id="link1">
+
+                  <svg (click)="pasteLink()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-3">
+
+              <label for="buyFees" class="form-label">Buy Fee</label>
+              <div class="input-group">
+                  <select [(ngModel)]="calculatorObject.buyAutionName" (ngModelChange)="changeSalePrice($event)" class="form-select" id="buyFees">
+                    <option value="Copart">Copart</option>
+                    <option value="IAAI">IAAI</option>
+                  </select>
+                  <label class="input-group-text" for="buyFees">${{calculatorObject.buyAutionAmount}}</label>
+
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4 mb-3">
+              <label for="taxTitle" class="form-label">Tax/Title</label>
+              <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.taxTitle" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Tax/Title" aria-label="taxTitle" aria-describedby="taxTitle">
+
+                </div>
+              </div>
+
+
+            <div class="col-12 col-md-4">
+
+              <label for="saleFees" class="form-label">Sale Fee</label>
+              <div class="input-group">
+                  <select [(ngModel)]="calculatorObject.saleAutionAmount" (ngModelChange)="changeSalePrice($event)" class="form-select" id="saleFees">
+                    <option value="400">Manheim-$400</option>
+                    <option value="100">Other-$100</option>
+                    <option value="0">None-$0</option>
+                  </select>
+                  <label class="input-group-text" for="saleFees">${{calculatorObject.saleAutionAmount}}</label>
+                </div>
+              </div>
+
+
+
+            <div class="col-12 col-md-4">
+              <label for="floorplan" class="form-label">Floorplan</label>
+              <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.floorplanAmount" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Floorplan" aria-label="floorplan" aria-describedby="floorplan">
+
+                </div>
+              </div>
+
+
+            <div class="col-12 col-md-4">
+
+              <label for="fixPrice" class="form-label">Fix</label>
+                <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.fixPrice" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Fix" aria-label="Fix" aria-describedby="fixPrice">
+
+                </div>
+              </div>
+
+
+
+            <div class="col-12 col-md-4">
+              <label for="Transport" class="form-label">Transport</label>
+              <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.transportPrice" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Transport" aria-label="Transport" aria-describedby="Transport">
+
+                </div>
+              </div>
+
+
+            <div class="col-12 col-md-4">
+              <label for="otherExpenses" class="form-label">Pieces</label>
+              <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.others" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Other expenses" aria-label="otherExpenses" aria-describedby="otherExpenses">
+
+                </div>
+              </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <div class="form-group col-12 col-md-4">
+
+        <div class="row">
+
+          <div class="col-12 mb-3">
+            <label for="salePrice" class="form-label">Clean Title Value</label>
+            <div class="input-group">
+          <input [(ngModel)]="calculatorObject.marketValue" (ngModelChange)="changeSalePrice($event)"  type="number" class="form-control" placeholder="Sale Price" aria-label="Sale Estimate" aria-describedby="salePrice">
+          <button
+          onclick="window.open('https://www.kbb.com/car-prices/', '_blank')"
+          ngDefaultControl  class="btn btn-outline-secondary" type="button" id="salePrice1">
+             Get Estimate
+          </button>
+        </div>
+
+          </div>
+
+          <div class="col-12 mb-3">
+
+            <label for="title" class="form-label">Sale Price</label>
+            <div class="input-group">
+                <select [(ngModel)]="calculatorObject.titleType" (ngModelChange)="changeSalePrice($event)" class="form-select" id="title">
+                  <option>Clean Title</option>
+                  <option>Salvage</option>
+                </select>
+                <label class="input-group-text" for="title">${{calculatorObject.marketValueFinal}}</label>
+              </div>
+              </div>
+
+
+           <div class="col-12 mb-3">
+            <label for="title" class="form-label">Earnings</label>
+            <div class="input-group">
+                <select [(ngModel)]="calculatorObject.earningPercent" (ngModelChange)="changeSalePrice($event)" class="form-select" id="earningPercent">
+                  <option value="5">5%</option>
+                  <option value="10">10%</option>
+                  <option value="15">15%</option>
+                  <option value="20">20%</option>
+                  <option value="25">25%</option>
+                  <option value="30">30%</option>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div class="col-12 mb-3">
+              <label for="earnings" class="form-label">Profit</label>
+              <div class="input-group">
+                  <input [(ngModel)]="calculatorObject.earningsAmount" (ngModelChange)="changeSalePrice($event)"  readonly="readonly" type="number" class="form-control" placeholder="Other expenses" aria-label="otherExpenses" aria-describedby="earnings">
+
+                </div>
+              </div>
+            <div class="col-12 mb-3" style="text-align: end;">
+
+
+              <button type="button" id="clean" class="btn btn-danger p-4" (click)="newCalculator()">Clean</button>
+              <button type="button" id="save" class="btn btn-success ms-4 p-4" (click)="executeCalculatorCreation()">Save</button>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+
     </div>
 
 
@@ -24,7 +260,7 @@
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button> -->
-</form>
+</div>
 </div>
 
 
@@ -32,7 +268,7 @@
 
 
 
-  <tabset>
+  <!-- <tabset>
     <tab heading="Calculator" id="tab1"><div class="py-5">
 
       <div class="container px-0">
@@ -109,7 +345,7 @@
                     <div class="col-12 col-md-6">
                        <h6 class="carDescription">{{this.calculatorObject.year}} {{this.calculatorObject.make}}</h6>
                        <h6 class="carDescription"> {{this.calculatorObject.model}} {{this.calculatorObject.serie}}</h6>
-                       <!-- <h6 class="carDescription">{{this.calculatorObject.serie}}</h6> -->
+
                        <h6 class="carDescription d-flex">Buy Price:<h6 class="carDescription" style="color: green;opacity: 1;
                         margin-left: 10px;"> ${{maxAmountToOffer}}</h6></h6>
 
@@ -328,7 +564,7 @@
       <app-calculator-list></app-calculator-list>
     </tab>
 
-  </tabset>
+  </tabset> -->
 
   <app-calculator-table *ngIf="showBills" [calculator]="calculatorObject"></app-calculator-table>
 </div>

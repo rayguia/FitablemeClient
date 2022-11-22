@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CalculatorTableComponent } from './calculator-table/calculator-table.component';
+import { CalculatorComponent } from './calculator.component';
 
 
 
@@ -26,7 +27,8 @@ import { CalculatorTableComponent } from './calculator-table/calculator-table.co
   declarations: [
     CalculatorPageComponent,
     CalculatorListComponent,
-    CalculatorTableComponent
+    CalculatorTableComponent,
+    CalculatorComponent
   ],
   imports: [
     CommonModule,

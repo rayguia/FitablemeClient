@@ -29,7 +29,9 @@ export class SidebarComponent implements OnInit {
       onSelected: () => {
         this.router.navigate(['/dashboard/profile'])
       },
+
     },
+
     {
       number:3,
       icon:'fa-solid fa-video',
@@ -94,6 +96,15 @@ export class SidebarComponent implements OnInit {
         this.logOut();
       },
     },
+    // {
+    //   number:2,
+    //   icon:'fa-solid fa-calculator',
+    //   name:'calculator',
+    //   onSelected: () => {
+    //     this.router.navigate(['/dashboard/calculator'])
+    //   },
+
+    // },
   ];
 
 
