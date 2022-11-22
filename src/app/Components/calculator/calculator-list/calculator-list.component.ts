@@ -22,6 +22,7 @@ import { ErrorHandlerService } from '../../shared/services/error-handler.service
 import { SuccessModalComponent } from '../../shared/modals/success-modal/success-modal.component';
 
 
+
 @Component({
   selector: 'app-calculator-list',
   templateUrl: './calculator-list.component.html',
@@ -40,7 +41,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   //                          'Title Type','Buy Aution Amount','Buy Acution Fee Percent','Buy Aution Name', 'Sale Aution Amount','Sale Aution Percent','Sale Aution Amount',
   //                           'Floorplan Amount','Earnings Amount','Earning Percent','Fix Price','Transport Price','Tax Title','Others' ]
 
-  headerTable:string[] = ['select','calculatorId','vin' ,'year','make','model' ,'loteNumber','autionDate','maxBid','marketValue','investment','earnings','title','actions']
+  headerTable:string[] = ['select','id','vin' ,'year','make','model' ,'loteNumber','autionDate','maxBid','marketValue','investment','earnings','title','actions']
 
 
   dataSource:MatTableDataSource<Calculator>;
@@ -87,7 +88,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
      if (!row) {
        return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
      }
-     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.calculatorId + 1}`;
+     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
    }
    /**End Select Section */
 
@@ -106,12 +107,12 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
 
   private getCalculators = () => {
-    const apiAddress: string = 'api/calculator';
+    const apiAddress: string = 'calculator';
     this.repository.getCalculators(apiAddress)
     .subscribe({
-      next: (cal: Calculator[]) => {
-        this.calculators = cal
-        this.dataSource = new MatTableDataSource(cal);
+      next: (response: any) => {
+        this.calculators = response.data.calculators
+        this.dataSource = new MatTableDataSource(this.calculators);
         this.isLoadingResults =false;
       },
       error: (err: HttpErrorResponse) => {
@@ -176,12 +177,14 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
   }
   public getCarculationDetails = (cal:Calculator) => {
-    const detailsUrl: string = `/owner/details/${cal.calculatorId}`;
+    const detailsUrl: string = `/owner/details/${cal.id}`;
     this.router.navigate([detailsUrl]);
   }
   public redirectToUpdatePage = (cal:Calculator) => {
-    const updateUrl: string = `/owner/update/${cal.calculatorId}`;
+    const updateUrl: string = `/calculator/${cal.id}`;
     this.router.navigate([updateUrl]);
+
+
   }
   public redirectToDeletePage = (cal:Calculator) => {
     // const deleteUrl: string = `/calculator/delete/${cal.calculatorId}`;
@@ -205,7 +208,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   deleteCalculator = (calculators:any) => {
 
     var all = calculators == 'all' ? this.selection.selected : [calculators];
-    const deleteUri: string = `api/calculator/selected`;
+    const deleteUri: string = `calculator/selected`;
     this.repository.deleteCalculators(deleteUri,all)
     .subscribe({
       next: (_) => {
@@ -226,8 +229,8 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
     var ids = [];
     calculators.forEach(calculator => {
 
-        ids.push(calculator.calculatorId)
-        var removeIndex = this.dataSource.data.map(item => item.calculatorId).indexOf(calculator.calculatorId);
+        ids.push(calculator.id)
+        var removeIndex = this.dataSource.data.map(item => item.id).indexOf(calculator.id);
         ~removeIndex && this.dataSource.data.splice(removeIndex, 1);
         this.dataSource._updateChangeSubscription();
 
@@ -236,9 +239,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
       });
 
       this.selection = new SelectionModel<Calculator>(true, []);
-
-
-
   }
+
 
 }

@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'owner', loadChildren: () => import('./owner/owner.module').then(m => m.OwnerModule),canActivate:[AuthGuard] },
 
   //To make it works we need to create tabla DB
-  // { path: 'calculator', loadChildren: () => import('./calculator/calculator.module').then(m => m.CalculatorModule),canActivate:[AuthGuard] },
+  { path: 'calculator', loadChildren: () => import('./calculator/calculator.module').then(m => m.CalculatorModule),canActivate:[AuthGuard] },
 
 
 

@@ -18,13 +18,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { CalculatorTableComponent } from './calculator-table/calculator-table.component';
 
 
 
 @NgModule({
   declarations: [
     CalculatorPageComponent,
-    CalculatorListComponent
+    CalculatorListComponent,
+    CalculatorTableComponent
   ],
   imports: [
     CommonModule,

@@ -16,13 +16,14 @@ border-radius: 15px;">
   </div>
 
   <form [formGroup]="loginForm" class="px-3">
+
     <div class="d-flex flex-row justify-content-center align-items-center">
       <div class="col mt-3 text-center">
         <mat-form-field hideRequiredMarker appearance="outline" class="m-0 w-100 input-styles">
           <mat-label style="margin-left: 12px;">Email Address</mat-label>
           <input type="email" style="padding-left: 12px;"
                  formControlName="username" matInput
-                 placeholder="enter username or email address...">
+                 placeholder="enter email">
         </mat-form-field>
       </div>
     </div>
@@ -33,14 +34,14 @@ border-radius: 15px;">
           <mat-label style="margin-left: 12px;">Password</mat-label>
           <input type="password" style="padding-left: 12px;"
                  class="input-styles" formControlName="password"
-                 matInput placeholder="enter your password...">
+                 matInput placeholder="enter your password">
         </mat-form-field>
       </div>
     </div>
 
     <div class="d-flex flex-row justify-content-center align-items-center">
       <div class="col mt-1 text-center">
-        <button (click)="login()" [disabled]="!loginForm.valid"
+        <button (click)="login()"
                 class="primary-color button-style button"
                 mat-raised-button>
           Log In

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://local.fitableme.com/api/'
+  /*apiUrl: 'http://local.calculator.com/api/'*/
+   apiUrl:'http://127.0.0.1:8000/api/'
 };
 
 /*

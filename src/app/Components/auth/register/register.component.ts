@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   genders = [''];
-  credentials: LoginModel = {email: '', password: ''};
+  credentials: LoginModel = {name:'',email: '', password: '',c_password:''};
   // selectedGender: string;
 
   constructor(private router: Router,
@@ -26,9 +26,10 @@ export class RegisterComponent implements OnInit {
               private toastrService: ToastrService) {
 
     this.registerForm = new FormGroup({
+      name: new FormControl(''),
       username: new FormControl(''),
       password: new FormControl(''),
-      confirmPassword: new FormControl(''),
+      c_password: new FormControl(''),
       gender: new FormControl(''),
       terms: new FormControl('')
     }, {validators: passwordMatchValidator});
@@ -45,6 +46,8 @@ export class RegisterComponent implements OnInit {
     await this.spinnerService.show();
     this.credentials.email = this.registerForm.get('username').value;
     this.credentials.password = this.registerForm.get('password').value;
+    this.credentials.c_password = this.registerForm.get('c_password').value;
+    this.credentials.name = this.registerForm.get('name').value;
 
     this.userService.register(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {

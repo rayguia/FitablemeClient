@@ -1,0 +1,48 @@
+table {
+  width: 100%;
+}
+
+.mat-paginator-range-label {
+    display: none;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+
+/* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgb(207, 205, 205);
+  /* background-color: white; */
+}
+/* Font color */
+input.mat-input-element {
+  color: rgb(0, 0, 0);
+}
+
+.my-form-field{
+  width: 90% !important;
+}
+
+.my-form-field .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0px !important;
+}
+.mat-form-field-infix{
+  border-top: 0px !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 15px 0 10px 0;
+}
+
+.mat-column-id {
+  width: 45px !important;
+  border-right: 1px solid rgb(182, 178, 178);
+  margin-right: 15px !important;
+
+}

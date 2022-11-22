@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { ApiResponse } from 'src/app/_interfaces/ApiResponse';
 
 
 import { Calculator } from 'src/app/_interfaces/calculator.model';
@@ -17,9 +19,11 @@ import { ErrorHandlerService } from '../../shared/services/error-handler.service
 })
 export class CalculatorPageComponent implements OnInit {
 
-  calculatorObject: Calculator = this.cleanCalculator()
+   calculatorObject: Calculator = this.cleanCalculator()
    maxAmountToOffer:number = 0;
    errorMessage:string = '';
+   calculatorIdToShow:number;
+   showBills:boolean = false;
 
 
    bsModalRef?: BsModalRef;
@@ -27,16 +31,45 @@ export class CalculatorPageComponent implements OnInit {
     private repository: CalculatorRepositoryService,
     private datePipe: DatePipe,
     private modal: BsModalService,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
+    this.showBills = false;
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      this.calculatorIdToShow = +params.get('id');
+      this.getCalculator();
+    });
+  }
+
+  getCalculator(){
+
+    if(this.calculatorIdToShow){
+      this.showBills = false
+      const apiUrl = `calculator/${this.calculatorIdToShow}`;
+        this.repository.getCalculator(apiUrl)
+        .subscribe({
+          next: (response: ApiResponse) => {
+            this.calculatorObject = response.data
+            this.changeSalePrice(1)
+            this.showBills = true
+          },
+          error: (err: HttpErrorResponse) => {
+              this.errorHandler.handleError(err);
+              this.errorMessage = this.errorHandler.errorMessage;
+          }
+        })
+    }
 
   }
+
+
   cleanCalculator():Calculator{
     this.maxAmountToOffer = 0;
   return  this.calculatorObject ={
-        calculatorId:0,
+        id:0,
         vin: "",
         loteNumber:"",
         autionDate:null,
@@ -44,7 +77,7 @@ export class CalculatorPageComponent implements OnInit {
         make:"",
         model:"",
         serie:"",
-        type:"Retail",
+        saleType:"Retail",
         link:"",
         maxAmountToOffer:0,
         marketValue:0,
@@ -62,7 +95,12 @@ export class CalculatorPageComponent implements OnInit {
         fixPrice:0,
         transportPrice:350,
         taxTitle:400,
-        others:0
+        others:0,
+        purchased:false,
+        purchasedValueNoFees:0,
+        purchasedValueFinal:0,
+        soldValue:0,
+        calculatorBills:[]
        };
 
 
@@ -75,10 +113,10 @@ export class CalculatorPageComponent implements OnInit {
 
     this.datePipe.transform(this.calculatorObject.autionDate, 'yyyy-MM-dd');
 
-    const apiUrl = 'api/calculator';
+    const apiUrl = 'calculator';
     this.repository.createCalculator(apiUrl, this.calculatorObject)
     .subscribe({
-      next: (own: Calculator) => {
+      next: (response: any) => {
         const config: ModalOptions = {
           initialState: {
             modalHeaderText: 'Success Message',
@@ -86,8 +124,11 @@ export class CalculatorPageComponent implements OnInit {
             okButtonText: 'OK'
           }
         };
-        this.cleanCalculator();
-        this.bsModalRef = this.modal.show(SuccessModalComponent, config);
+        console.log(response.data);
+        this.router.navigate([`/calculator/${response.data.id}`]);
+        this.calculatorObject = response.data
+        //this.cleanCalculator();
+        //this.bsModalRef = this.modal.show(SuccessModalComponent, config);
         //this.bsModalRef.content.redirectOnOk.subscribe(_ => this.redirectToOwnerList());
       },
       error: (err: HttpErrorResponse) => {
@@ -170,6 +211,8 @@ export class CalculatorPageComponent implements OnInit {
 
   }
   changeSalePrice(newValue){
+
+    console.log('this.calculatorObject from calculator-page',this.calculatorObject);
 
     if(this.calculatorObject.marketValue > 0){
       this.calculatorObject.marketValueFinal = this.calculatorObject.titleType == 'Clean Title' ? this.calculatorObject.marketValue : this.calculatorObject.marketValue * 0.65;

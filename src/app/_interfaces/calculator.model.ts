@@ -1,5 +1,7 @@
+import { ICalculatorBills } from "./ICalculatorBills";
+
 export interface Calculator{
-  calculatorId:number;
+  id:number;
   vin?: string;
   loteNumber?:string;
   autionDate:Date;
@@ -7,7 +9,7 @@ export interface Calculator{
   make?:string;
   model?:string;
   serie?:string;
-  type?:string;
+  saleType?:string;
   titleType?:string;
   link?:string;
   maxAmountToOffer:number;
@@ -26,6 +28,12 @@ export interface Calculator{
   transportPrice:number;
   taxTitle:number;
   others:number;
+  purchased:boolean;
+  purchasedValueNoFees:number;
+  purchasedValueFinal:number;
+  soldValue:number;
+  calculatorBills:ICalculatorBills[];
+
 
 }
 

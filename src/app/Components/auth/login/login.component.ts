@@ -22,7 +22,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent implements OnInit {
   invalidLogin: boolean;
-  credentials: LoginModel = {email: '', password: ''};
+  credentials: LoginModel = {name:'',email: '', password: '',c_password:''};
   loginForm: FormGroup
   returnUrl: string = '/dashboard';
 
@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('')
+      password: new FormControl('', [Validators.required])
+
     });
   }
 
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
     await this.spinnerService.show();
     this.credentials.email = this.loginForm.get('username').value;
     this.credentials.password = this.loginForm.get('password').value;
+
 
     this.userService.auth(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {
