@@ -20,6 +20,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CalculatorTableComponent } from './calculator-table/calculator-table.component';
 import { CalculatorComponent } from './calculator.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 
 
@@ -30,6 +32,7 @@ import { CalculatorComponent } from './calculator.component';
     CalculatorTableComponent,
     CalculatorComponent
   ],
+  exports:[MatAutocompleteModule],
   imports: [
     CommonModule,
     CalculatorRoutingModule,
@@ -44,6 +47,7 @@ import { CalculatorComponent } from './calculator.component';
     MatInputModule,
     MatCheckboxModule,
     MatIconModule,
+    MatAutocompleteModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
   ]

@@ -23,11 +23,7 @@ th.mat-sort-header-sorted {
     padding: 4px;
   }
 
-.mat-header-cell {
-    min-height: 12px;
-    font-size: 13px;
-    font-weight: bold;
-}
+
 
 .mat-header-row {
   width: 100%;
@@ -59,17 +55,17 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-.mat-row:nth-child(1n + 1) {
-    background-color: mat-color($accent, lighter);
-  }
-
-  .mat-row:not(:nth-child(2n + 1)) {
-    background-color: mat-color($primary, 300);
-  }
-
-.example-element-row:hover {
-  background: mat-color($accent, 800);
-}
 .example-element-row:active {
   background: #efefef;
 }
+
+
+
+.filter-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+

@@ -74,7 +74,7 @@ export class CalculatorPageComponent implements OnInit {
         id:0,
         vin: "",
         loteNumber:"",
-        autionDate:null,
+        auctionDate:null,
         year:null,
         make:"",
         model:"",
@@ -102,6 +102,7 @@ export class CalculatorPageComponent implements OnInit {
         purchasedValueNoFees:0,
         purchasedValueFinal:0,
         soldValue:0,
+        isSold:false,
         calculatorBills:[]
        };
 
@@ -113,7 +114,7 @@ export class CalculatorPageComponent implements OnInit {
 
   executeCalculatorCreation = () => {
 
-    this.datePipe.transform(this.calculatorObject.autionDate, 'yyyy-MM-dd');
+    this.datePipe.transform(this.calculatorObject.auctionDate, 'yyyy-MM-dd');
 
     const apiUrl = 'calculator';
     this.repository.createCalculator(apiUrl, this.calculatorObject)

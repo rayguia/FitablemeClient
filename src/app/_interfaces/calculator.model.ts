@@ -4,7 +4,7 @@ export interface Calculator{
   id:number;
   vin?: string;
   loteNumber?:string;
-  autionDate:Date;
+  auctionDate:Date;
   year:number;
   make?:string;
   model?:string;
@@ -32,6 +32,9 @@ export interface Calculator{
   purchasedValueNoFees:number;
   purchasedValueFinal:number;
   soldValue:number;
+  isSold:boolean;
+  totalInvested?:number;
+  earningsFinal?:number;
   calculatorBills:ICalculatorBills[];
 
 

@@ -37,6 +37,17 @@ export class CalculatorRepositoryService {
   public deleteCalculatorBill = (route: string) => {
     return this.http.delete(this.createCompleteRoute(route, this.envUrl.urlAddress));
   }
+  public getDifferentNamesAndProviderNames = (route: string) => {
+
+    return this.http.get<ApiResponse>(this.createCompleteRoute(route, this.envUrl.urlAddress));
+  }
+
+  public markAsSold = (route: string, calculator: Calculator) => {
+    return this.http.put(this.createCompleteRoute(route, this.envUrl.urlAddress), calculator, this.generateHeaders());
+  }
+  public markAsBought = (route: string, calculator: Calculator) => {
+    return this.http.put(this.createCompleteRoute(route, this.envUrl.urlAddress), calculator, this.generateHeaders());
+  }
 
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}${route}`;

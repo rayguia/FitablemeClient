@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, OnInit, OnChanges} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, OnInit, OnChanges, ViewEncapsulation} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -20,13 +20,16 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { CalculatorRepositoryService } from '../../shared/services/calculator-repository.service';
 import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 import { SuccessModalComponent } from '../../shared/modals/success-modal/success-modal.component';
+import { FormBuilder } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-calculator-list',
   templateUrl: './calculator-list.component.html',
-  styleUrls: ['./calculator-list.component.css']
+  styleUrls: ['./calculator-list.component.css'],
+  encapsulation : ViewEncapsulation.None,
+
 })
 export class CalculatorListComponent implements OnInit,AfterViewInit{
 
@@ -41,7 +44,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   //                          'Title Type','Buy Aution Amount','Buy Acution Fee Percent','Buy Aution Name', 'Sale Aution Amount','Sale Aution Percent','Sale Aution Amount',
   //                           'Floorplan Amount','Earnings Amount','Earning Percent','Fix Price','Transport Price','Tax Title','Others' ]
 
-  headerTable:string[] = ['select','id','vin' ,'year','make','model' ,'loteNumber','autionDate','maxBid','marketValue','investment','earnings','title','actions']
+  headerTable:string[] = ['select','id','vin' ,'year','make','model' ,'loteNumber','auctionDate','maxBid','marketValue','investment','earnings','title','created_at','actions']
 
 
   dataSource:MatTableDataSource<Calculator>;
@@ -51,12 +54,24 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   @ViewChild(MatSort) set matSort(sort:MatSort){
     this.dataSource.sort = sort;
   }
+
+  onlySold = false;
+  onlyBought = false;
+  labelPosition: 'before' | 'after' = 'after';
+  disabled = false;
+
+  filters = this._formBuilder.group({
+    sold: false,
+    bought: false,
+
+  });
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
   constructor(private repository: CalculatorRepositoryService,
               private errorHandler: ErrorHandlerService,
               private router: Router,
-              private modalService:BsModalService) {
+              private modalService:BsModalService,
+              private _formBuilder: FormBuilder) {
 
 
                }
@@ -93,8 +108,21 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
    /**End Select Section */
 
   ngOnInit(): void {
-    //this.getCalculators();
+    // this.dataSource.filterPredicate = ((data: Calculator, filter: string): boolean => {
+    //   const filterValues = JSON.parse(filter);
+
+    //   return (this.onlyBought ? data.purchased === filterValues.purchased : false) &&
+    //   (this.onlySold ? data.isSold == true : false);
+    // })
+
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+
+    // }
+
   }
+
+
 
 
   ngAfterViewInit() {
@@ -124,12 +152,61 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
 
   applyFilter(event: Event) {
+    console.log('event',event);
+
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  applyFilterCheck(){
+
+    let cal:Calculator[] = [];
+    if(this.onlyBought && this.onlySold){
+
+      cal = this.calculators.filter(function (cal) {
+
+        return cal.isSold == true && cal.purchased == true
+      });
+
+    }
+    else if(this.onlyBought && !this.onlySold){
+      cal = this.calculators.filter(function (cal) {
+
+        return cal.purchased == true
+      });
+    }
+    else if(!this.onlyBought && this.onlySold){
+      cal = this.calculators.filter(function (cal) {
+
+        return cal.isSold == true
+      });
+    }else{
+      cal = this.calculators
+    }
+    console.log('this.calculators',this.calculators)
+    console.log('this.onlyBought',this.onlyBought);
+
+    console.log('this.onlySold',this.onlySold);
+    console.log('this.cal',cal);
+
+
+
+
+
+    this.dataSource = new MatTableDataSource(cal);
+
+
+    if (this.dataSource.paginator) {
+      setTimeout(() => this.dataSource.paginator.firstPage(),2000);
+
+    }
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
+
   }
 
 

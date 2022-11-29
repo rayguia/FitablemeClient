@@ -20,6 +20,16 @@ padding: 50px;border-radius: 20px;">
     </div>
 
     <div class="row mt-5">
+      <div class="col-12 py-2">
+        <button type="button" id="offerup" class="btn btn-outline-secondary mx-2" (click)="openNewTab('offerup')">OfferUp</button>
+        <button type="button" id="ebay" class="btn btn-outline-secondary mx-2" (click)="openNewTab('ebay')">Ebay</button>
+           <button type="button" id="kbb" class="btn btn-outline-secondary mx-2" (click)="openNewTab('kbb')">KBB Get Price</button>
+           <button type="button" id="vincheck" class="btn btn-outline-secondary mx-2" (click)="openNewTab('vincheck')">VinCheck</button>
+
+      </div>
+    </div>
+
+    <div class="row mt-1">
 
       <div class="form-group col-12 col-md-8">
 
@@ -64,9 +74,9 @@ padding: 50px;border-radius: 20px;">
 
              <div class="col-12 col-md-6 mb-3">
 
-              <label for="autionDate" class="form-label">Auction Date</label>
+              <label for="auctionDate" class="form-label">Auction Date</label>
               <div class="input-group">
-                <input  [(ngModel)]="calculatorObject.autionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="autionDate">
+                <input  [(ngModel)]="calculatorObject.auctionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="auctionDate">
 
               </div>
             </div>
@@ -321,9 +331,9 @@ padding: 50px;border-radius: 20px;">
 
                       <div class="form-group col-12">
                         <div class="input-group input-group-lg mb-3">
-                          <span class="input-group-text labelInformation" id="autionDate">AUTION DATE:</span>
-                          <input  [(ngModel)]="calculatorObject.autionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="autionDate">
-                          <button  ngDefaultControl class="btn btn-outline-secondary" type="button" id="autionDate1">
+                          <span class="input-group-text labelInformation" id="auctionDate">AUTION DATE:</span>
+                          <input  [(ngModel)]="calculatorObject.auctionDate" type="text" class="form-control" readonly bsDatepicker placeholder="Aution Date:" aria-label="Aution Date" aria-describedby="auctionDate">
+                          <button  ngDefaultControl class="btn btn-outline-secondary" type="button" id="auctionDate1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16">
                               <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
                             </svg>

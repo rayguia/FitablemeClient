@@ -1,7 +1,114 @@
+<div class="container">
+  <div class="mt-4" style="background-color: white;
+  padding: 50px;border-radius: 20px;">
+
+     <div class="row">
+
+      <div class="col-12">
+        <h2>Expenses and Earnings</h2>
+      </div>
+     </div>
+
+      <!-- <div class="row">
+        <div class="col-12 col-md-9 d-md-flex">
+          <div><img src="./assets/images/car_header.webp" width="200" height="200" class="img-thumbnail" alt="car"></div>
+          <div style="max-height:100px ;">
+            <h6 class="carDescription">{{this.calculatorObject.year}} {{this.calculatorObject.make}} {{this.calculatorObject.model}} {{this.calculatorObject.serie}}</h6>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+
+           <div class="box-max-amount-to-offer">
+               <div class="box-text-title">Max To Offer</div>
+               <div class="box-text-amount">${{maxAmountToOffer}}</div>
+           </div>
+        </div>
+      </div> -->
+
+      <div class="row my-3">
+
+        <div class="form-group col-9">
+
+          <div class="row">
+               <div class="col-6 col-md-4 mb-3">
+
+                <label for="paidTotal" class="form-label">Amount Paid</label>
+                  <div class="input-group">
+                    <input [(ngModel)]="calculator.purchasedValueFinal"  type="number" [readonly]="calculator.purchased" class="form-control" placeholder="Total" aria-label="Paid total" aria-describedby="paidTotal"/>
+
+                    <input [(ngModel)]="calculator.purchasedValueNoFees"
+                    *ngIf="calculator.purchasedValueFinal != null && !calculator.purchased"
+                    type="number" [readonly]="calculator.purchased" class="form-control" placeholder="Without fees" aria-label="Without fees" aria-describedby="purchasedValueNoFees"/>
+
+                    <button mat-button class="btn btn-success button-w-icon mx-1"
+                    matTooltip="Mark as bought" (click)="markAsBought()"
+                    *ngIf="calculator.purchasedValueFinal != null && calculator.purchasedValueNoFees != null && !calculator.purchased">
+                    <mat-icon>check_circle</mat-icon>
+                    </button>
+                  </div>
+                  <!-- <div>Bought on: 11/8/2022</div>  put it below input-->
+
+               </div>
+
+
+
+
+               <div class="col-6 col-md-2 mb-3">
+                <label for="Expenses" class="form-label">Expenses</label>
+                <div class="input-group">
+                    <input [(ngModel)]="billsAmount"  type="number" readonly class="form-control" placeholder="Expenses" aria-label="taxTitle" aria-describedby="Expenses">
+
+                  </div>
+                </div>
+
+
+
+                <div class="col-6 col-md-2 mb-3">
+                  <label for="amountTotal" class="form-label">Invested Total</label>
+                  <div class="input-group">
+                      <input [(ngModel)]="amountTotal"   type="number" class="form-control" readonly placeholder="Invested Total" aria-label="amountTotal" aria-describedby="amountTotal">
+
+                  </div>
+                  </div>
+
+                  <div class="col-6 col-md-4 mb-3">
+                    <label for="soldValue" class="form-label">Sold Amount</label>
+                    <div class="input-group">
+                        <input [(ngModel)]="calculator.soldValue"   type="number" class="form-control" [readonly]="calculator.isSold" placeholder="Sold Amount" aria-label="soldValue" aria-describedby="soldValue">
+                        <button mat-button class="btn btn-success button-w-icon mx-1"
+                        matTooltip="Mark as sold" (click)="markAsSold()"
+                        *ngIf="calculator.soldValue != null && !calculator.isSold">
+                        <mat-icon>check_circle</mat-icon>
+                        </button>
+                      </div>
+                      <!-- <div>Sold on: 11/8/2022</div>  put it below input-->
+                    </div>
+          </div>
+
+        </div>
+
+        <div class="form-group col-3">
+          <div class="row">
+            <div class="col-12">
+
+              <div class="box-max-amount-to-offer">
+                  <div class="box-text-title">Profit</div>
+                  <div class="box-text-amount">${{profit}}</div>
+              </div>
+           </div>
+                    </div>
+
+
+        </div>
+
+
+      </div>
+
+      <button type="button" mat-button class="btn btn-primary mb-2 button-w-icon"
+      (click)="AddNewRow()"><mat-icon class="me-2" (click)="AddNewRow()">add_box</mat-icon> Add new expense</button>
+
 <div class="mat-elevation-z8">
-  <button><mat-icon (click)="AddNewRow()" class="add-button">add_box</mat-icon></button>
-  <br />
-  <div>Amount Total: {{amountTotal}}</div>
+
   <form [formGroup]="VOForm" autocomplete="off">
     <ng-container formArrayName="VORows">
       <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -19,14 +126,27 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="ps-3"> Name </th>
-          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="ps-3">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" (dblclick)="EditSVO(VOForm,i)" class="ps-3">
 
-            <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
-            <mat-form-field class="my-form-field"
+
+            <!-- <mat-form-field class="my-form-field"
               [appearance]="VOForm.get('VORows').value[i].isEditable? 'none' : 'outline'">
               <input matInput type="text" formControlName="name" [readonly]="VOForm.get('VORows').value[i].isEditable">
-            </mat-form-field>
-            <!-- </span> -->
+            </mat-form-field> -->
+
+            <mat-form-field class="my-form-field" [appearance]="VOForm.get('VORows').value[i].isEditable? 'none' : 'outline'">
+              <input type="text" matInput formControlName="name"  [formControl]="name" [readonly]="VOForm.get('VORows').value[i].isEditable"
+                   [matAutocomplete]="auto">
+                 <mat-autocomplete #auto="matAutocomplete">
+                   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                     {{option}}
+                  </mat-option>
+              </mat-autocomplete>
+           </mat-form-field>
+
+
+
+
 
           </td>
         </ng-container>
@@ -34,7 +154,7 @@
         <!-- Weight Column -->
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef> Price </th>
-          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" (dblclick)="EditSVO(VOForm,i)">
             <!-- [appearance]="true ? 'outline': 'fill'" -->
             <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
             <mat-form-field class="my-form-field"
@@ -48,43 +168,82 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="providerName">
           <th mat-header-cell *matHeaderCellDef> Provider Name </th>
-          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <!-- <span [hidden]="VOForm.get('VORows').value[i].isEditable"> -->
-            <mat-form-field class="my-form-field"
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" (dblclick)="EditSVO(VOForm,i)">
+
+            <!-- <mat-form-field class="my-form-field"
               [appearance]="VOForm.get('VORows').value[i].isEditable? 'none' : 'outline'">
               <input matInput type="text" formControlName="providerName" [readonly]="VOForm.get('VORows').value[i].isEditable">
-            </mat-form-field>
-            <!-- </span> -->
+            </mat-form-field> -->
+
+            <mat-form-field class="my-form-field" [appearance]="VOForm.get('VORows').value[i].isEditable? 'none' : 'outline'">
+              <input type="text" matInput formControlName="providerName" [formControl]="providerName" [readonly]="VOForm.get('VORows').value[i].isEditable"
+                   [matAutocomplete]="auto">
+                 <mat-autocomplete #auto="matAutocomplete">
+                   <mat-option *ngFor="let option of filteredOptionsProvider | async" [value]="option">
+                     {{option}}
+                  </mat-option>
+              </mat-autocomplete>
+           </mat-form-field>
+
           </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef> Created on </th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field appearance="none" class="my-form-field" style="max-width: 90px !important;">
+              <input matInput type="text" formControlName="created_at" [readonly]="true">
+            </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updated_at">
+          <th mat-header-cell *matHeaderCellDef> Updated on </th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field appearance="none" class="my-form-field" style="max-width: 90px !important;">
+              <input matInput type="text" formControlName="updated_at" [readonly]="true">
+            </mat-form-field>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
-                                    matTooltip="Save Changes" (click)="SaveVO(VOForm,i)"
-                                    *ngIf="!VOForm.get('VORows').value[i].isEditable" color="primary">
-                                    <mat-icon>check_circle</mat-icon>
-                                </button>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="d-flex">
 
-            <button mat-icon-button class="material-icons app-toolbar-menu cancel-button"
-                                    matTooltip="Cancel Changes" color="warn"
-                                    (click)="CancelEdit(VOForm,i)"
-                                    *ngIf="!VOForm.get('VORows').value[i].isEditable">
-                                    <mat-icon>cancel</mat-icon>
-                                </button>
 
-            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
+            <button mat-button class="btn btn-warning button-w-icon mx-1"
+            *ngIf="VOForm.get('VORows').value[i].isEditable"
+            (click)="EditSVO(VOForm,i)">
+              <mat-icon (click)="EditSVO(VOForm,i)">edit</mat-icon>
+            </button>
+
+
+
+            <button mat-button class="btn btn-success button-w-icon mx-1"
+                matTooltip="Save Changes" (click)="SaveVO(VOForm,i)"
+                matTooltip="Edit"
+                *ngIf="!VOForm.get('VORows').value[i].isEditable">
+                <mat-icon>check_circle</mat-icon>
+            </button>
+
+            <button mat-button class="btn btn-danger button-w-icon mx-1"
+                matTooltip="Cancel Changes"
+                (click)="CancelEdit(VOForm,i)"
+                *ngIf="!VOForm.get('VORows').value[i].isEditable">
+                <mat-icon>cancel</mat-icon>
+            </button>
+
+            <!-- <button mat-button class="material-icons app-toolbar-menu save-button"
                                     *ngIf="VOForm.get('VORows').value[i].isEditable"
                                     matTooltip="Edit" color="primary" (click)="EditSVO(VOForm,i)">
                                     <mat-icon>edit</mat-icon>
-                                </button>
+                                </button> -->
 
-            <button mat-icon-button class="material-icons app-toolbar-menu delete-button"
-                                    *ngIf="VOForm.get('VORows').value[i].isEditable"
-                                    matTooltip="Delete" color="warn" (click)="removeCalculatorBill(VOForm,i)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+            <button mat-button class="btn btn-danger button-w-icon mx-1"
+                *ngIf="VOForm.get('VORows').value[i].isEditable"
+                matTooltip="Delete" (click)="removeCalculatorBill(VOForm,i)">
+                <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </ng-container>
 
@@ -106,3 +265,8 @@
 </mat-card>
 
 </div>
+
+</div>
+
+</div>
+
