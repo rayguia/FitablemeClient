@@ -1,0 +1,135 @@
+
+  <div class="container px-0" *ngIf="!isLoadingResults">
+<div class="row my-5">
+  <div class="col-2">
+    <mat-form-field class="my-form-field" placeholder="Year Filter">
+      <input type="text" matInput  placeholder="Year Filter" [formControl]="year"
+           [matAutocomplete]="auto">
+         <mat-autocomplete #auto="matAutocomplete">
+           <mat-option *ngFor="let option of filteredYearsOptions | async" [value]="option">
+             {{option}}
+          </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+  </div>
+
+
+
+  <div class="col-2">
+    <mat-form-field class="my-form-field" placeholder="Make Filter">
+      <input type="text" matInput placeholder="Make Filter"  [formControl]="make"
+           [matAutocomplete]="autoMakes">
+         <mat-autocomplete #autoMakes="matAutocomplete">
+           <mat-option *ngFor="let option of filteredMakesOptions | async" [value]="option">
+             {{option}}
+          </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+  </div>
+  <div class="col-2">
+    <mat-form-field class="my-form-field" placeholder="Model Filter">
+      <input type="text" matInput placeholder="Model Filter"  [formControl]="model"
+           [matAutocomplete]="autoModel">
+         <mat-autocomplete #autoModel="matAutocomplete">
+           <mat-option *ngFor="let option of filteredModelOptions | async" [value]="option">
+             {{option}}
+          </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+  </div>
+
+  <div class="col-2">
+    <mat-form-field class="my-form-field" placeholder="Name Filter">
+      <input type="text" matInput placeholder="Name Filter"  [formControl]="name"
+           [matAutocomplete]="autoName">
+         <mat-autocomplete #autoName="matAutocomplete">
+           <mat-option *ngFor="let option of filteredNameOptions | async" [value]="option">
+             {{option}}
+          </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+  </div>
+
+  <div class="col-2">
+    <mat-form-field class="my-form-field" placeholder="Provider Name Filter">
+      <input type="text" matInput placeholder="Provider Name Filter"  [formControl]="providerName"
+           [matAutocomplete]="autoProviderName">
+         <mat-autocomplete #autoProviderName="matAutocomplete">
+           <mat-option *ngFor="let option of filteredProviderNameOptions | async" [value]="option">
+             {{option}}
+          </mat-option>
+      </mat-autocomplete>
+   </mat-form-field>
+  </div>
+
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+     <!-- Year -->
+     <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+      <td mat-cell *matCellDef="let row"> {{row.year}} </td>
+    </ng-container>
+
+     <!-- Make -->
+     <ng-container matColumnDef="make">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+
+        <!-- <mat-form-field>
+          <input matInput class="form-field" [formControl]="make" placeholder="Make Filter">
+        </mat-form-field> -->
+        Make </th>
+      <td mat-cell *matCellDef="let row"> {{row.make}} </td>
+    </ng-container>
+
+     <!-- Model -->
+     <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+      <td mat-cell *matCellDef="let row"> {{row.model}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="serie">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Serie </th>
+      <td mat-cell *matCellDef="let row"> {{row.serie}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+      <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+
+      <ng-container matColumnDef="providerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Provider Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.providerName}} </td>
+      </ng-container>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created on </th>
+      <td mat-cell *matCellDef="let row"> {{row.created_at |  date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="updated_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated on </th>
+      <td mat-cell *matCellDef="let row"> {{row.updated_at |  date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="headerTable"></tr>
+    <tr mat-row *matRowDef="let row; columns: headerTable;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filters</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10,20,50,100]" aria-label="Select page of dataSource.filteredData"></mat-paginator>
+</div>
+
+</div>

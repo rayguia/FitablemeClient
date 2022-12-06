@@ -128,6 +128,10 @@
                 <li routerLink="/calculator" *ngIf="isLoggedIn$ | async">
                   <a  class="dropdown-item py-2">Calculator</a>
                 </li>
+
+                <li routerLink="/calculator/alltime" *ngIf="isLoggedIn$ | async">
+                  <a  class="dropdown-item py-2">All Time Bills</a>
+                </li>
               <li routerLink="/dashboard/profile" *ngIf="isLoggedIn$ | async">
                 <a class="dropdown-item py-2">Your Profile</a>
               </li>

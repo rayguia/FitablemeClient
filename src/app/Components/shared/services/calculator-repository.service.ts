@@ -48,6 +48,10 @@ export class CalculatorRepositoryService {
   public markAsBought = (route: string, calculator: Calculator) => {
     return this.http.put(this.createCompleteRoute(route, this.envUrl.urlAddress), calculator, this.generateHeaders());
   }
+  public getCalculatorBillsAlltime = (route: string) => {
+
+    return this.http.get<ApiResponse>(this.createCompleteRoute(route, this.envUrl.urlAddress));
+  }
 
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}${route}`;

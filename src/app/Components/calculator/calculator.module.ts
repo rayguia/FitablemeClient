@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CalculatorTableComponent } from './calculator-table/calculator-table.component';
 import { CalculatorComponent } from './calculator.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calculator-alltimebills.component';
 
 
 
@@ -30,7 +31,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     CalculatorPageComponent,
     CalculatorListComponent,
     CalculatorTableComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    CalculatorAlltimebillsComponent
   ],
   exports:[MatAutocompleteModule],
   imports: [

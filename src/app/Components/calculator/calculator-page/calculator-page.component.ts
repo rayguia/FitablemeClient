@@ -38,6 +38,7 @@ export class CalculatorPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.showBills = false;
+
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.calculatorIdToShow = +params.get('id');
       this.getCalculator();
@@ -440,6 +441,7 @@ export class CalculatorPageComponent implements OnInit {
     console.error('Failed to read clipboard contents: ', err);
   });
    }
+
 
 
 }
