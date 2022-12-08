@@ -47,7 +47,8 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   headerTable:string[] = ['select','id','vin' ,'year','make','model' ,'loteNumber','auctionDate','maxBid','marketValue','investment','earnings','title','created_at','actions']
 
 
-  dataSource:MatTableDataSource<Calculator>;
+
+  dataSource = new MatTableDataSource<Calculator>([]);
   @ViewChild(MatPaginator) set matPaginator(paginator:MatPaginator){
     this.dataSource.paginator = paginator;
   }

@@ -54,7 +54,7 @@ export class OwnerCreateComponent implements OnInit {
   private executeOwnerCreation = (ownerFormValue) => {
     const owner: OwnerForCreation = {
       name: ownerFormValue.name,
-      dateOfBirth: this.datePipe.transform(ownerFormValue.dateOfBirth, 'yyyy-MM-dd'),
+      dateOfBirth: this.datePipe.transform(ownerFormValue.dateOfBirth, 'MM/dd/yyyy'),
       address: ownerFormValue.address
     }
     const apiUrl = 'api/owner';

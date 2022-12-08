@@ -115,7 +115,7 @@ export class CalculatorPageComponent implements OnInit {
 
   executeCalculatorCreation = () => {
 
-    this.datePipe.transform(this.calculatorObject.auctionDate, 'yyyy-MM-dd');
+    this.datePipe.transform(this.calculatorObject.auctionDate, 'MM/dd/yyyy');
 
     const apiUrl = 'calculator';
     this.repository.createCalculator(apiUrl, this.calculatorObject)

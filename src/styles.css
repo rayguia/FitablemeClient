@@ -90,6 +90,7 @@ app-sidebar{
   position: absolute;
   left: 60px;
   width: calc(100% - 60px);
+  min-height: calc(100vh);
   /* width: 100%; */
   transition: left 250ms ease-in, width 250ms ease-in;
   background-color: #EAEEF2;

@@ -1,11 +1,22 @@
 
   <div class="container px-0" *ngIf="!isLoadingResults">
-<div class="row my-5">
+
+    <div class="mt-4" style="background-color: white;
+    padding: 50px;border-radius: 20px;">
+
+    <div class="row pb-3 px-0">
+      <label class="form-label ms-0">All Expenses</label>
+    </div>
+
+
+<div class="row my-2">
+
+
   <div class="col-2">
     <mat-form-field class="my-form-field" placeholder="Year Filter">
-      <input type="text" matInput  placeholder="Year Filter" [formControl]="year"
-           [matAutocomplete]="auto">
-         <mat-autocomplete #auto="matAutocomplete">
+      <input type="text" matInput name="year"  placeholder="Year Filter" [formControl]="year"
+           [matAutocomplete]="autoYear">
+         <mat-autocomplete #autoYear="matAutocomplete">
            <mat-option *ngFor="let option of filteredYearsOptions | async" [value]="option">
              {{option}}
           </mat-option>
@@ -62,6 +73,43 @@
    </mat-form-field>
   </div>
 
+
+
+</div>
+
+
+<div class="row py-2">
+
+  <div class="col-2">
+
+    <mat-form-field class="my-form-field">
+
+      <input matInput type="text" placeholder="From Date Filter" autocomplete="off"
+     [minDate]="minDate"
+     [maxDate]="maxDate"
+     #dp="bsDatepicker"
+     bsDatepicker [formControl]="fromDate">
+
+   </mat-form-field>
+  </div>
+
+
+  <div class="col-2">
+
+    <mat-form-field class="my-form-field">
+
+      <input matInput type="text" placeholder="To Date Filter" autocomplete="off"
+     [minDate]="minDate"
+     [maxDate]="maxDate"
+     #dp="bsDatepicker"
+     bsDatepicker [formControl]="toDate">
+
+   </mat-form-field>
+  </div>
+
+  <div class="col-8" style="text-align: right;">
+    <app-export [dataSource]="dataSource" nameExcel="Expenses" [headerKeyToExport]="headerKeyToExport" [headerTableToExport]="headerTableToExport"></app-export>
+  </div>
 </div>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -111,12 +159,12 @@
 
     <ng-container matColumnDef="created_at">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Created on </th>
-      <td mat-cell *matCellDef="let row"> {{row.created_at |  date: 'dd/MM/yyyy'}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.created_at |  date: 'MM/dd/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="updated_at">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated on </th>
-      <td mat-cell *matCellDef="let row"> {{row.updated_at |  date: 'dd/MM/yyyy'}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.updated_at |  date: 'MM/dd/yyyy'}} </td>
     </ng-container>
 
 
@@ -131,5 +179,8 @@
 
   <mat-paginator [pageSizeOptions]="[10,20,50,100]" aria-label="Select page of dataSource.filteredData"></mat-paginator>
 </div>
+
+</div>
+
 
 </div>

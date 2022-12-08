@@ -46,7 +46,8 @@
 
       <div class="col-4 mt-3" style="text-align: right;">
 
-        <button type="button" id="save" class="btn btn-success " (click)="exportExcel()">Export Excel</button>
+        <app-export [dataSource]="dataSource" nameExcel="CalculatorNew" [headerTableToExport]="headerTableToExport"></app-export>
+        <!-- <button type="button" id="save" class="btn btn-success " (click)="exportExcel()">Export Excel</button> -->
       </div>
 
 
@@ -117,7 +118,7 @@
 
         <ng-container matColumnDef="auctionDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Autiuon Date </th>
-          <td mat-cell *matCellDef="let row"> {{row.auctionDate |  date: 'dd/MM/yyyy'}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.auctionDate |  date: 'MM/dd/yyyy'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="maxBid">

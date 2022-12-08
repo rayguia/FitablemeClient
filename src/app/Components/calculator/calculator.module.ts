@@ -22,6 +22,11 @@ import { CalculatorTableComponent } from './calculator-table/calculator-table.co
 import { CalculatorComponent } from './calculator.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calculator-alltimebills.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
+
 
 
 
@@ -34,7 +39,7 @@ import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calcu
     CalculatorComponent,
     CalculatorAlltimebillsComponent
   ],
-  exports:[MatAutocompleteModule],
+  exports:[MatAutocompleteModule,MatDatepickerModule,MatNativeDateModule],
   imports: [
     CommonModule,
     CalculatorRoutingModule,
@@ -50,6 +55,8 @@ import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calcu
     MatCheckboxModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
   ]

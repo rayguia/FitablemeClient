@@ -11,7 +11,7 @@
         <tbody>
           <tr *ngFor="let account of accounts" (click)="onAccountClicked(account)">
             <td>{{account?.accountType}}</td>
-            <td>{{account?.dateCreated | date: 'dd/MM/yyyy'}}</td>
+            <td>{{account?.dateCreated | date: 'MM/dd/yyyy'}}</td>
           </tr>
         </tbody>
       </table>

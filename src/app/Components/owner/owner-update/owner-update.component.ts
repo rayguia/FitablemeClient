@@ -66,7 +66,7 @@ export class OwnerUpdateComponent implements OnInit {
     private executeOwnerUpdate = (ownerFormValue) => {
       const ownerForUpd: OwnerForUpdate = {
         name: ownerFormValue.name,
-        dateOfBirth: this.datePipe.transform(ownerFormValue.dateOfBirth, 'yyyy-MM-dd'),
+        dateOfBirth: this.datePipe.transform(ownerFormValue.dateOfBirth, 'MM/dd/yyyy'),
         address: ownerFormValue.address
       }
       const apiUri: string = `api/owner/${this.owner.id}`;

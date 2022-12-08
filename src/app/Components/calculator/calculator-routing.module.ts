@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calculator-alltimebills.component';
 import { CalculatorListComponent } from './calculator-list/calculator-list.component';
 import { CalculatorPageComponent } from './calculator-page/calculator-page.component';
@@ -19,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes),SharedModule],
+  exports: [RouterModule,SharedModule]
 })
 export class CalculatorRoutingModule { }

@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ReturnStatement } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +11,7 @@ import { ApiResponse } from 'src/app/_interfaces/ApiResponse';
 import { IAlltimebills } from 'src/app/_interfaces/IAlltimebills';
 import { CalculatorRepositoryService } from '../../shared/services/calculator-repository.service';
 import { ErrorHandlerService } from '../../shared/services/error-handler.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-calculator-alltimebills',
@@ -22,6 +24,8 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
   errorMessage:string = ''
   alltimebills:IAlltimebills[] = []
   headerTable:string[] = ['year','make','model' ,'serie','name', 'price', 'providerName','created_at','updated_at']
+  headerTableToExport:string[] = ['Year','Make','Model' ,'Serie','Name', 'Price', 'Provider Name','Created on','Updated on']
+  headerKeyToExport:string[] = ['year','make','model' ,'serie','name', 'price', 'providerName','created_at','updated_at']
   isLoadingResults:boolean= true;
   // dataSource:MatTableDataSource<IAlltimebills>;
   dataSource = new MatTableDataSource<IAlltimebills>([]);
@@ -45,6 +49,13 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
   name = new FormControl('')
   providerName = new FormControl('')
 
+  fromDate = new FormControl('')
+  toDate = new FormControl('')
+
+  // fromDate = new Date("12-08-2019");
+  // toDate:Date = new Date();
+
+  pipe: DatePipe;
 
   years:string[]=[]
   makes:string[]=[]
@@ -52,15 +63,32 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
   names:string[]=[]
   providerNames:string[]=[]
 
+    //   filterForm = new FormGroup({
+    //     fromDate: new FormControl(),
+    //     toDate: new FormControl(),
+    // });
+
+    // get fromDate() { return this.filterForm.get('fromDate').value; }
+    // get toDate() { return this.filterForm.get('toDate').value; }
+
   filteredValues = {
     year: '', make: '', model: '',
-    serie: '',name:'',providerName:''
+    serie: '',name:'',providerName:'',fromDate:'',toDate:''
   };
 
   constructor(
     private repository: CalculatorRepositoryService,
     private datePipe: DatePipe,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService) {
+
+
+      // this.dataSource.filterPredicate = (data, filter) =>{
+      //   if (this.fromDate && this.toDate) {
+      //     return data.created_at >= this.fromDate && data.created_at <= this.toDate;
+      //   }
+      //   return true;
+      // }
+     }
 
 
   ngOnInit(): void {
@@ -103,6 +131,9 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
     // });
     // this.dataSource.filterPredicate = this.customFilterPredicate();
   }
+  // applyFilter(){
+  //   this.dataSource.filter = ''+Math.random();
+  // }
   ngAfterViewInit(){
     this.getCalculatorBillsAlltime()
   }
@@ -131,6 +162,23 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
       this.filteredValues['providerName'] = name;
       this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
+
+    this.fromDate.valueChanges.subscribe((date) => {
+      this.filteredValues['fromDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.toDate.valueChanges.subscribe((date) => {
+      this.filteredValues['toDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+    this.pipe = new DatePipe('en');
+    // this.dataSource.filterPredicate = (data, filter) =>{
+    //   if (this.fromDate && this.toDate) {
+    //     return data.created_at >= this.fromDate && data.created_at <= this.toDate;
+    //   }
+    //   return true;
+    // }
     this.dataSource.filterPredicate = this.customFilterPredicate();
 
 
@@ -147,11 +195,12 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
   customFilterPredicate() {
     const myFilterPredicate = (data: IAlltimebills, filter: string): boolean => {
 
+      console.log('searchString before',filter);
 
       let searchString = JSON.parse(filter);
-      //console.log('searchString',searchString);
+      console.log('searchString',searchString);
 
-      return data.year.toString().trim().indexOf(searchString.year.toString()) !== -1
+      if(data.year.toString().trim().indexOf(searchString.year.toString()) !== -1
        &&
        data.make.toString().trim().toLowerCase().indexOf(searchString.make.toLowerCase()) !== -1
        &&
@@ -159,7 +208,50 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
        &&
        data.name.toString().trim().toLowerCase().indexOf(searchString.name.toLowerCase()) !== -1
        &&
-       data.providerName.toString().trim().toLowerCase().indexOf(searchString.providerName.toLowerCase()) !== -1;
+       data.providerName.toString().trim().toLowerCase().indexOf(searchString.providerName.toLowerCase()) !== -1){
+
+
+        if(searchString.fromDate || searchString.toDate){
+
+
+          let fromdate=moment(searchString.fromDate).format('MM/DD/YYYY');
+          let todate=moment(searchString.toDate).format('MM/DD/YYYY');
+          let created =moment(data.created_at).format('MM/DD/YYYY');
+
+             if(searchString.fromDate && searchString.toDate){
+
+                if( created>=fromdate && created <= todate){
+                  return true
+                }
+                return false
+
+              }else if(searchString.fromDate && !searchString.toDate){
+
+                if( created>=fromdate){
+                  return true
+                }
+                return false
+
+              }else if(!searchString.fromDate && searchString.toDate){
+
+                    if( created<=todate){
+                      return true
+                    }
+                    return false
+                  }
+          return true
+        }
+        return true
+
+        // if(this.myDateValue && this.toDate){
+        // const selectedMembers = this.array.filter(m => {
+        //         return this.reverseAndTimeStamp(m.fromDate) >= this.reverseAndTimeStamp(fromdate) && this.reverseAndTimeStamp(m.fromDate) <= this.reverseAndTimeStamp(todate)
+        //     }
+        //     );
+
+       }else{
+        return false
+       }
     }
     return myFilterPredicate;
   }

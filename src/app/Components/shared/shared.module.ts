@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { ConfirmModalComponent } from 'src/app/shared/modals/confirm-modal/confirm-modal.component';
+import { ExportComponent } from './export/export.component';
 
 
 
@@ -20,13 +21,15 @@ import { ConfirmModalComponent } from 'src/app/shared/modals/confirm-modal/confi
     AppendDirective,
     ConfirmModalComponent,
     HeaderComponent,
-    AppendDirective
+    AppendDirective,
+    ExportComponent
   ],
   exports:[
     ErrorModalComponent,
     SuccessModalComponent,
     HeaderComponent,
     AppendDirective,
+    ExportComponent
 
   ],
   imports: [
