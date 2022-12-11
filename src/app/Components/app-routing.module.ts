@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate:[LoginActiveGuard]},
   { path: '404', component: NotFoundComponent },
   { path: '500', component: InternalServerComponent },
-  { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+  // { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+  { path: '', redirectTo: '/calculator', pathMatch: 'full'},
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 

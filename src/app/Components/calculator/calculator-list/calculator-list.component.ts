@@ -72,15 +72,26 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   isLoadingResults:boolean = true;
   errorMessage: string = '';
   bsModalRef?: BsModalRef;
-  headerTableToExport:string[] = ['Calculator ','Vin','Lote Number','Ation Date','Year','Make','Model','Serie','Type','Link','Max Amount To Offer','Market Value','Market Value Final',
-                           'Title Type','Buy Aution Amount','Buy Acution Fee Percent','Buy Aution Name', 'Sale Aution Amount','Sale Aution Percent','Sale Aution Amount',
-                            'Floorplan Amount','Earnings Amount','Earning Percent','Fix Price','Transport Price','Tax Title','Others' ]
+  headerKeyToExport = {
+    'vin':'Vin' , 'loteNumber':'Lote Number','auctionDate':'Ation Date','year':'Year','make':'Make','model':'Model' ,'serie':'Serie',
+  'saleType':'Sale Type','link':'Link','created_at':'Added on', 'maxAmountToOffer':'Max Amount To Offer', 'marketValue':'Market Value', 'marketValueFinal':'Market Value Final',
+  'titleType':'Title Type','buyAutionAmount':'Buy Aution Amount'
+  ,'buyAutionFeePercent':'Buy Acution Fee Percent','buyAutionName':'Buy Aution Name','saleAutionAmount':'Sale Aution Amount'
+  ,'saleAutionPercent':'Sale Aution Percent','saleAutionName':'Sale Aution Name'
+
+  ,'floorplanAmount':'Floorplan Amount','earningsAmount':'Earnings Amount','earningPercent':'Earning Percent',
+  'fixPrice':'Fix Price','transportPrice':'Transport Price','taxTitle':'Tax Title','others':'Parts',
+   'purchasedDate':'Purchased Date','purchasedValueNoFees':'Purchased Without Fees', 'purchasedValueFinal':'Purchased With Fess',
+   'soldValue': 'Sold Value', 'soldDate': 'Sold Date', 'totalInvested': 'Total Invested', 'earningsFinal': 'Earning Final', 'hasCarfax': 'Carfax'
+
+}
+
+
   // headerTable:string[] = ['Calculator #','Vin','Lote Number','Ation Date','Year','Make','Model','Serie','Type','Link','Max Amount To Offer','Market Value','Market Value Final',
   //                          'Title Type','Buy Aution Amount','Buy Acution Fee Percent','Buy Aution Name', 'Sale Aution Amount','Sale Aution Percent','Sale Aution Amount',
   //                           'Floorplan Amount','Earnings Amount','Earning Percent','Fix Price','Transport Price','Tax Title','Others' ]
 
-  headerTable:string[] = ['select','id','vin' ,'year','make','model' ,'loteNumber','auctionDate','maxBid','marketValue','investment','earnings','title','created_at','actions']
-
+  headerTable:string[] = ['select','vin' ,'year','make','model' ,'loteNumber','auctionDate','maxBid','marketValue','investment','earnings','title','created_at','actions']
 
 
   dataSource = new MatTableDataSource<Calculator>([]);
@@ -628,6 +639,13 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
       });
 
       this.selection = new SelectionModel<Calculator>(true, []);
+  }
+  newCalculator(){
+    this.router.navigate([`/calculator`]);
+  }
+  public redirectToUpdatePage = (cal:Calculator) => {
+    const updateUrl: string = `/calculator/${cal.id}`;
+    this.router.navigate([updateUrl]);
   }
 
 

@@ -96,6 +96,7 @@ export class UserService {
   logout() {
     this.removeLogged();
     this.router.navigate(['/']);
+    location.reload()
     return false
   }
   removeLogged(){
@@ -122,7 +123,7 @@ export class UserService {
     //localStorage.removeItem("refreshToken");
     this.localService.clearToken()
     return false;
-      
+
     } catch (error) {
       return false
     }
@@ -185,7 +186,7 @@ export class UserService {
       iApiAuthResponse.success,
       iApiAuthResponse.data,
       iApiAuthResponse.message
-     
+
     );
   }
 }

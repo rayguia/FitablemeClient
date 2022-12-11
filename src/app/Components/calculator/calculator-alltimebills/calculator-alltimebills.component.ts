@@ -24,8 +24,7 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
   errorMessage:string = ''
   alltimebills:IAlltimebills[] = []
   headerTable:string[] = ['year','make','model' ,'serie','name', 'price', 'providerName','created_at','updated_at']
-  headerTableToExport:string[] = ['Year','Make','Model' ,'Serie','Name', 'Price', 'Provider Name','Created on','Updated on']
-  headerKeyToExport:string[] = ['year','make','model' ,'serie','name', 'price', 'providerName','created_at','updated_at']
+  headerKeyToExport = {'year':'Year','make':'Make','model':'Model' ,'serie':'Serie','name':'Name', 'price':'Price', 'providerName':'Provider Name','created_at':'Created on','updated_at':'Updated on'}
   isLoadingResults:boolean= true;
   // dataSource:MatTableDataSource<IAlltimebills>;
   dataSource = new MatTableDataSource<IAlltimebills>([]);

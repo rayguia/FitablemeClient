@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 export class ExportComponent implements OnInit {
 
   @Input() dataSource: MatTableDataSource<any>;
-  @Input() headerTableToExport:string[];
+
   @Input() headerKeyToExport:string[]=[];
   @Input() nameExcel: string;
   constructor() { }
@@ -25,24 +25,38 @@ export class ExportComponent implements OnInit {
 
     var response = this.dataSource.sort ? this.dataSource.sort : new MatSort();
     var dataSorted:any = this.dataSource.sortData(this.dataSource.filteredData,response);
-
+    let header = [];
+    let position = 0
     console.log('from export',this.headerKeyToExport);
     var output = dataSorted.map((obj:any) => {
       let newObject=[];
 
-       Object.keys(obj).map((key) =>{
-        if(this.headerKeyToExport.length == 0 || this.headerKeyToExport.includes(key)){
-          console.log('key',key);
 
-          newObject.push(obj[key])
+      for (var key in this.headerKeyToExport) {
+        newObject.push(obj[key])
+        if(position == 0){
+           header.push(this.headerKeyToExport[key])
         }
-      })
+
+
+      }
+      position++;
+
+
+      //  Object.keys(obj).map((key,index) =>{
+      //   if(this.headerKeyToExport.length == 0 || this.headerKeyToExport.includes(key)){
+      //     console.log('key',key);
+
+      //     newObject.push(obj[key])
+      //   }
+      // })
 
       return newObject
     })
 
+    console.log('output');
 
-    output.unshift(this.headerTableToExport);
+    output.unshift(header);
     /* pass here the table id */
     // let element = document.getElementById('excel-table');
     // const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
