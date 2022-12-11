@@ -1,10 +1,10 @@
-  <app-header (sideNavToggle)="sideNavStatus = $event"></app-header>
-
+  <!-- <app-header (sideNavToggle)="sideNavStatus = $event"></app-header> -->
+  <app-header></app-header>
   <main>
-    <app-sidebar [sideNavStatus]="sideNavStatus"
+    <!-- <app-sidebar [sideNavStatus]="sideNavStatus"
     [ngClass]="{'app-sidebar-open':sideNavStatus}"
     *ngIf="isLoggedIn$ | async"
-    ></app-sidebar>
+    ></app-sidebar> -->
 
     <div class="display-area" [ngClass]="{'display-area-shrink':sideNavStatus}">
       <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, OnInit, OnChanges, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, OnInit, OnChanges, ViewEncapsulation, ChangeDetectorRef} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -20,7 +20,9 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { CalculatorRepositoryService } from '../../shared/services/calculator-repository.service';
 import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 import { SuccessModalComponent } from '../../shared/modals/success-modal/success-modal.component';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 
 
@@ -32,6 +34,39 @@ import { FormBuilder } from '@angular/forms';
 
 })
 export class CalculatorListComponent implements OnInit,AfterViewInit{
+
+
+  showResetFilter:boolean = false
+  filteredValues = {
+    year: '', make: '', model: '', vin:'',carfaxSelect:'2',boughtSelect:'2',soldSelect:'2',
+    fromAddedDate:'',toAddedDate:'',fromAuctionDate:'',toAuctionDate:'',fromBoughtDate:'',toBoughtDate:'',fromSoldDate:'',toSoldDate:''
+  };
+  pipe: DatePipe;
+
+  filteredYearsOptions:Observable<string[]>;
+  filteredMakesOptions:Observable<string[]>;
+  filteredModelOptions:Observable<string[]>;
+  year = new FormControl('')
+  make = new FormControl('')
+  model = new FormControl('')
+  years:string[]=[]
+  makes:string[]=[]
+  models:string[]=[]
+
+  fromAddedDate = new FormControl('')
+  toAddedDate = new FormControl('')
+  fromAuctionDate = new FormControl('')
+  toAuctionDate = new FormControl('')
+  fromBoughtDate = new FormControl('')
+  toBoughtDate= new FormControl('')
+  fromSoldDate= new FormControl('')
+  toSoldDate= new FormControl('')
+
+  boughtSelect = new FormControl('2')
+  soldSelect = new FormControl('2')
+  carfaxSelect = new FormControl('2')
+
+
 
   calculators: Calculator[] = [];
   isLoadingResults:boolean = true;
@@ -72,7 +107,9 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
               private errorHandler: ErrorHandlerService,
               private router: Router,
               private modalService:BsModalService,
-              private _formBuilder: FormBuilder) {
+              private _formBuilder: FormBuilder,
+              private datePipe: DatePipe,
+              private cdRef : ChangeDetectorRef) {
 
 
                }
@@ -99,6 +136,29 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
      this.selection.select(...this.dataSource.data);
    }
 
+   resetFilters(){
+
+    this.year.setValue('')
+    this.make.setValue('')
+    this.model.setValue('')
+
+    this.fromAddedDate.setValue('')
+    this.toAddedDate.setValue('')
+    this.fromBoughtDate.setValue('')
+    this.toBoughtDate.setValue('')
+    this.fromSoldDate.setValue('')
+    this.toSoldDate.setValue('')
+    this.fromAuctionDate.setValue('')
+    this.toAuctionDate.setValue('')
+
+    this.carfaxSelect.setValue('2')
+    this.boughtSelect.setValue('2')
+    this.soldSelect.setValue('2')
+
+    this.cdRef.detectChanges();
+
+   }
+
    /** The label for the checkbox on the passed row */
    checkboxLabel(row?: Calculator): string {
      if (!row) {
@@ -107,8 +167,24 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
    }
    /**End Select Section */
-
+   showFilters(){
+    return this.showResetFilter
+   }
   ngOnInit(): void {
+
+    this.filteredYearsOptions = this.year.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+
+    this.filteredMakesOptions = this.make.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterMakes(value || '')),
+    );
+    this.filteredModelOptions = this.model.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterModels(value || '')),
+    );
     // this.dataSource.filterPredicate = ((data: Calculator, filter: string): boolean => {
     //   const filterValues = JSON.parse(filter);
 
@@ -122,6 +198,289 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
     // }
 
   }
+  private _filter(value: string): string[] {
+
+    const filterValue = value.toLowerCase();
+    return this.years.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  private _filterMakes(value: string): string[] {
+
+    const filterValue = value.toLowerCase();
+    return this.makes.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  private _filterModels(value: string): string[] {
+
+    const filterValue = value.toLowerCase();
+    return this.models.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  setupFilters(){
+    this.year.valueChanges.subscribe((year) => {
+      this.filteredValues['year'] = year;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.make.valueChanges.subscribe((make) => {
+      this.filteredValues['make'] = make;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.model.valueChanges.subscribe((model) => {
+      this.filteredValues['model'] = model;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.carfaxSelect.valueChanges.subscribe((carfaxSelect) => {
+      this.filteredValues['carfaxSelect'] = carfaxSelect;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.boughtSelect.valueChanges.subscribe((boughtSelect) => {
+      this.filteredValues['boughtSelect'] = boughtSelect;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.soldSelect.valueChanges.subscribe((soldSelect) => {
+      this.filteredValues['soldSelect'] = soldSelect;
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+
+
+    this.fromAddedDate.valueChanges.subscribe((date) => {
+      this.filteredValues['fromAddedDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.toAddedDate.valueChanges.subscribe((date) => {
+      this.filteredValues['toAddedDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.fromAuctionDate.valueChanges.subscribe((date) => {
+      this.filteredValues['fromAuctionDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.toAuctionDate.valueChanges.subscribe((date) => {
+      this.filteredValues['toAuctionDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.fromBoughtDate.valueChanges.subscribe((date) => {
+      this.filteredValues['fromBoughtDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.toBoughtDate.valueChanges.subscribe((date) => {
+      this.filteredValues['toBoughtDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.fromSoldDate.valueChanges.subscribe((date) => {
+      this.filteredValues['fromSoldDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+
+    this.toSoldDate.valueChanges.subscribe((date) => {
+      this.filteredValues['toSoldDate'] = this.datePipe.transform(date, 'MM/dd/yyyy');
+      this.dataSource.filter = JSON.stringify(this.filteredValues);
+    });
+    this.pipe = new DatePipe('en');
+
+    this.dataSource.filterPredicate = this.customFilterPredicate();
+
+
+    //TODO Do it in a better way
+    this.makes = [...new Set(this.calculators.map(item => item.make.toLocaleUpperCase()))];
+    this.years = [...new Set(this.calculators.map(item => item.year.toString().toLocaleUpperCase()))];
+    this.models = [...new Set(this.calculators.map(item => item.model.toLocaleUpperCase()))];
+    // this.names = [...new Set(this.alltimebills.map(item => item.name.toLocaleUpperCase()))];
+    // this.providerNames = [...new Set(this.alltimebills.map(item => item.providerName.toLocaleUpperCase()))];
+
+
+
+  }
+  customFilterPredicate() {
+    const myFilterPredicate = (data: Calculator, filter: string): boolean => {
+
+     // console.log('searchString before',filter);
+
+      let searchString = JSON.parse(filter);
+      if(
+        searchString.year!= '' || searchString.make!= '' || searchString.model!= '' ||
+        searchString.vin!='' || searchString.carfaxSelect != 2 ||
+        searchString.boughtSelect !=2 || searchString.soldSelect !=2 ||
+      searchString.fromAddedDate != '' || searchString.toAddedDate != '' ||
+      searchString.fromAuctionDate != '' || searchString.toAddedDate != '' ||
+      searchString.fromBoughtDate != '' || searchString.toBoughtDate != '' ||
+      searchString.fromSoldDate != '' || searchString.toSoldDate != ''
+      ){
+        this.showResetFilter = true
+      }
+
+      // console.log('searchString',searchString);
+      // console.log('searchString',data);
+
+
+      return data.year.toString().trim().indexOf(searchString.year.toString()) !== -1
+       &&
+       data.make.toString().trim().toLowerCase().indexOf(searchString.make.toLowerCase()) !== -1
+       &&
+       data.model.toString().trim().toLowerCase().indexOf(searchString.model.toLowerCase()) !== -1 &&
+       (searchString.boughtSelect == 2 || data.purchased == searchString.boughtSelect) &&
+       (searchString.carfaxSelect == 2 || data.hasCarfax == searchString.carfaxSelect) &&
+       (searchString.soldSelect == 2 || data.isSold == searchString.soldSelect) &&
+       this.checkFilterAddedDate(data,searchString) &&
+       this.checkFilterAuctionDate(data,searchString) &&
+       this.checkFilterBoughtDate(data,searchString) &&
+       this.checkFilterSoldDate(data,searchString)
+
+    }
+    return myFilterPredicate;
+  }
+
+  checkFilterAddedDate(data:Calculator ,searchString:any):boolean{
+    if(searchString.fromAddedDate || searchString.toAddedDate){
+
+      let fromAddedDate=moment(searchString.fromAddedDate).format('MM/DD/YYYY');
+      let toAddedDate=moment(searchString.toAddedDate).format('MM/DD/YYYY');
+      let created =moment(data.created_at).format('MM/DD/YYYY');
+
+         if(searchString.fromAddedDate && searchString.toAddedDate){
+
+            if( created>=fromAddedDate && created <= toAddedDate){
+
+              return true
+            }
+            return false
+
+          }else if(searchString.fromAddedDate && !searchString.toAddedDate){
+
+            if( created>=fromAddedDate){
+              return true
+            }
+            return false
+
+          }else if(!searchString.fromAddedDate && searchString.toAddedDate){
+
+                if( created<=toAddedDate){
+                  return true
+                }
+                return false
+              }
+      return true
+    }
+    return true
+  }
+  checkFilterAuctionDate(data:Calculator ,searchString:any){
+
+    if(searchString.fromAuctionDate || searchString.toAuctionDate){
+
+      let fromAuctionDate=moment(searchString.fromAuctionDate).format('MM/DD/YYYY');
+      let toAuctionDate=moment(searchString.toAuctionDate).format('MM/DD/YYYY');
+      let created =moment(data.auctionDate).format('MM/DD/YYYY');
+
+         if(searchString.fromAuctionDate && searchString.toAuctionDate){
+
+            if( created>=fromAuctionDate && created <= toAuctionDate){
+
+              return true
+            }
+            return false
+
+          }else if(searchString.fromAuctionDate && !searchString.toAuctionDate){
+
+            if( created>=fromAuctionDate){
+              return true
+            }
+            return false
+
+          }else if(!searchString.fromAuctionDate && searchString.toAuctionDate){
+
+                if( created<=toAuctionDate){
+                  return true
+                }
+                return false
+              }
+      return true
+    }
+    return true
+
+  }
+  checkFilterBoughtDate(data:Calculator ,searchString:any){
+
+    if(searchString.fromBoughtDate || searchString.toBoughtDate){
+
+      let fromBoughtDate=moment(searchString.fromBoughtDate).format('MM/DD/YYYY');
+      let toBoughtDate=moment(searchString.toBoughtDate).format('MM/DD/YYYY');
+      let created =moment(data.purchasedDate).format('MM/DD/YYYY');
+
+      console.log('fromBoughtDate',fromBoughtDate);
+      console.log('searcchString',toBoughtDate);
+      console.log('created',created);
+
+         if(searchString.fromBoughtDate && searchString.toBoughtDate){
+
+            if( created>=fromBoughtDate && created <= toBoughtDate){
+              console.log('dos',created);
+              return true
+            }
+            return false
+
+          }else if(searchString.fromBoughtDate && !searchString.toBoughtDate){
+
+            if( created>=fromBoughtDate){
+              console.log('fromBoughtDate entro',created);
+              return true
+            }
+            return false
+
+          }else if(!searchString.fromBoughtDate && searchString.toBoughtDate){
+
+                if( created<=toBoughtDate){
+                  console.log('toBoughtDate entro',created);
+                  return true
+                }
+                return false
+              }
+      return true
+    }
+    return true
+
+  }
+  checkFilterSoldDate(data:Calculator ,searchString:any):boolean{
+    if(searchString.fromSoldDate || searchString.toSoldDate){
+
+      let fromSoldDate=moment(searchString.fromSoldDate).format('MM/DD/YYYY');
+      let toSoldDate=moment(searchString.toSoldDate).format('MM/DD/YYYY');
+      let created =moment(data.soldDate).format('MM/DD/YYYY');
+
+         if(searchString.fromSoldDate && searchString.toSoldDate){
+
+            if( created>=fromSoldDate && created <= toSoldDate){
+
+              return true
+            }
+            return false
+
+          }else if(searchString.fromSoldDate && !searchString.toSoldDate){
+
+            if( created>=fromSoldDate){
+              return true
+            }
+            return false
+
+          }else if(!searchString.fromSoldDate && searchString.toSoldDate){
+
+                if( created<=toSoldDate){
+                  return true
+                }
+                return false
+              }
+      return true
+    }
+    return true
+  }
 
 
 
@@ -130,7 +489,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
 
 
     this.getCalculators();
-
+    this.cdRef.detectChanges();
 
   }
 
@@ -143,6 +502,7 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
         this.calculators = response.data.calculators
         this.dataSource = new MatTableDataSource(this.calculators);
         this.isLoadingResults =false;
+        this.setupFilters()
       },
       error: (err: HttpErrorResponse) => {
           this.errorHandler.handleError(err);
@@ -152,124 +512,75 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
   }
 
 
-  applyFilter(event: Event) {
-    console.log('event',event);
+  // applyFilter(event: Event) {
+  //   console.log('event',event);
 
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  applyFilterCheck(){
+  //   if (this.dataSource.paginator) {
+  //     this.dataSource.paginator.firstPage();
+  //   }
+  // }
+  // applyFilterCheck(){
 
-    let cal:Calculator[] = [];
-    if(this.onlyBought && this.onlySold){
+  //   let cal:Calculator[] = [];
+  //   if(this.onlyBought && this.onlySold){
 
-      cal = this.calculators.filter(function (cal) {
+  //     cal = this.calculators.filter(function (cal) {
 
-        return cal.isSold == true && cal.purchased == true
-      });
+  //       return cal.isSold == true && cal.purchased == true
+  //     });
 
-    }
-    else if(this.onlyBought && !this.onlySold){
-      cal = this.calculators.filter(function (cal) {
+  //   }
+  //   else if(this.onlyBought && !this.onlySold){
+  //     cal = this.calculators.filter(function (cal) {
 
-        return cal.purchased == true
-      });
-    }
-    else if(!this.onlyBought && this.onlySold){
-      cal = this.calculators.filter(function (cal) {
+  //       return cal.purchased == true
+  //     });
+  //   }
+  //   else if(!this.onlyBought && this.onlySold){
+  //     cal = this.calculators.filter(function (cal) {
 
-        return cal.isSold == true
-      });
-    }else{
-      cal = this.calculators
-    }
-    console.log('this.calculators',this.calculators)
-    console.log('this.onlyBought',this.onlyBought);
+  //       return cal.isSold == true
+  //     });
+  //   }else{
+  //     cal = this.calculators
+  //   }
+  //   console.log('this.calculators',this.calculators)
+  //   console.log('this.onlyBought',this.onlyBought);
 
-    console.log('this.onlySold',this.onlySold);
-    console.log('this.cal',cal);
-
-
+  //   console.log('this.onlySold',this.onlySold);
+  //   console.log('this.cal',cal);
 
 
 
-    this.dataSource = new MatTableDataSource(cal);
 
 
-    if (this.dataSource.paginator) {
-      setTimeout(() => this.dataSource.paginator.firstPage(),2000);
-
-    }
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
-
-  }
+  //   this.dataSource = new MatTableDataSource(cal);
 
 
-  /*Export Section*/
+  //   if (this.dataSource.paginator) {
+  //     setTimeout(() => this.dataSource.paginator.firstPage(),2000);
 
-  exportExcel(): void
-  {
+  //   }
 
-    var response = this.dataSource.sort ? this.dataSource.sort : new MatSort();
-    var dataSorted:any = this.dataSource.sortData(this.dataSource.filteredData,response);
-    var output = dataSorted.map(function(obj:any){
-      return Object.keys(obj).map(function(key){
-        return obj[key]
-      })
-    })
 
-    output.unshift(this.headerTableToExport);
-    /* pass here the table id */
-    // let element = document.getElementById('excel-table');
-    // const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
-    const ws: XLSX.WorkSheet =XLSX.utils.aoa_to_sheet(output);
+  // }
 
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    /* save to file */
-    XLSX.writeFile(wb, 'CarCalculators.xlsx');
-
-  }
-  /*End Export Section*/
 
 
   openLink(link:string,newPage:boolean){
-
-
     window.open(link, '_blank')
   }
   public getCalculation(calculation:Calculator){
-
 
     return calculation.buyAutionAmount + calculation.saleAutionAmount +
      calculation.floorplanAmount + calculation.fixPrice + calculation.transportPrice +
      calculation.taxTitle + calculation.others;
 
   }
-  public getCarculationDetails = (cal:Calculator) => {
-    const detailsUrl: string = `/owner/details/${cal.id}`;
-    this.router.navigate([detailsUrl]);
-  }
-  public redirectToUpdatePage = (cal:Calculator) => {
-    const updateUrl: string = `/calculator/${cal.id}`;
-    this.router.navigate([updateUrl]);
 
-
-  }
-  public redirectToDeletePage = (cal:Calculator) => {
-    // const deleteUrl: string = `/calculator/delete/${cal.calculatorId}`;
-    // this.router.navigate([deleteUrl]);
-
-    BsModalService
-  }
   showModalToDelete(calculator:any){
     let text = this.selection.selected.length > 1 ? 'items' : 'item'
     const config: ModalOptions = {

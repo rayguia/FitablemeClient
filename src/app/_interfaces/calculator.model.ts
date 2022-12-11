@@ -29,12 +29,17 @@ export interface Calculator{
   taxTitle:number;
   others:number;
   purchased:boolean;
+  purchasedDate?:Date;
   purchasedValueNoFees:number;
   purchasedValueFinal:number;
   soldValue:number;
   isSold:boolean;
+  soldDate?:Date;
   totalInvested?:number;
   earningsFinal?:number;
+  created_at?:Date;
+  carfax?:string;
+  hasCarfax?:boolean;
   calculatorBills:ICalculatorBills[];
 
 

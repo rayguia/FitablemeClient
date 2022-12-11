@@ -243,12 +243,6 @@ export class CalculatorAlltimebillsComponent implements OnInit,AfterViewInit {
         }
         return true
 
-        // if(this.myDateValue && this.toDate){
-        // const selectedMembers = this.array.filter(m => {
-        //         return this.reverseAndTimeStamp(m.fromDate) >= this.reverseAndTimeStamp(fromdate) && this.reverseAndTimeStamp(m.fromDate) <= this.reverseAndTimeStamp(todate)
-        //     }
-        //     );
-
        }else{
         return false
        }

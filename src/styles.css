@@ -88,18 +88,19 @@ app-sidebar{
 
 .display-area{
   position: absolute;
-  left: 60px;
-  width: calc(100% - 60px);
+  /* left: 60px;
+  width: calc(100% - 60px); */
+  width: 100%;
   min-height: calc(100vh);
   /* width: 100%; */
   transition: left 250ms ease-in, width 250ms ease-in;
   background-color: #EAEEF2;
 }
 
-.display-area-shrink{
+/* .display-area-shrink{
   width: calc(100% - 250px);
   left: 250px;
-}
+} */
 
 .badge-counter{
   position: relative;

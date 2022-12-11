@@ -24,6 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CalculatorAlltimebillsComponent } from './calculator-alltimebills/calculator-alltimebills.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -39,7 +40,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     CalculatorComponent,
     CalculatorAlltimebillsComponent
   ],
-  exports:[MatAutocompleteModule,MatDatepickerModule,MatNativeDateModule],
+  exports:[MatAutocompleteModule,MatDatepickerModule,MatNativeDateModule,MatSelectModule],
   imports: [
     CommonModule,
     CalculatorRoutingModule,
@@ -57,6 +58,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
   ]

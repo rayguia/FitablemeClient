@@ -1,13 +1,265 @@
+<div class="container-fluid px-5" *ngIf="!isLoadingResults">
+  <div
+    class="mt-4"
+    style="background-color: white; padding: 50px; border-radius: 20px"
+  >
+  <div class="row pb-3 px-0">
+    <label class="form-label ms-0"
+      >Saved Cars<a style="cursor: pointer; font-size: 12px;"
+        class="ms-3"
+        [hidden]="!showResetFilter"
+
+        (click)="resetFilters() ; showResetFilter = false"
+        >Reset Filters</a
+      ></label
+    >
+  </div>
+
+
+    <div class="row my-2">
+
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field" placeholder="Year Filter">
+          <input type="text" matInput name="year"  placeholder="Year Filter" [formControl]="year"
+               [matAutocomplete]="autoYear">
+             <mat-autocomplete #autoYear="matAutocomplete">
+               <mat-option *ngFor="let option of filteredYearsOptions | async" [value]="option">
+                 {{option}}
+              </mat-option>
+          </mat-autocomplete>
+       </mat-form-field>
+      </div>
 
 
 
-  <div class="container px-0" *ngIf="!isLoadingResults">
+      <div class="col-2">
+        <mat-form-field class="my-form-field" placeholder="Make Filter">
+          <input type="text" matInput placeholder="Make Filter"  [formControl]="make"
+               [matAutocomplete]="autoMakes">
+             <mat-autocomplete #autoMakes="matAutocomplete">
+               <mat-option *ngFor="let option of filteredMakesOptions | async" [value]="option">
+                 {{option}}
+              </mat-option>
+          </mat-autocomplete>
+       </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field class="my-form-field" placeholder="Model Filter">
+          <input type="text" matInput placeholder="Model Filter"  [formControl]="model"
+               [matAutocomplete]="autoModel">
+             <mat-autocomplete #autoModel="matAutocomplete">
+               <mat-option *ngFor="let option of filteredModelOptions | async" [value]="option">
+                 {{option}}
+              </mat-option>
+          </mat-autocomplete>
+       </mat-form-field>
+      </div>
 
 
-    <div class="row">
-       <h3>Filters</h3>
+
+      <div class="col-2">
+
+        <mat-form-field>
+          <mat-label>Carfax</mat-label>
+          <mat-select [formControl]="carfaxSelect">
+            <mat-option [value]="2">All</mat-option>
+            <mat-option [value]="1">Yes</mat-option>
+            <mat-option [value]="0">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-2">
+
+        <mat-form-field>
+          <mat-label>Bought</mat-label>
+          <mat-select [formControl]="boughtSelect">
+            <mat-option [value]="2">All</mat-option>
+            <mat-option [value]="1">Yes</mat-option>
+            <mat-option [value]="0">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+
+        <mat-form-field>
+          <mat-label>Sold</mat-label>
+          <mat-select [formControl]="soldSelect">
+            <mat-option [value]="2">All</mat-option>
+            <mat-option [value]="1">Yes</mat-option>
+            <mat-option [value]="0">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+<!--
+      <div class="col-2">
+        <mat-form-field class="my-form-field" placeholder="Provider Name Filter">
+          <input type="text" matInput placeholder="Provider Name Filter"  [formControl]="providerName"
+               [matAutocomplete]="autoProviderName">
+             <mat-autocomplete #autoProviderName="matAutocomplete">
+               <mat-option *ngFor="let option of filteredProviderNameOptions | async" [value]="option">
+                 {{option}}
+              </mat-option>
+          </mat-autocomplete>
+       </mat-form-field>
+      </div> -->
+
+
+
     </div>
-    <div class="row">
+
+
+    <div class="row py-2">
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="From Added Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="fromAddedDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="To Added Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="toAddedDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="From Auction Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="fromAuctionDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="To Auction Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="toAuctionDate"
+          />
+        </mat-form-field>
+      </div>
+
+    </div>
+
+
+
+    <div class="row py-2">
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="From Bought Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="fromBoughtDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="To Bought Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="toBoughtDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="From Sold Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="fromSoldDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-2">
+        <mat-form-field class="my-form-field">
+          <input
+            matInput
+            type="text"
+            placeholder="To Sold Date"
+            autocomplete="off"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [formControl]="toSoldDate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-4" style="text-align: right">
+        <app-export
+          [dataSource]="dataSource"
+          nameExcel="CalculatorNew"
+          [headerTableToExport]="headerTableToExport"
+        >
+        </app-export>
+      </div>
+    </div>
+
+
+
+
+    <!-- <div class="row">
 
 
       <div class="col-6">
@@ -35,157 +287,176 @@
       </div>
 
 
-    </div>
+    </div> -->
 
-    <div class="row">
-      <div class="col-8">
-
-
-      </div>
+    <!-- <div class="row">
+      <div class="col-8"></div>
 
 
-      <div class="col-4 mt-3" style="text-align: right;">
-
-        <app-export [dataSource]="dataSource" nameExcel="CalculatorNew" [headerTableToExport]="headerTableToExport"></app-export>
-        <!-- <button type="button" id="save" class="btn btn-success " (click)="exportExcel()">Export Excel</button> -->
-      </div>
-
-
-    </div>
-
-
+    </div> -->
 
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-
-          <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                    [aria-label]="checkboxLabel()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(row) : null"
-                    [checked]="selection.isSelected(row)"
-                    [aria-label]="checkboxLabel(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? toggleAllRows() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="bold"> # </th>
-          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="bold">
+            #
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
         </ng-container>
 
         <!-- Vin -->
         <ng-container matColumnDef="vin">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Vin </th>
-          <td mat-cell *matCellDef="let row"> {{row.vin}}
-            <mat-icon *ngIf="row.purchased">shopping_bag</mat-icon>
-            <mat-icon *ngIf="row.isSold">check_circle</mat-icon>
-
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Vin</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.vin }}
+            <mat-icon style="color:green" *ngIf="row.purchased">shopping_bag</mat-icon>
+            <mat-icon style="color:green" *ngIf="row.isSold">check_circle</mat-icon>
           </td>
         </ng-container>
 
-         <!-- Year -->
-         <ng-container matColumnDef="year">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Year </th>
-          <td mat-cell *matCellDef="let row"> {{row.year}} </td>
+        <!-- Year -->
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+          <td mat-cell *matCellDef="let row">{{ row.year }}</td>
         </ng-container>
 
-         <!-- Make -->
-         <ng-container matColumnDef="make">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Make </th>
-          <td mat-cell *matCellDef="let row"> {{row.make}} </td>
+        <!-- Make -->
+        <ng-container matColumnDef="make">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Make</th>
+          <td mat-cell *matCellDef="let row">{{ row.make }}</td>
         </ng-container>
 
-         <!-- Model -->
-         <ng-container matColumnDef="model">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
-          <td mat-cell *matCellDef="let row"> {{row.model}} </td>
+        <!-- Model -->
+        <ng-container matColumnDef="model">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
+          <td mat-cell *matCellDef="let row">{{ row.model }}</td>
         </ng-container>
 
         <ng-container matColumnDef="loteNumber">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lote Number </th>
-          <td mat-cell *matCellDef="let row"> {{row.loteNumber}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Lote Number</th>
+          <td mat-cell *matCellDef="let row">{{ row.loteNumber }}</td>
         </ng-container>
 
         <ng-container matColumnDef="auctionDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Autiuon Date </th>
-          <td mat-cell *matCellDef="let row"> {{row.auctionDate |  date: 'MM/dd/yyyy'}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Autiuon Date
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.auctionDate | date: "MM/dd/yyyy" }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="maxBid">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Max Bid </th>
-          <td mat-cell *matCellDef="let row"> {{row.maxAmountToOffer}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Max Bid</th>
+          <td mat-cell *matCellDef="let row">{{ row.maxAmountToOffer }}</td>
         </ng-container>
 
         <ng-container matColumnDef="marketValue">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Market Value </th>
-          <td mat-cell *matCellDef="let row"> {{row.marketValueFinal}}
-          <div *ngIf="row.isSold">({{row.soldValue}})</div>
-
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Market Value
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.marketValueFinal }}
+            <div *ngIf="row.isSold">({{ row.soldValue }})</div>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="investment">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Investment </th>
-          <td mat-cell *matCellDef="let row"> {{getCalculation(row,'investment')}}
-            <div *ngIf="row.purchased">({{row.totalInvested}})</div>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Investment</th>
+          <td mat-cell *matCellDef="let row">
+            {{ getCalculation(row, "investment") }}
+            <div *ngIf="row.purchased">({{ row.totalInvested }})</div>
           </td>
         </ng-container>
 
-
         <ng-container matColumnDef="earnings">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Earnings </th>
-          <td mat-cell *matCellDef="let row"> {{row.earningsAmount}}
-            <div *ngIf="row.isSold">({{row.earningsFinal}})</div>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Earnings</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.earningsAmount }}
+            <div *ngIf="row.isSold">({{ row.earningsFinal }})</div>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-          <td mat-cell *matCellDef="let row"> {{row.titleType}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+          <td mat-cell *matCellDef="let row">{{ row.titleType }}</td>
         </ng-container>
 
         <ng-container matColumnDef="created_at">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Added on </th>
-          <td mat-cell *matCellDef="let row"> {{row.created_at | date:'shortDate' }} </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Added on</th>
           <td mat-cell *matCellDef="let row">
-
-            <button type="button" id="details" class="btn btn-primary"
-            (click)="openLink(row.link,true)">Details</button>
-            <button type="button" id="update" class="btn btn-success"
-              (click)="redirectToUpdatePage(row)">Update</button>
-              <!-- <button type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
-                (click)="showModalToDelete(row)">Delete</button> -->
-
+            {{ row.created_at | date: "shortDate" }}
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              type="button"
+              id="details"
+              class="btn btn-primary"
+              (click)="openLink(row.link, true)"
+            >
+              Details
+            </button>
+            <button
+              type="button"
+              id="update"
+              class="btn btn-success"
+              (click)="redirectToUpdatePage(row)"
+            >
+              Update
+            </button>
+            <!-- <button type="button" id="delete" class="btn btn-danger" style="margin-left: 10px;"
+                (click)="showModalToDelete(row)">Delete</button> -->
+          </td>
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headerTable"></tr>
-        <tr mat-row *matRowDef="let row; columns: headerTable;"></tr>
+        <tr mat-row *matRowDef="let row; columns: headerTable"></tr>
 
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          <td class="mat-cell" colspan="4">
+            No data matching the filters
+          </td>
         </tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[10,20,50,100]" aria-label="Select page of dataSource.filteredData"></mat-paginator>
+      <mat-paginator
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        aria-label="Select page of dataSource.filteredData"
+      >
+      </mat-paginator>
     </div>
   </div>
-
-
+</div>
