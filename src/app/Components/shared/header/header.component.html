@@ -125,6 +125,14 @@
                   <a  class="dropdown-item py-2">Dashboard</a>
                 </li>
 
+                <li routerLink="/settings" *ngIf="isLoggedIn$ | async">
+                  <a  class="dropdown-item py-2">Settings</a>
+                </li>
+
+                <li routerLink="/subscription" *ngIf="isLoggedIn$ | async">
+                  <a  class="dropdown-item py-2">Subscription</a>
+                </li>
+
                 <li routerLink="/calculator" *ngIf="isLoggedIn$ | async">
                   <a  class="dropdown-item py-2">New Estimate</a>
                 </li>

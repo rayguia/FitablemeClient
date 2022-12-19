@@ -54,26 +54,7 @@ import { CalculatorDashboardComponent } from './calculator-dashboard/calculator-
     CommonModule,
     CalculatorRoutingModule,
     SharedModule,
-    ReactiveFormsModule,
-    BsDatepickerModule.forRoot(),
-    FormsModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatToolbarModule,
-    TabsModule.forRoot(),
-    AccordionModule.forRoot(),
+
   ]
 })
 export class CalculatorModule { }

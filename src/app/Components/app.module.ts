@@ -21,6 +21,12 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from '../Guards/auth.guard';
 import { TokenInterceptorService } from '../Interceptors/token-interceptor.service';
+import { NgxStripeModule } from 'ngx-stripe';
+import { SettingModule } from './setting/setting/setting.module';
+import { AddPaymentComponent } from './setting/add-payment/add-payment.component';
+import { PaymentSavedComponent } from './setting/payment-saved/payment-saved.component';
+
+
 
 
 export function tokenGetter() {
@@ -29,11 +35,11 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,    
+    NotFoundComponent,
     InternalServerComponent,
     MessageComponent,
-
-
+    AddPaymentComponent,
+    PaymentSavedComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +49,10 @@ export function tokenGetter() {
     OwnerModule,
     DashboardModule,
     AuthModule,
+    SettingModule,
     NgSelectModule,
     FormsModule,
-
+    NgxStripeModule.forRoot('pk_test_51LPGp5A8gdNsGmcIoYWTwKIoq4GejbYZPyO5Ze33x9VTht1XSsnNXKJ87D11TbMPUpmkD98nHYHmdW32FLHcCJQG00Z7I6s0r9'),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

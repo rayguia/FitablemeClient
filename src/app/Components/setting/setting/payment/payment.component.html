@@ -1,0 +1,173 @@
+<!-- <form #email="ngForm" (ngSubmit)="onClickSubmit(email.value)" class="center">
+  <input type="text" name="emailID" placeholder="email" ngModel>
+  <br />
+  <button type="submit">Create Customer</button>
+  </form> -->
+  <!-- <h4 *ngIf="customerID" class="center">{{customerID}}</h4> -->
+  <mat-spinner *ngIf="loading == true; else allContent" class="center" style="margin: auto;
+  margin-top: 275px;"></mat-spinner>
+
+
+  <ng-template #allContent>
+    <h2 class="center mt-5">Payment</h2>
+    <div class="center" *ngIf="paymentMethod == null; else ifCardSaved">
+
+
+
+
+    <div  [formGroup]="paymentElementForm" ngxStripeCardGroup [elementsOptions]="elementsOptions">
+      <div class="row px-5 mx-5">
+
+        <div class="col-12">
+          <mat-form-field class="example-full-width my-3" appearance="outline">
+            <input matInput placeholder="Name on card" formControlName="name" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-12">
+          <mat-form-field class="example-full-width my-3" appearance="outline">
+            <input matInput placeholder="Address" formControlName="address" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field class="example-full-width my-3" appearance="outline">
+            <input matInput placeholder="City" formControlName="city" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field class="example-full-width my-3" appearance="outline">
+            <input matInput placeholder="ZIP Code" formControlName="zipcode" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-12">
+          <ngx-stripe-card-number style="margin:12px 0px;" class="stripe"  [options]="cardNumberOptions"></ngx-stripe-card-number>
+
+        </div>
+
+        <div class="col-6">
+
+          <ngx-stripe-card-expiry style="margin:12px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-expiry>
+        </div>
+        <div class="col-6">
+
+          <ngx-stripe-card-cvc style="margin:12px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-cvc>
+        </div>
+
+
+       </div>
+
+       <div class="row center">
+        <div class="col-12  center">
+          <button type="button" class="btn btn-success my-3" (click)="create_payment_intent()">Save</button>
+        </div>
+       </div>
+
+    </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+    <ng-template #ifCardSaved>
+
+
+    <div class="row px-5 mx-5">
+
+
+      <div class="col-12">
+        <div>
+          <mat-label>Credit Card</mat-label>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput readonly [formControl]="cardSaved" />
+          </mat-form-field>
+
+          <button type="button" class="btn btn-primary my-3 text-center" >Edit</button>
+
+          <button type="button" class="btn btn-text my-3 text-center" >Delete</button>
+
+        </div>
+
+      </div>
+  </div>
+</ng-template>
+
+
+
+</ng-template>
+
+
+
+
+
+
+
+  <!-- <div class="row">
+        <div class="col-md-6" *ngFor="let plan of plans">
+            <div class="card mb-3">
+              <div class="card-header">
+                    ${{ plan.price }}/Mo
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">{{ plan.name }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                <a class="btn btn-primary pull-right" (click)="CreateIntent(plan)">Choose</a>
+
+              </div>
+            </div>
+        </div>
+</div> -->
+
+
+<!-- <div class="container" *ngIf="showIntent">
+  <div class="row justify-content-center">
+      <div class="col-md-8">
+          <div class="card">
+              <div class="card-header">
+                  You will be charged ${{ plan.price  }}.00 for {{ plan.name }} Plan
+              </div>
+
+              <div class="card-body">
+
+                  <form id="payment-form">
+
+                      <input type="hidden" name="plan" id="plan" value="plan.id">
+
+                      <div class="row">
+                          <div class="col-xl-4 col-lg-4">
+                              <div class="form-group">
+                                  <label for="">Name</label>
+                                  <input type="text" name="name" id="card-holder-name" class="form-control" value="" placeholder="Name on the card">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="col-xl-4 col-lg-4">
+                              <div class="form-group">
+                                  <label for="">Card details</label>
+                                  <div id="card-element"></div>
+                              </div>
+                          </div>
+                          <div class="col-xl-12 col-lg-12">
+                          <hr>
+                              <button type="submit" class="btn btn-primary" id="card-button" data-secret="intent.client_secret">Purchase</button>
+                          </div>
+                      </div>
+
+                  </form>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div> -->

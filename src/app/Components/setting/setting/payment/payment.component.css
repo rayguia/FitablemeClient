@@ -1,0 +1,160 @@
+/* .StripeElement--empty{
+  box-sizing: border-box;
+  height: 40px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+  background-color: aqua !important;
+}
+
+
+*/
+
+.StripeElement {
+
+  font-size: 14px;
+    width: 100%;
+
+    background-color: #f5f8fa;
+    border-color: #e4e6ef;
+    border: 1px solid #e4e6ef;
+    color: #5e6278;
+    transition: color 0.2s ease;
+    box-shadow: none !important;
+    font-size: 1.15rem;
+    border-radius: 0.625rem;
+    height: 50px;
+    margin: 12px 0px;
+    padding: 15px 12px;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+
+  /* box-sizing: border-box;
+  height: 40px;
+  padding: 10px 12px;
+  border: 1px solid #e4e6ef;
+  border-radius: 4px;
+  background-color: #f5f8fa !important;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+  height: 50px; */
+  /* background-color: aqua !important; */
+  }
+  .StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+
+  }
+  .StripeElement--invalid {
+  border-color: #fa755a;
+
+  }
+  .StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+
+  }
+  .stripe{
+
+    /* font-size: 14px;
+    width: 100%;
+
+    background-color: #f5f8fa;
+    border-color: #e4e6ef;
+    border: 1px solid #d6d8df;
+    color: #5e6278;
+    transition: color 0.2s ease;
+    box-shadow: none !important;
+    font-size: 1.15rem;
+    border-radius: 0.625rem;
+    height: 50px;
+    display: block; */
+
+
+
+  /* width: 400px;
+  border: '1px solid #cdacac';
+  border-radius: 5px;
+  margin: 20px 0px;
+  min-height: 50px;
+  border: 1px solid #e7dede; */
+  }
+  .div{
+  width: 400px;
+
+  }
+  .center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  }
+
+
+
+  table {
+    width: 100%;
+  }
+
+  .mat-paginator-range-label {
+      display: none;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+
+    background-color: #f5f8fa;
+    border-color: #e4e6ef;
+    border: 1px solid #e4e6ef;
+    color: #5e6278;
+    transition: color 0.2s ease;
+    box-shadow: none !important;
+    font-size: 1.15rem;
+    border-radius: 0.625rem;
+    height: 50px;
+    /* margin: 20px 0px; */
+  }
+
+
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgb(207, 205, 205);
+    height: 50px !important;
+
+  }
+
+  input.mat-input-element {
+    color: rgb(0, 0, 0);
+  }
+
+  .my-form-field{
+    width: 90% !important;
+  }
+
+  .my-form-field .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0px !important;
+    height: 50px !important;
+  }
+  .mat-form-field-infix{
+    border-top: 0px !important;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 20px 0 10px 0;
+    font-weight: 500;
+    opacity: 0.5;
+  }
+
+  .mat-column-id {
+    width: 45px !important;
+    border-right: 1px solid rgb(182, 178, 178);
+    margin-right: 15px !important;
+
+  }

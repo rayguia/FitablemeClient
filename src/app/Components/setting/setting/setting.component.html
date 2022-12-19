@@ -1,0 +1,42 @@
+
+  <app-header></app-header>
+  <main>
+
+    <div class="display-area">
+
+      <div style="max-width: 1000px;margin: auto;
+      margin-top: 50px;">
+
+        <div class="row">
+
+          <div class="col-3">
+            <mat-selection-list  [(ngModel)]="selectedOption" #shoes [multiple]="false" (ngModelChange)="selectValue($event)" >
+              <mat-list-option  *ngFor="let shoe of typesOfShoes" [value]="shoe">
+                {{shoe}}
+              </mat-list-option>
+            </mat-selection-list>
+
+          </div>
+
+          <div class="col-9" style="background-color: white;border-radius: 20px;" [ngStyle]="loading ? {'min-height': '650px'}:''">
+
+            <div *ngIf="selectedOption == 'Account'">
+              <app-profile ></app-profile>
+            </div>
+
+            <app-payment *ngIf="selectedOption == 'Payment'" (loadingEvent)="loadingChanged($event)"></app-payment>
+
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+
+      <router-outlet></router-outlet>
+
+    </div>
+  </main>

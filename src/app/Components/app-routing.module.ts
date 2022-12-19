@@ -14,7 +14,7 @@ const routes: Routes = [
   //To make it works we need to create tabla DB
   { path: 'calculator', loadChildren: () => import('./calculator/calculator.module').then(m => m.CalculatorModule),canActivate:[AuthGuard] },
 
-
+  { path: 'settings', loadChildren: () => import('./setting/setting/setting.module').then(m => m.SettingModule),canActivate:[AuthGuard] },
 
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate:[AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate:[LoginActiveGuard]},
