@@ -6,8 +6,9 @@ import { SettingComponent } from './setting.component';
 
 const routes: Routes = [
     { path: '', component: SettingComponent, children:[
-      { path:'account', component: ProfileComponent },
-      { path: 'payment', component: PaymentComponent },
+      // { path:'account', component: ProfileComponent },
+      // { path: 'payment', component: PaymentComponent },
+      // { path: ':action', component: SettingComponent },
     // { path: 'create', component: CalculatorPageComponent },
     // { path: 'dashboard', component: CalculatorDashboardComponent },
     // { path: ':id', component: CalculatorPageComponent },

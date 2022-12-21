@@ -31,9 +31,12 @@ export class PaymentComponent implements OnInit {
 
 
   cardSaved = new FormControl('')
+  editCardSaved:boolean = false
 
 
   @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() actionEvent = new EventEmitter<string>();
+  @Input() action;
 
 
   loading:boolean = false;
@@ -110,6 +113,9 @@ export class PaymentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    console.log('action from payment',this.action);
+
     // this.createPaymentIntent(this.paymentElementForm.get('amount').value)
     //   .subscribe(pi => {
     //     this.elementsOptions.clientSecret = pi.client_secret;
@@ -131,10 +137,7 @@ export class PaymentComponent implements OnInit {
  });}
 
 
- setLoading(value:boolean){
-  this.loading = value
-  this.loadingEvent.emit(value);
- }
+
 
  PaymentMethodID;
  create_payment_method() : void{
@@ -164,7 +167,9 @@ export class PaymentComponent implements OnInit {
         this.service.create_payment_method(pack).subscribe((res:any) => {
             console.log('res',res);
             this.paymentMethod = res.data.paymentMethod
-            this.cardSaved = res.data.paymentMethod
+
+            this.setPayment()
+            //this.cardSaved = res.data.paymentMethod
             //this.loading =false;
             this.setLoading(false)
 
@@ -178,8 +183,22 @@ export class PaymentComponent implements OnInit {
       }});}
  }
 
+ create_subscription_with_payment_method_saved(){
+        this.setLoading(true)
+        const pack = {
+          paymentMethodId: this.paymentMethod,
+          customerID: this.customerID,
+      };// Send the payment method and customer ID to your server
+      this.service.create_subscription(pack).subscribe((res) => {
+      this.action = ''
+      this.actionEvent.emit('subscription done');
+      this.setLoading(false)
 
+      console.log('res',res);
+      });
+ }
  create_subscription(): void {
+  this.paymentElementForm.disable()
   this.stripeService.createPaymentMethod({
      type: 'card',
      card: this.cardNumber.element,
@@ -192,6 +211,8 @@ export class PaymentComponent implements OnInit {
       }
     },
   }).subscribe((result:any) => {
+    this.paymentElementForm.enable()
+        this.setLoading(true)
         if (result.paymentMethod) {
            const pack = {
              paymentMethodId: result.paymentMethod,
@@ -199,10 +220,15 @@ export class PaymentComponent implements OnInit {
         };// Send the payment method and customer ID to your server
       this.service.create_subscription(pack).subscribe((res) => {
           console.log('res',res);
+          this.actionEvent.emit('subscription done');
+          //this.action = ''
+          //this.get_payment_method()
+          //this.setLoading(false)
       });
        console.log(result.paymentMethod.id);
 }   else if (result.error) {
        // Error creating the token
+       this.setLoading(false)
        console.log(result.error.message);
     }});}
 
@@ -305,6 +331,7 @@ export class PaymentComponent implements OnInit {
       next: (response: any) => {
 
         this.paymentMethod = response.data.paymentMethod
+
         this.setPayment()
         //this.cardSaved = response.data.paymentMethod
         console.log('response',response);
@@ -325,10 +352,10 @@ export class PaymentComponent implements OnInit {
     this.service.delete_payment_method()
     .subscribe({
       next: (response: any) => {
-
+        this.get_payment_method();
         console.log('remove payment method',response);
         //this.loading = false;
-        this.setLoading(false)
+        //this.setLoading(false)
 
       },
       error: (err: HttpErrorResponse) => {
@@ -340,7 +367,7 @@ export class PaymentComponent implements OnInit {
   create_payment_intent = () => {
 
     let el = this;
-
+    this.paymentElementForm.disable();
     this.service.create_payment_intent()
     .subscribe({
       next: (response: any) => {
@@ -364,16 +391,23 @@ export class PaymentComponent implements OnInit {
           }
           ).subscribe((result:any) => {
           this.paying = false;
+          this.editCardSaved = false;
+          this.resetFormValues()
+
+          this.setLoading(true)
           console.log('Result', result);
+          this.paymentElementForm.enable()
           if (result.error) {
+            this.setLoading(false)
             // Show error to your customer (e.g., insufficient funds)
-            alert({ success: false, error: result.error.message });
+            //alert({ success: false, error: result.error.message });
+
           } else {
 
             console.log('save_payment_method',result);
             el.save_payment_method(result)
             // The payment has been processed!
-            if (result.paymentIntent.status === 'succeeded') {
+            if (result.status === 'succeeded') {
               // Show a success message to your customer
               alert({ success: true });
             }
@@ -395,6 +429,7 @@ export class PaymentComponent implements OnInit {
   }
   save_payment_method(paymentIntent:any){
 
+     this.setLoading(true)
     console.log('paymentIntent',paymentIntent.setupIntent
     );
 
@@ -419,11 +454,22 @@ export class PaymentComponent implements OnInit {
   }
   setPayment(){
 
-    this.cardSaved.setValue('XXXX-XXXX-XXXX-'+this.paymentMethod.card.last4)
+    if(this.paymentMethod != null){
+      this.cardSaved.setValue('XXXX-XXXX-XXXX-'+this.paymentMethod.card.last4)
+      this.cdRef.detectChanges();
+    }
 
-    this.cdRef.detectChanges();
 
   }
+  setLoading(value:boolean){
+    this.loading = value
+    this.loadingEvent.emit(value);
+   }
+   resetFormValues(){
+    this.paymentElementForm.reset();
+   }
+
+
 
 
 

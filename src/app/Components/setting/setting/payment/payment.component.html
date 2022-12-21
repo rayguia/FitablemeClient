@@ -10,7 +10,7 @@
 
   <ng-template #allContent>
     <h2 class="center mt-5">Payment</h2>
-    <div class="center" *ngIf="paymentMethod == null; else ifCardSaved">
+    <div class="center" *ngIf="paymentMethod == null || editCardSaved == true; else ifCardSaved">
 
 
 
@@ -61,7 +61,13 @@
 
        <div class="row center">
         <div class="col-12  center">
-          <button type="button" class="btn btn-success my-3" (click)="create_payment_intent()">Save</button>
+          <button *ngIf="editCardSaved == true"  type="button" class="btn btn-text my-3" (click)="editCardSaved = false">Cancel</button>
+          <button *ngIf="action == ''" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_payment_intent()">Save
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          </button>
+          <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_subscription()">Subscribe
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          </button>
         </div>
        </div>
 
@@ -90,9 +96,11 @@
             <input matInput readonly [formControl]="cardSaved" />
           </mat-form-field>
 
-          <button type="button" class="btn btn-primary my-3 text-center" >Edit</button>
+          <button *ngIf="action == ''" type="button" class="btn btn-primary my-3 text-center" (click)="resetFormValues();editCardSaved = true" >Edit</button>
 
-          <button type="button" class="btn btn-text my-3 text-center" >Delete</button>
+          <button *ngIf="action == ''" type="button" class="btn btn-text my-3 text-center" (click)="delete_payment_method()">Delete</button>
+
+          <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" (click)="create_subscription_with_payment_method_saved()">Subscribe</button>
 
         </div>
 

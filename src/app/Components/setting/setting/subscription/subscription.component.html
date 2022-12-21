@@ -1,0 +1,41 @@
+<mat-spinner *ngIf="loading == true; else allContentSub" class="center" style="margin: auto;
+margin-top: 275px;"></mat-spinner>
+
+
+
+<ng-template #allContentSub>
+<div class="row p-5">
+
+
+
+  <div class="col p-4 rounded bg-light text-dark" *ngIf="subscription != null; else subscribe" >
+    <h2 class="mb-2">Car Estimate {{subscription.plan.name}} Subscription</h2>
+    <div class="d-inline-flex mb-1">Status: <div class="status ms-2">{{subscription.stripe_status}}</div></div>
+
+    <div *ngIf="subscription.ends_at == null; then cancelSubscription else renewSubscription"></div>
+    <ng-template #cancelSubscription>
+      <div class="mb-1">${{subscription.plan.price}} USD next billing cycle.</div>
+      <div  class="mb-2">Your card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}.</b></div>
+      <a class="mt-1" style="cursor: pointer;" (click)="cancel_subscription()">Cancel Subscription</a>
+    </ng-template>
+
+    <ng-template #renewSubscription>
+
+      <div class="mb-1">Your subscription will expire on <b>{{ subscription.ends_at | date}}.</b></div>
+      <div class="mb-2">If you renew today, you card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}</b> with ${{subscription.plan.price}} USD.</div>
+      <a class="mt-1" style="cursor: pointer;" (click)="renew_subscription()">Renew Subscription</a>
+    </ng-template>
+
+
+
+  </div>
+
+
+  <ng-template  #subscribe>
+  <div class="col">
+    <button type="button" class="btn btn-success my-3" (click)="redirectToUpdatePage()">Subscribe
+    </button>
+  </div>
+</ng-template>
+</div>
+</ng-template>

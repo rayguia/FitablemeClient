@@ -7,10 +7,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { NgxStripeModule } from 'ngx-stripe';
 import { PaymentComponent } from './payment/payment.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 
 @NgModule({
-  declarations: [SettingComponent,PaymentComponent,ProfileComponent],
+  declarations: [SettingComponent,PaymentComponent,ProfileComponent, SubscriptionComponent, PaymentHistoryComponent],
   imports: [
     CommonModule,
     SharedModule,

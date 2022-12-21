@@ -1,0 +1,59 @@
+
+
+
+
+<mat-spinner *ngIf="loading == true; else allPayments" class="center" style="margin: auto;
+margin-top: 275px;"></mat-spinner>
+
+
+
+<ng-template #allPayments>
+
+  <div class="row p-3" style="justify-content: center;">
+
+   <div *ngIf="invoices == null then noPayments else yesPayments"></div>
+   <ng-template #noPayments>
+    <div class="col p-4 rounded bg-light text-dark">
+    <p>No purchases found in your history.</p>
+  </div>
+   </ng-template>
+
+   <ng-template #yesPayments>
+
+     <div class="row py-3 text-center">
+      <div class="col-3">Purchase</div>
+      <div class="col-3">Amount</div>
+      <div class="col-3">Payment Date</div>
+      <div class="col-3">Payment Sattus</div>
+
+     </div>
+
+
+     <div class="row rounded bg-light text-dark py-4 text-center">
+      <div class="col-3 border-end" style="align-self: center;"><p class="m-0"><strong>Basic Subscription car</strong></p></div>
+      <div class="col-3 border-end">
+        <div>$10 USD</div>
+        <div style="display: inline-flex;">Subscription
+          <mat-icon style="color:grey" style="font-size: 20px;" matTooltip="Subscription Info" mat-raised-button>info</mat-icon>
+        </div>
+      </div>
+      <div class="col-3 border-end">
+        <div>Dec 29, 2022</div>
+        <div><a>Email Receipt</a></div>
+      </div>
+
+      <div class="col-3">
+        <div>Paid</div>
+        <div>Non-refundable <i>Info</i></div>
+      </div>
+
+     </div>
+
+
+   </ng-template>
+
+
+
+
+    </div>
+</ng-template>

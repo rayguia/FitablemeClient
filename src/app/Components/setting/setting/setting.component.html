@@ -18,13 +18,19 @@
 
           </div>
 
-          <div class="col-9" style="background-color: white;border-radius: 20px;" [ngStyle]="loading ? {'min-height': '650px'}:''">
+          <div class="col-9" style="background-color: white;border-radius: 20px;" [ngStyle]="loading ? {'min-height': '650px'}:{}">
 
-            <div *ngIf="selectedOption == 'Account'">
+            <div *ngIf="selectedOption == 'Account Info'">
               <app-profile ></app-profile>
             </div>
 
-            <app-payment *ngIf="selectedOption == 'Payment'" (loadingEvent)="loadingChanged($event)"></app-payment>
+            <app-payment *ngIf="selectedOption == 'Payment Method'" [action]="action"
+            (actionEvent)="actionChanged($event)"
+            (loadingEvent)="loadingChanged($event)"></app-payment>
+
+            <app-payment-history  *ngIf="selectedOption == 'Payment History'"  (loadingEvent)="loadingChanged($event)"></app-payment-history>
+
+            <app-subscription (actionEvent)="actionChanged($event)" *ngIf="selectedOption == 'Subscription'" (loadingEvent)="loadingChanged($event)"></app-subscription>
 
 
           </div>

@@ -34,6 +34,24 @@ export class StripeDataService {
 
 
 
+    public get_subscription = () => {
+      return this.http.get<any[]>(this.createCompleteRoute('subscription', this.envUrl.urlAddress));
+    }
+    public cancel_subscription = (subscription:any) => {
+      return this.http.post<any[]>(this.createCompleteRoute('cancel_subscription', this.envUrl.urlAddress),subscription,this.generateHeaders());
+    }
+    public renew_subscription = (subscription:any) => {
+      return this.http.post<any[]>(this.createCompleteRoute('renew_subscription', this.envUrl.urlAddress),subscription,this.generateHeaders());
+    }
+
+
+
+    public get_payment_history = () => {
+      return this.http.get<any[]>(this.createCompleteRoute('payment', this.envUrl.urlAddress));
+    }
+
+
+
 
   // public getCalculator = (route: string) => {
 
