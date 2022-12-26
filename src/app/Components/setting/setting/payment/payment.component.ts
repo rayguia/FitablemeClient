@@ -20,6 +20,8 @@ import {
 
 import { StripeDataService } from '../../../shared/services/stripe-data.service';
 import { outputAst } from '@angular/compiler';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { ConfirmModalComponent } from 'src/app/shared/modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-payment',
@@ -32,6 +34,7 @@ export class PaymentComponent implements OnInit {
 
   cardSaved = new FormControl('')
   editCardSaved:boolean = false
+  bsModalRef?: BsModalRef;
 
 
   @Output() loadingEvent = new EventEmitter<boolean>();
@@ -109,7 +112,8 @@ export class PaymentComponent implements OnInit {
     private service:StripeDataService,
     private fb: FormBuilder,
     private stripeService: StripeService,
-    private cdRef : ChangeDetectorRef
+    private cdRef : ChangeDetectorRef,
+    private modalService:BsModalService,
   ) {}
 
   ngOnInit() {
@@ -451,6 +455,20 @@ export class PaymentComponent implements OnInit {
      });
 
 
+  }
+  showModalToDeletePaymentMethod(){
+
+    const config: ModalOptions = {
+      initialState: {
+        modalHeaderText: 'Confirm',
+        modalBodyText: `Are you sure you want to delete your payment method?`,
+        modalBodySubtitle:'This action will unsubscribe you from active subscriptions that use this card. To avoid this, please edit your card information',
+        okButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
+      }
+    };
+    this.bsModalRef = this.modalService.show(ConfirmModalComponent, config);
+    this.bsModalRef.content.deleteConfirmed.subscribe(_ => this.delete_payment_method());
   }
   setPayment(){
 

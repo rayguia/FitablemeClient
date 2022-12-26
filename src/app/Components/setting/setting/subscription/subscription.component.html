@@ -10,23 +10,32 @@ margin-top: 275px;"></mat-spinner>
 
   <div class="col p-4 rounded bg-light text-dark" *ngIf="subscription != null; else subscribe" >
     <h2 class="mb-2">Car Estimate {{subscription.plan.name}} Subscription</h2>
-    <div class="d-inline-flex mb-1">Status: <div class="status ms-2">{{subscription.stripe_status}}</div></div>
+    <div class="d-inline-flex mb-1">Status: <div class="status ms-2">{{subscription.stripe_status | uppercase}}</div></div>
 
     <div *ngIf="subscription.ends_at == null; then cancelSubscription else renewSubscription"></div>
     <ng-template #cancelSubscription>
       <div class="mb-1">${{subscription.plan.price}} USD next billing cycle.</div>
       <div  class="mb-2">Your card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}.</b></div>
-      <a class="mt-1" style="cursor: pointer;" (click)="cancel_subscription()">Cancel Subscription</a>
+      <a class="mt-1" style="cursor: pointer;" (click)="show_modal_cancel_subscription()">Cancel Subscription</a>
     </ng-template>
 
     <ng-template #renewSubscription>
 
-      <div class="mb-1">Your subscription will expire on <b>{{ subscription.ends_at | date}}.</b></div>
-      <div class="mb-2">If you renew today, you card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}</b> with ${{subscription.plan.price}} USD.</div>
-      <a class="mt-1" style="cursor: pointer;" (click)="renew_subscription()">Renew Subscription</a>
+      <ng-container *ngIf="subscription.stripe_status == 'canceled'; else renewSubscription2">
+  <div class="mb-1">Your subscription expired on <b>{{ subscription.ends_at | date}}.</b></div>
+      <div class="mb-2">If you renew today, you card will be charged today <b>{{ today | date}}</b> with ${{subscription.plan.price}} USD.</div>
+      <a class="mt-1" style="cursor: pointer;" (click)="redirectToUpdatePage()">Renew Subscription Today</a>
+
+      </ng-container>
+
     </ng-template>
 
+    <ng-template #renewSubscription2>
 
+      <div class="mb-1">Your subscription will expire on <b>{{ subscription.ends_at | date}}.</b></div>
+      <div class="mb-2">If you renew today, you card will be charged on <b>{{ subscription.ends_at | date}}</b> with ${{subscription.plan.price}} USD.</div>
+      <a class="mt-1" style="cursor: pointer;" (click)="renew_subscription()">Renew Subscription</a>
+    </ng-template>
 
   </div>
 

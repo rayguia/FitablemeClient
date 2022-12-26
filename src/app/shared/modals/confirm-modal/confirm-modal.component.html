@@ -8,6 +8,9 @@
 <div class="modal-body">
   {{modalBodyText}}
 </div>
+<div *ngIf="modalBodySubtitle !=''" class="modal-body">
+  {{modalBodySubtitle}}
+</div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="onOkClicked()">{{okButtonText}}</button>
   <button type="button" class="btn btn-success" (click)="cancelDelete()">{{cancelButtonText}}</button>

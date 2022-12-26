@@ -220,6 +220,10 @@ select.form-select{
     text-align: center;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 
 
 

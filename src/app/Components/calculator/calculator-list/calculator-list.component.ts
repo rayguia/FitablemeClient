@@ -510,10 +510,13 @@ export class CalculatorListComponent implements OnInit,AfterViewInit{
     this.repository.getCalculators(apiAddress)
     .subscribe({
       next: (response: any) => {
-        this.calculators = response.data.calculators
-        this.dataSource = new MatTableDataSource(this.calculators);
-        this.isLoadingResults =false;
-        this.setupFilters()
+        if(response.data.calculators){
+            this.calculators = response.data.calculators
+            this.dataSource = new MatTableDataSource(this.calculators);
+            this.isLoadingResults =false;
+            this.setupFilters()
+        }
+
       },
       error: (err: HttpErrorResponse) => {
           this.errorHandler.handleError(err);

@@ -1,7 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { StripeDataService } from 'src/app/Components/shared/services/stripe-data.service';
+import { ConfirmModalComponent } from 'src/app/shared/modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-subscription',
@@ -15,7 +19,14 @@ export class SubscriptionComponent implements OnInit {
   loading:boolean = false;
   subscription:any = null;
   upcomingInvoice:any = null
-  constructor(private cdRef : ChangeDetectorRef,private service:StripeDataService,private router: Router) { }
+  bsModalRef?: BsModalRef;
+  today = new Date();
+  constructor(
+    private cdRef : ChangeDetectorRef,
+    private service:StripeDataService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private modalService:BsModalService) { }
 
   ngOnInit(): void {
 
@@ -88,6 +99,26 @@ export class SubscriptionComponent implements OnInit {
           // this.errorMessage = this.errorHandler.errorMessage;
       }
     })
+  }
+
+  show_modal_cancel_subscription(){
+
+    //this.datePipe.transform()
+
+    let dateNext = this.datePipe.transform(this.upcomingInvoice.next_payment_attempt*1000, 'MMM d, y h:mm:ss a');
+    //let newDate  = moment(this.upcomingInvoice.next_payment_attempt, "DD-MM-YYYY").add(5, 'days');
+    let newDate = moment.unix(this.upcomingInvoice.next_payment_attempt).add(1,'days').format("MM/DD/YYYY")
+    const config: ModalOptions = {
+      initialState: {
+        modalHeaderText: 'Confirm',
+        modalBodyText: `Are you sure you want to cancel?`,
+        modalBodySubtitle:`If you cancel, your estimates content will be unavailable starting ${newDate}.`,
+        okButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
+      }
+    };
+    this.bsModalRef = this.modalService.show(ConfirmModalComponent, config);
+    this.bsModalRef.content.deleteConfirmed.subscribe(_ => this.cancel_subscription());
   }
 
 

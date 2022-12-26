@@ -11,7 +11,7 @@ margin-top: 275px;"></mat-spinner>
 
   <div class="row p-3" style="justify-content: center;">
 
-   <div *ngIf="invoices == null then noPayments else yesPayments"></div>
+   <div *ngIf="invoices.length == 0 then noPayments else yesPayments"></div>
    <ng-template #noPayments>
     <div class="col p-4 rounded bg-light text-dark">
     <p>No purchases found in your history.</p>
@@ -29,22 +29,24 @@ margin-top: 275px;"></mat-spinner>
      </div>
 
 
-     <div class="row rounded bg-light text-dark py-4 text-center">
-      <div class="col-3 border-end" style="align-self: center;"><p class="m-0"><strong>Basic Subscription car</strong></p></div>
+     <div class="row rounded bg-light text-dark py-4 mb-3 text-center" *ngFor="let invoice of invoices; index as i;">
+      <div class="col-3 border-end" style="align-self: center;"><p class="m-0"><strong>Car Estimate Basic Subscription</strong></p></div>
       <div class="col-3 border-end">
-        <div>$10 USD</div>
-        <div style="display: inline-flex;">Subscription
-          <mat-icon style="color:grey" style="font-size: 20px;" matTooltip="Subscription Info" mat-raised-button>info</mat-icon>
+        <div>${{invoice.amount_paid/100}} {{invoice.currency | uppercase}}</div>
+        <div style="display: inline-flex;" class="small">Subscription
+          <mat-icon style="color:grey" style="font-size: 18px;" matTooltip="Auto-renews every {{invoice.lines.data[0].plan.interval}}" mat-raised-button>info</mat-icon>
         </div>
       </div>
       <div class="col-3 border-end">
-        <div>Dec 29, 2022</div>
-        <div><a>Email Receipt</a></div>
+        <div>{{invoice.created*1000 | date}}</div>
+        <div><a class="small pointer" [href]="invoice.invoice_pdf" download>Download Receipt</a></div>
       </div>
 
       <div class="col-3">
-        <div>Paid</div>
-        <div>Non-refundable <i>Info</i></div>
+        <div>{{invoice.status | uppercase}}</div>
+        <div style="display: inline-flex;" class="small">Non-refundable
+          <!-- <mat-icon style="color:grey" style="font-size: 18px;" matTooltip="Subscription Info" mat-raised-button>info</mat-icon> -->
+        </div>
       </div>
 
      </div>

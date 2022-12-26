@@ -12,6 +12,7 @@ export class ConfirmModalComponent implements OnInit {
   modalBodyText: string = '';
   okButtonText: string = '';
   cancelButtonText: string = '';
+  modalBodySubtitle:string = '';
   deleteConfirmed: EventEmitter<any> = new EventEmitter();
   constructor(private bsModalRef: BsModalRef) { }
   ngOnInit(): void {

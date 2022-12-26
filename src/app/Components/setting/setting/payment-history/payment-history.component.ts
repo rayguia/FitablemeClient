@@ -11,7 +11,7 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit {
 
   @Output() loadingEvent = new EventEmitter<boolean>();
   loading:boolean = false;
-  invoices:any = null
+  invoices:any[] = []
   constructor(private service:StripeDataService) { }
 
   ngOnInit(): void {

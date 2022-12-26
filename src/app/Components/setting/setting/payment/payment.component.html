@@ -98,7 +98,7 @@
 
           <button *ngIf="action == ''" type="button" class="btn btn-primary my-3 text-center" (click)="resetFormValues();editCardSaved = true" >Edit</button>
 
-          <button *ngIf="action == ''" type="button" class="btn btn-text my-3 text-center" (click)="delete_payment_method()">Delete</button>
+          <button *ngIf="action == ''" type="button" class="btn btn-text my-3 text-center" (click)="showModalToDeletePaymentMethod()">Delete</button>
 
           <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" (click)="create_subscription_with_payment_method_saved()">Subscribe</button>
 
