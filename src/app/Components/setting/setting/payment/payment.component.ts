@@ -35,7 +35,8 @@ export class PaymentComponent implements OnInit {
   cardSaved = new FormControl('')
   editCardSaved:boolean = false
   bsModalRef?: BsModalRef;
-
+  errorsMessage:string[] = []
+  processing:boolean = false
 
   @Output() loadingEvent = new EventEmitter<boolean>();
   @Output() actionEvent = new EventEmitter<string>();
@@ -99,6 +100,7 @@ export class PaymentComponent implements OnInit {
   showIntent:boolean = false
   planAmount: number = 10;
 
+
   paymentElementForm = this.fb.group({
     name: ['', [Validators.required]],
     address: ['',[Validators.required]],
@@ -106,6 +108,7 @@ export class PaymentComponent implements OnInit {
     city: ['',[Validators.required]]
   });
   paymentMethod:any = null
+  subscription:any = null;
 
   constructor(
     private http: HttpClient,
@@ -128,6 +131,14 @@ export class PaymentComponent implements OnInit {
     this.get_payment_method()
     // this.delete_payment_method();
     // this.getPlans()
+  }
+
+  getError(name:string){
+    let error = this.paymentElementForm.get(name).hasError('required')
+    console.log('erros', name, error );
+
+    return error
+
   }
 
   customerID;
@@ -171,6 +182,7 @@ export class PaymentComponent implements OnInit {
         this.service.create_payment_method(pack).subscribe((res:any) => {
             console.log('res',res);
             this.paymentMethod = res.data.paymentMethod
+            this.subscription = res.data.subscription
 
             this.setPayment()
             //this.cardSaved = res.data.paymentMethod
@@ -189,12 +201,14 @@ export class PaymentComponent implements OnInit {
 
  create_subscription_with_payment_method_saved(){
         this.setLoading(true)
+
         const pack = {
           paymentMethodId: this.paymentMethod,
           customerID: this.customerID,
       };// Send the payment method and customer ID to your server
-      this.service.create_subscription(pack).subscribe((res) => {
+      this.service.create_subscription(pack).subscribe((res:any) => {
       this.action = ''
+      this.subscription = res.data.subscription
       this.actionEvent.emit('subscription done');
       this.setLoading(false)
 
@@ -202,6 +216,16 @@ export class PaymentComponent implements OnInit {
       });
  }
  create_subscription(): void {
+
+
+
+  this.errorsMessage= []
+  this.paymentElementForm.markAllAsTouched();
+
+
+  if (this.paymentElementForm.valid) {
+
+  this.processing = true
   this.paymentElementForm.disable()
   this.stripeService.createPaymentMethod({
      type: 'card',
@@ -216,8 +240,9 @@ export class PaymentComponent implements OnInit {
     },
   }).subscribe((result:any) => {
     this.paymentElementForm.enable()
-        this.setLoading(true)
+
         if (result.paymentMethod) {
+          this.setLoading(true)
            const pack = {
              paymentMethodId: result.paymentMethod,
              customerID: this.customerID,
@@ -227,83 +252,89 @@ export class PaymentComponent implements OnInit {
           this.actionEvent.emit('subscription done');
           //this.action = ''
           //this.get_payment_method()
-          //this.setLoading(false)
+          this.processing = false
+          this.setLoading(false)
       });
        console.log(result.paymentMethod.id);
 }   else if (result.error) {
        // Error creating the token
+       this.paymentElementForm.enable();
+            console.log('Result error', result);
+            //this.errorMessage = result.error.message
+            this.errorsMessage[result.error.code] = result.error.message
+       this.processing = false
        this.setLoading(false)
        console.log(result.error.message);
     }});}
 
-
-  pay() {
-    if (true || this.paymentElementForm.valid) {
-
-      // this.stripeService.confirmCardSetup
-      // this.stripeService.confirmSetup
-      this.paying = true;
-      this.stripeService.confirmPayment({
-        elements: this.paymentElement.elements,
-        confirmParams: {
-          payment_method_data: {
-            billing_details: {
-              name: this.paymentElementForm.get('name').value,
-              email: this.paymentElementForm.get('email').value,
-              address: {
-                line1: this.paymentElementForm.get('address').value || '',
-                postal_code: this.paymentElementForm.get('zipcode').value || '',
-                city: this.paymentElementForm.get('city').value || '',
-              }
-            }
-          }
-        },
-        redirect: 'if_required'
-      }).subscribe(result => {
-        this.paying = false;
-        console.log('Result', result);
-        if (result.error) {
-          // Show error to your customer (e.g., insufficient funds)
-          alert({ success: false, error: result.error.message });
-        } else {
-          // The payment has been processed!
-          if (result.paymentIntent.status === 'succeeded') {
-            // Show a success message to your customer
-            alert({ success: true });
-          }
-        }
-      });
-    } else {
-      console.log(this.paymentElementForm);
-    }
   }
+  // pay() {
+  //   if (true || this.paymentElementForm.valid) {
 
-  private createPaymentIntent(amount: number): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(
-      `http://127.0.0.1:8000/api/create-payment-intent`,
-      { amount }
-    );
-  }
+  //     // this.stripeService.confirmCardSetup
+  //     // this.stripeService.confirmSetup
+  //     this.paying = true;
+  //     this.stripeService.confirmPayment({
+  //       elements: this.paymentElement.elements,
+  //       confirmParams: {
+  //         payment_method_data: {
+  //           billing_details: {
+  //             name: this.paymentElementForm.get('name').value,
+  //             email: this.paymentElementForm.get('email').value,
+  //             address: {
+  //               line1: this.paymentElementForm.get('address').value || '',
+  //               postal_code: this.paymentElementForm.get('zipcode').value || '',
+  //               city: this.paymentElementForm.get('city').value || '',
+  //             }
+  //           }
+  //         }
+  //       },
+  //       redirect: 'if_required'
+  //     }).subscribe(result => {
+  //       this.paying = false;
+  //       console.log('Result', result);
+  //       if (result.error) {
+  //         // Show error to your customer (e.g., insufficient funds)
+  //         alert({ success: false, error: result.error.message });
+  //       } else {
+  //         // The payment has been processed!
+  //         if (result.paymentIntent.status === 'succeeded') {
+  //           // Show a success message to your customer
+  //           alert({ success: true });
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     console.log(this.paymentElementForm);
+  //   }
+  // }
 
-  private getPlans = () => {
-    const apiAddress: string = 'plans';
-    this.service.getPlans(apiAddress)
-    .subscribe({
-      next: (response: any) => {
-        this.plans = response.data.plans
+  // private createPaymentIntent(amount: number): Observable<PaymentIntent> {
+  //   return this.http.post<PaymentIntent>(
+  //     `http://127.0.0.1:8000/api/create-payment-intent`,
+  //     { amount }
+  //   );
+  // }
 
-        console.log('plans',this.plans);
+  // private getPlans = () => {
+  //   const apiAddress: string = 'plans';
+  //   this.service.getPlans(apiAddress)
+  //   .subscribe({
+  //     next: (response: any) => {
+  //       this.plans = response.data.plans
 
-        // this.dataSource = new MatTableDataSource(this.calculators);
-        // this.isLoadingResults =false;
-        // this.setupFilters()
-      },
-      error: (err: HttpErrorResponse) => {
-          // this.errorHandler.handleError(err);
-          // this.errorMessage = this.errorHandler.errorMessage;
-      }
-    })
-  }
+  //       console.log('plans',this.plans);
+
+  //       // this.dataSource = new MatTableDataSource(this.calculators);
+  //       // this.isLoadingResults =false;
+  //       // this.setupFilters()
+  //     },
+  //     error: (err: HttpErrorResponse) => {
+  //         // this.errorHandler.handleError(err);
+  //         // this.errorMessage = this.errorHandler.errorMessage;
+  //     }
+  //   })
+  // }
   CreateIntent = (plan:any) => {
     this.planAmount = plan.price
     const apiAddress: string = `plans/${plan.slug}`;
@@ -335,6 +366,7 @@ export class PaymentComponent implements OnInit {
       next: (response: any) => {
 
         this.paymentMethod = response.data.paymentMethod
+        this.subscription = response.data.subscription
 
         this.setPayment()
         //this.cardSaved = response.data.paymentMethod
@@ -370,8 +402,17 @@ export class PaymentComponent implements OnInit {
   }
   create_payment_intent = () => {
 
+
+    this.errorsMessage= []
+    this.paymentElementForm.markAllAsTouched();
     let el = this;
+    console.log('form value',this.paymentElementForm.valid);
+    console.log('this.paymentElementForm',this.paymentElementForm);
+
+    if(this.paymentElementForm.valid){
+
     this.paymentElementForm.disable();
+    this.processing = true
     this.service.create_payment_intent()
     .subscribe({
       next: (response: any) => {
@@ -394,20 +435,43 @@ export class PaymentComponent implements OnInit {
             }
           }
           ).subscribe((result:any) => {
-          this.paying = false;
-          this.editCardSaved = false;
-          this.resetFormValues()
 
-          this.setLoading(true)
+
+
+          //this.setLoading(true)
           console.log('Result', result);
-          this.paymentElementForm.enable()
+
           if (result.error) {
+            this.paymentElementForm.enable();
+            console.log('Result error', result);
+            //this.errorMessage = result.error.message
+            this.errorsMessage[result.error.code] = result.error.message
             this.setLoading(false)
+
+            this.processing = false
+
+            /**
+             *
+             *
+             this.errorsMessage['incomplete_number'] = result.error.message
+             this.errorsMessage['incomplete_expiry'] = result.error.message
+             this.errorsMessage['incomplete_cvc'] = result.error.message
+
+
+
+             */
+            return;
             // Show error to your customer (e.g., insufficient funds)
             //alert({ success: false, error: result.error.message });
 
           } else {
 
+            this.setLoading(true)
+            console.log('Result succeeded', result);
+            this.paying = false;
+            this.paymentElementForm.enable();
+            this.editCardSaved = false;
+            this.resetFormValues()
             console.log('save_payment_method',result);
             el.save_payment_method(result)
             // The payment has been processed!
@@ -431,6 +495,7 @@ export class PaymentComponent implements OnInit {
       }
     })
   }
+  }
   save_payment_method(paymentIntent:any){
 
      this.setLoading(true)
@@ -440,13 +505,16 @@ export class PaymentComponent implements OnInit {
     const pack = {
       paymentMethodId: paymentIntent.setupIntent.payment_method,
       customerID: this.customerID,
+      action:this.action
     };// Send the payment method and customer ID to your server
 
     this.service.create_payment_method(pack).subscribe((res:any) => {
       console.log('res',res);
       this.paymentMethod = res.data.paymentMethod
+      this.subscription = res.data.subscription
       //this.cardSaved = res.data.paymentMethod
-
+      this.processing = false
+      this.action = ''
       this.setPayment()
 
       //this.loading =false;
@@ -485,6 +553,9 @@ export class PaymentComponent implements OnInit {
    }
    resetFormValues(){
     this.paymentElementForm.reset();
+   }
+   showDelete(): boolean{
+     return this.subscription == null || this.subscription.ends_at != null || this.subscription.stripe_status == 'canceled'
    }
 
 

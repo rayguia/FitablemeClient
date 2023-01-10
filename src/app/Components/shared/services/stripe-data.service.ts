@@ -13,10 +13,12 @@ export class StripeDataService {
     return this.http.get<any[]>(this.createCompleteRoute(route, this.envUrl.urlAddress));
   }
     createCustomer(data){
-    return this.http.post('http://127.0.0.1:8000/api/create-customer',data,this.generateHeaders());
+      return this.http.post<any[]>(this.createCompleteRoute('create-customer', this.envUrl.urlAddress),data,this.generateHeaders());
+      return this.http.post('http://127.0.0.1:8000/api/create-customer',data,this.generateHeaders());
     }
 
     create_subscription(data) {
+      return this.http.post<any[]>(this.createCompleteRoute('create-subscription', this.envUrl.urlAddress),data,this.generateHeaders());
         return this.http.post('http://127.0.0.1:8000/api/create-subscription',data,this.generateHeaders());
     }
     public get_payment_method = () => {
@@ -49,6 +51,13 @@ export class StripeDataService {
     public get_payment_history = () => {
       return this.http.get<any[]>(this.createCompleteRoute('payment', this.envUrl.urlAddress));
     }
+
+
+    public get_user_is_subscribed = () => {
+      return this.http.get<any[]>(this.createCompleteRoute('subscription/subscribed', this.envUrl.urlAddress));
+    }
+
+
 
 
 

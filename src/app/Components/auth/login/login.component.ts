@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   credentials: LoginModel = {name:'',email: '', password: '',c_password:''};
   loginForm: FormGroup
   returnUrl: string = '/dashboard';
+  loginError:string = ''
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
+    this.loginError = '';
     if (!this.loginForm.valid)
       return;
     await this.spinnerService.show();
@@ -73,14 +75,16 @@ export class LoginComponent implements OnInit {
 
           //this.router.navigate(['/dashboard']);
       },
-      error: () =>  {
+      error: (error) =>  {
+
+        this.loginError = 'The email and password does not match our records.'
         this.spinnerService.hide();
-        this.toastrService.error('Invalid credentials');
+        //this.toastrService.error('Invalid credentials');
       }
     });
-    console.log('login...');
-    console.log('email', this.loginForm.get('username').value)
-    console.log('password', this.loginForm.get('password').value)
+    // console.log('login...');
+    // console.log('email', this.loginForm.get('username').value)
+    // console.log('password', this.loginForm.get('password').value)
   }
 
   // login = ( form: NgForm) => {

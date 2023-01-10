@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from 'src/app/Components/shared/services/user.service';
 import { UserModel } from 'src/app/models/user.model';
 
@@ -10,7 +10,9 @@ import { UserModel } from 'src/app/models/user.model';
 export class ProfileComponent implements OnInit {
 
   @Input() user: UserModel;
-  constructor(private userService: UserService) {
+  @Output() loadingEvent = new EventEmitter<boolean>();
+  loading:boolean = false;
+  constructor(private cdRef : ChangeDetectorRef,private userService: UserService) {
 
     userService.getLoggedUser$.subscribe((user: UserModel) => {
       //this check is required only if the initial user is null
@@ -19,13 +21,20 @@ export class ProfileComponent implements OnInit {
         this.user = user;
       }
     });
+
+
   }
 
   ngOnInit(): void {
-
+      this.setLoading(false)
   }
   changeUser(){
     this.userService.setLoggedUser({...this.user,UserName:"NewUser"})
   }
+  setLoading(value:boolean){
+    this.loading = value
+    this.loadingEvent.emit(value);
+    this.cdRef.detectChanges();
 
+   }
 }

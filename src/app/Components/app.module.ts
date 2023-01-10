@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -13,6 +14,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { MessageComponent } from './home/message/message.component';
@@ -63,12 +65,14 @@ export function tokenGetter() {
     ToastrModule.forRoot({
       positionClass: 'toast-top-right'
     }),
-    NgxSpinnerModule,
+
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe,AuthGuard,{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },],
   bootstrap: [AppComponent]
 })

@@ -112,13 +112,13 @@ export class UserService {
       const token = localStorage.getItem("jwt");
     if (token && !this.jwtHelper.isTokenExpired(token)){
       //this.userLogged.next(this.localService.getJsonValue('user'))
-      console.log('from isLogged in userService token valid')
+      //console.log('from isLogged in userService token valid')
       let user = this.localService.getJsonValue('user');
       this._userLogged$.next(user)
 
       return true;
     }
-    console.log('from isLogged in userService token no valid')
+    //console.log('from isLogged in userService token no valid')
     localStorage.removeItem("jwt");
     //localStorage.removeItem("refreshToken");
     this.localService.clearToken()

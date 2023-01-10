@@ -1,10 +1,9 @@
-<mat-spinner *ngIf="loading == true; else allContentSub" class="center" style="margin: auto;
-margin-top: 275px;"></mat-spinner>
 
 
 
-<ng-template #allContentSub>
-<div class="row p-5">
+
+
+<div class="row p-5" *ngIf="!loading">
 
 
 
@@ -15,16 +14,18 @@ margin-top: 275px;"></mat-spinner>
     <div *ngIf="subscription.ends_at == null; then cancelSubscription else renewSubscription"></div>
     <ng-template #cancelSubscription>
       <div class="mb-1">${{subscription.plan.price}} USD next billing cycle.</div>
-      <div  class="mb-2">Your card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}.</b></div>
+      <div   class="mb-2">Your card will be charged on <b>{{ getDate(upcomingInvoice.next_payment_attempt) | date}}.</b></div>
+      <!-- <div *ngIf="!lastInvoice.paid"  class="mb-2">We could not renew your subscription, the payment method failed. To continue with the subscription you need to add a new payment method.  </div> -->
       <a class="mt-1" style="cursor: pointer;" (click)="show_modal_cancel_subscription()">Cancel Subscription</a>
+      <!-- <a class="mt-1" style="cursor: pointer;" (click)="redirectToUpdatePage()">Pay Subscription</a> -->
     </ng-template>
 
     <ng-template #renewSubscription>
 
-      <ng-container *ngIf="subscription.stripe_status == 'canceled'; else renewSubscription2">
+      <ng-container *ngIf="['canceled','expired'].includes(subscription.stripe_status); else renewSubscription2">
   <div class="mb-1">Your subscription expired on <b>{{ subscription.ends_at | date}}.</b></div>
       <div class="mb-2">If you renew today, you card will be charged today <b>{{ today | date}}</b> with ${{subscription.plan.price}} USD.</div>
-      <a class="mt-1" style="cursor: pointer;" (click)="redirectToUpdatePage()">Renew Subscription Today</a>
+      <a class="mt-1" style="cursor: pointer;" (click)="renewSubscriptionAction('subscribe')">Renew Subscription Today</a>
 
       </ng-container>
 
@@ -34,17 +35,30 @@ margin-top: 275px;"></mat-spinner>
 
       <div class="mb-1">Your subscription will expire on <b>{{ subscription.ends_at | date}}.</b></div>
       <div class="mb-2">If you renew today, you card will be charged on <b>{{ subscription.ends_at | date}}</b> with ${{subscription.plan.price}} USD.</div>
-      <a class="mt-1" style="cursor: pointer;" (click)="renew_subscription()">Renew Subscription</a>
+      <a class="mt-1" style="cursor: pointer;" (click)="renewSubscriptionAction('renew')">Renew Subscription</a>
     </ng-template>
 
   </div>
 
 
   <ng-template  #subscribe>
+
+  <div class="col-12">
+    <h1>Subscription Details</h1>
+    <p>
+      We provide numerous options when you are subscribed. Certain Services are provided free-of-charge, while other options require payment before they can be accessed (the "Paid Subscriptions").
+
+
+
+      </p>
+      <p>Your subscription will auto-renew at the end of the current pay period and you card will be charged unless your cancel the subscription before we change the amount of the subscription that you are subscribed.</p>
+
+     <p>You can cancel a subscription at any time.</p>
+    </div>
   <div class="col">
-    <button type="button" class="btn btn-success my-3" (click)="redirectToUpdatePage()">Subscribe
+    <button type="button" class="btn btn-success my-3" (click)="redirectToUpdatePage('subscribe')">Go To Subscribe
     </button>
   </div>
 </ng-template>
 </div>
-</ng-template>
+

@@ -20,8 +20,13 @@
 
           <div class="col-9" style="background-color: white;border-radius: 20px;" [ngStyle]="loading ? {'min-height': '650px'}:{}">
 
+            <mat-spinner *ngIf="loading == true; else componentSelected" class="center" style="margin: auto;
+            margin-top: 275px;"></mat-spinner>
+
+           <ng-container #componentSelected>
+
             <div *ngIf="selectedOption == 'Account Info'">
-              <app-profile ></app-profile>
+              <app-profile   (loadingEvent)="loadingChanged($event)"></app-profile>
             </div>
 
             <app-payment *ngIf="selectedOption == 'Payment Method'" [action]="action"
@@ -31,6 +36,9 @@
             <app-payment-history  *ngIf="selectedOption == 'Payment History'"  (loadingEvent)="loadingChanged($event)"></app-payment-history>
 
             <app-subscription (actionEvent)="actionChanged($event)" *ngIf="selectedOption == 'Subscription'" (loadingEvent)="loadingChanged($event)"></app-subscription>
+
+           </ng-container>
+
 
 
           </div>

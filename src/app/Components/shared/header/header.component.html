@@ -142,9 +142,9 @@
                 <li routerLink="/calculator/alltime" *ngIf="isLoggedIn$ | async">
                   <a  class="dropdown-item py-2">Expenses</a>
                 </li>
-              <li routerLink="/dashboard/profile" *ngIf="isLoggedIn$ | async">
+              <!-- <li routerLink="/dashboard/profile" *ngIf="isLoggedIn$ | async">
                 <a class="dropdown-item py-2">Profile</a>
-              </li>
+              </li> -->
               <li (click)="onLogout()" *ngIf="isLoggedIn$ | async">
                 <a class="dropdown-item py-2">Log Out</a>
               </li>

@@ -4,12 +4,24 @@
   <button type="submit">Create Customer</button>
   </form> -->
   <!-- <h4 *ngIf="customerID" class="center">{{customerID}}</h4> -->
-  <mat-spinner *ngIf="loading == true; else allContent" class="center" style="margin: auto;
-  margin-top: 275px;"></mat-spinner>
+  <!-- <mat-spinner *ngIf="loading == true; else allContent" class="center" style="margin: auto;
+  margin-top: 275px;"></mat-spinner> -->
 
 
-  <ng-template #allContent>
-    <h2 class="center mt-5">Payment</h2>
+  <ng-container *ngIf="!loading">
+
+    <div *ngIf="!loading && true" [ngClass]="{'loading' : processing}"></div>
+     <!-- <div style="position: relative;">
+      <mat-spinner *ngIf="!loading && true" style="position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);"></mat-spinner>
+      </div> -->
+    <h2  *ngIf="action == 'subscribe'"  class="center mt-5">Subscribe</h2>
+    <h2  *ngIf="action == 'renew'"  class="center mt-5">Renew Subscription</h2>
+    <h2 *ngIf="action == ''" class="center mt-5">Payment</h2>
+    <div *ngIf="action == 'subscribe'" class="col-12 center text-success"><p>Subscription Amount: $20.00</p></div>
+    <div *ngIf="action == 'renew'" class="col-12 center text-success"><p>If you renew today, you won't be charged until the last day of your subscription.</p></div>
     <div class="center" *ngIf="paymentMethod == null || editCardSaved == true; else ifCardSaved">
 
 
@@ -19,41 +31,53 @@
       <div class="row px-5 mx-5">
 
         <div class="col-12">
-          <mat-form-field class="example-full-width my-3" appearance="outline">
+          <mat-form-field class="example-full-width" style="margin:20px 0px;" appearance="outline">
             <input matInput placeholder="Name on card" formControlName="name" />
+            <mat-error *ngIf="paymentElementForm.get('name').errors &&
+            paymentElementForm.get('name').hasError('required')">Name is required</mat-error>
           </mat-form-field>
-        </div>
+
+
+          </div>
 
         <div class="col-12">
-          <mat-form-field class="example-full-width my-3" appearance="outline">
+          <mat-form-field class="example-full-width" style="margin:20px 0px;" appearance="outline">
             <input matInput placeholder="Address" formControlName="address" />
+            <mat-error *ngIf="paymentElementForm.get('address').errors &&
+            paymentElementForm.get('address').hasError('required')">Address is required</mat-error>
           </mat-form-field>
         </div>
 
         <div class="col-6">
-          <mat-form-field class="example-full-width my-3" appearance="outline">
+          <mat-form-field class="example-full-width" style="margin:20px 0px;" appearance="outline">
             <input matInput placeholder="City" formControlName="city" />
+            <mat-error *ngIf="paymentElementForm.get('city').errors &&
+            paymentElementForm.get('city').hasError('required')">City is required</mat-error>
           </mat-form-field>
         </div>
 
         <div class="col-6">
-          <mat-form-field class="example-full-width my-3" appearance="outline">
+          <mat-form-field class="example-full-width" style="margin:20px 0px;" appearance="outline">
             <input matInput placeholder="ZIP Code" formControlName="zipcode" />
+            <mat-error *ngIf="paymentElementForm.get('zipcode').errors &&
+            paymentElementForm.get('zipcode').hasError('required')">Zipcode is required</mat-error>
           </mat-form-field>
         </div>
 
         <div class="col-12">
-          <ngx-stripe-card-number style="margin:12px 0px;" class="stripe"  [options]="cardNumberOptions"></ngx-stripe-card-number>
-
+          <ngx-stripe-card-number style="margin:16px 0px;" class="stripe"  [options]="cardNumberOptions"></ngx-stripe-card-number>
+          <mat-error class="errorCardPayment" *ngIf="errorsMessage['incomplete_number']">{{errorsMessage['incomplete_number']}}</mat-error>
         </div>
 
         <div class="col-6">
 
-          <ngx-stripe-card-expiry style="margin:12px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-expiry>
+          <ngx-stripe-card-expiry style="margin:16px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-expiry>
+          <mat-error class="errorCardPayment" *ngIf="errorsMessage['incomplete_expiry']">{{errorsMessage['incomplete_expiry']}}</mat-error>
         </div>
         <div class="col-6">
 
-          <ngx-stripe-card-cvc style="margin:12px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-cvc>
+          <ngx-stripe-card-cvc style="margin:16px 0px;" class="stripe" [options]="cardOptions"></ngx-stripe-card-cvc>
+          <mat-error class="errorCardPayment" *ngIf="errorsMessage['incomplete_cvc']">{{errorsMessage['incomplete_cvc']}}</mat-error>
         </div>
 
 
@@ -62,12 +86,44 @@
        <div class="row center">
         <div class="col-12  center">
           <button *ngIf="editCardSaved == true"  type="button" class="btn btn-text my-3" (click)="editCardSaved = false">Cancel</button>
-          <button *ngIf="action == ''" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_payment_intent()">Save
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          <button *ngIf="action == ''" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_payment_intent()">Add Payment
           </button>
-          <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_subscription()">Subscribe
-            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-          </button>
+
+
+
+          <div class="row center" *ngIf="action == 'subscribe' || action == 'renew'">
+
+              <div class="col-12 my-2 center">
+            <h5 *ngIf="action != 'renew'" style="font-size: 12px; color: #131220" class="text-center"
+              >By tapping *Subscribe now* you agree to our
+              <!-- <a
+              href="/terms"
+              target="__blank"
+              >Terms & Conditions.</a> -->
+              Terms & Conditions.
+              <br>Charges will appear on your credit card statement as
+              carservices.com
+            </h5>
+
+            <h5  *ngIf="action == 'renew'" style="font-size: 12px; color: #131220" class="text-center"
+              >By tapping *Renew* you agree to our
+              <!-- <a
+              href="/terms"
+              target="__blank"
+              >Terms & Conditions.</a> -->
+              Terms & Conditions.
+              <br>Charges will appear on your credit card statement as
+              carservices.com
+            </h5>
+          </div>
+           <div class="col-12 center">
+             <button *ngIf="action != 'renew'"  type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_subscription()">Subscribe now </button>
+             <button *ngIf="action == 'renew'" type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_payment_intent()">Renew </button>
+           </div>
+
+          </div>
+
+
         </div>
        </div>
 
@@ -89,6 +145,11 @@
     <div class="row px-5 mx-5">
 
 
+      <!-- <div class="col-12 center text-success">
+         <p>Subscription Amount: $20.00</p>
+
+      </div> -->
+
       <div class="col-12">
         <div>
           <mat-label>Credit Card</mat-label>
@@ -98,9 +159,31 @@
 
           <button *ngIf="action == ''" type="button" class="btn btn-primary my-3 text-center" (click)="resetFormValues();editCardSaved = true" >Edit</button>
 
-          <button *ngIf="action == ''" type="button" class="btn btn-text my-3 text-center" (click)="showModalToDeletePaymentMethod()">Delete</button>
+          <button *ngIf="action == '' && showDelete()" type="button" class="btn btn-text my-3 text-center" (click)="showModalToDeletePaymentMethod()">Delete</button>
 
-          <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" (click)="create_subscription_with_payment_method_saved()">Subscribe</button>
+
+          <div class="row center" *ngIf="action == 'subscribe'">
+
+            <div class="col-12 my-4 center">
+          <h5 style="font-size: 12px; color: #131220" class="text-center"
+            >By tapping *Subscribe now* you agree to our
+            <!-- <a
+              href="/terms"
+              target="__blank"
+              >Terms & Conditions.</a> -->
+              Terms & Conditions.
+              <br>Charges will appear on your credit card statement as
+            carservices.com
+          </h5>
+        </div>
+         <div class="col-12 center">
+           <button  type="button" class="btn btn-success my-3" [disabled]="loading" (click)="create_subscription_with_payment_method_saved()">Subscribe now
+          <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        </button>
+         </div>
+
+        </div>
+          <!-- <button *ngIf="action == 'subscribe'" type="button" class="btn btn-success my-3" (click)="create_subscription_with_payment_method_saved()">Subscribe</button> -->
 
         </div>
 
@@ -108,9 +191,9 @@
   </div>
 </ng-template>
 
+</ng-container>
 
 
-</ng-template>
 
 
 

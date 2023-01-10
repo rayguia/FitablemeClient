@@ -19,8 +19,10 @@ export class SubscriptionComponent implements OnInit {
   loading:boolean = false;
   subscription:any = null;
   upcomingInvoice:any = null
+  lastInvoice:any = null
   bsModalRef?: BsModalRef;
   today = new Date();
+  paymentMethod:any = null
   constructor(
     private cdRef : ChangeDetectorRef,
     private service:StripeDataService,
@@ -33,7 +35,15 @@ export class SubscriptionComponent implements OnInit {
     this.get_subscription()
   }
 
+   renewSubscriptionAction(action:string){
 
+      if(this.paymentMethod != null && action == 'renew'){
+        this.renew_subscription()
+      }else{
+        this.redirectToUpdatePage(action)
+      }
+
+   }
    get_subscription = () => {
     //this.loading = true;
     this.setLoading(true)
@@ -43,6 +53,8 @@ export class SubscriptionComponent implements OnInit {
 
         this.upcomingInvoice = response.data.upcomingInvoice
         this.subscription = response.data.subscription
+        this.lastInvoice = response.data.lastInvoice
+        this.paymentMethod = response.data.paymentMethod
 
         console.log('this.subscription',this.subscription);
 
@@ -67,6 +79,7 @@ export class SubscriptionComponent implements OnInit {
 
         this.upcomingInvoice = null
         this.subscription = null
+        this.lastInvoice = null
 
         console.log('response',response);
 
@@ -136,12 +149,12 @@ export class SubscriptionComponent implements OnInit {
    }
 
 
-   public redirectToUpdatePage = () => {
+   public redirectToUpdatePage = (action:string) => {
 
     //this.setLoading(true)
     console.log('to subcribe');
 
-    this.actionEvent.emit('subscribe');
+    this.actionEvent.emit(action);
     // const updateUrl: string = `subscribe`;
     // this.router.navigate([updateUrl]);
   }
