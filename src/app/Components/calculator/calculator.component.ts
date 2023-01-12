@@ -22,7 +22,7 @@ export class CalculatorComponent implements OnInit,AfterViewInit {
 
   title = 'angular-material-tab-router';
   navLinks: any[];
-  activeLinkIndex = 1;
+  activeLinkIndex = -1;
 
 
   constructor(private userService: UserService,private router: Router) {
@@ -63,29 +63,35 @@ export class CalculatorComponent implements OnInit,AfterViewInit {
               </li>
      */
     this.navLinks = [
+      // {
+      //     label: 'Dashboard',
+      //     link: '/calculator/dashboard',
+      //     index: 0
+      // },
+
       {
-          label: 'Dashboard',
-          link: '/calculator/dashboard',
-          index: 0
-      }, {
           label: 'New Estimate',
           link: '/calculator',
-          index: 1
+          index: 0
       }, {
           label: 'Estimates',
           link: '/calculator/list',
-          index: 2
+          index: 1
       },
       {
         label: 'Expenses',
         link: '/calculator/alltime',
-        index: 3
+        index: 2
       },
   ];
   }
    async ngAfterViewInit(){
+    console.log('ddddd--',this.router.url);
+
     this.router.events.subscribe((res) => {
-      this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === this.router.url));
+
+
+
   });
    }
   async ngOnInit() {
@@ -94,6 +100,11 @@ export class CalculatorComponent implements OnInit,AfterViewInit {
     this.router.events.subscribe((res) => {
           this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === this.router.url));
       });
+
+      setTimeout(() => {
+        this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === this.router.url));
+        console.log('ddddd-22222222222222-',this.activeLinkIndex);
+      }, 200);
 
 
 

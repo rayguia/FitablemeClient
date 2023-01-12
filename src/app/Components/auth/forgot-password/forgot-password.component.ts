@@ -17,10 +17,12 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //check when we send last recovery
   }
 
   recoverPassword() {
-
+      //send recovery
   }
 
   async toLogin() {

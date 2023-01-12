@@ -10,7 +10,7 @@ export class SubscriptionService {
   private redirectToSubscribe :Subject<string> = new BehaviorSubject<string>('Subscription');
   constructor() {
     this.isSubscribed = new Subject<boolean>();
-    this.redirectToSubscribe = new Subject<string>();
+    this.redirectToSubscribe = new BehaviorSubject<string>('');
   }
     setSettingTab(redirect: string): void {
     this.redirectToSubscribe.next(redirect);

@@ -13,3 +13,13 @@
   position: absolute;
 }
 
+.mat-checkbox-label{
+  white-space: pre-wrap;
+}
+.button {
+  height: 44px;
+  width: 100%;
+  border-radius: 25px;
+  color: #e5e5e5
+}
+

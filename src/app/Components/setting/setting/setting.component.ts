@@ -74,12 +74,11 @@ export class SettingComponent implements OnInit,AfterViewInit {
    }
 
   loadingChanged(value:boolean){
-    console.log('from setting',value);
+
     this.loading = value
     this.cdRef.detectChanges();
   }
   actionChanged(action:string){
-    console.log('event',action);
 
     this.action = action
     if(this.action == 'subscribe' || this.action == 'renew'){
@@ -95,13 +94,10 @@ export class SettingComponent implements OnInit,AfterViewInit {
     this.action = ''
     console.log('selecValue',event);
     this.cdRef.detectChanges();
-
   }
 
   get_user_is_subscribed = () => {
-
     this.loading = true;
-
     this.service.get_user_is_subscribed()
     .subscribe({
       next: (response: any) => {
@@ -110,12 +106,12 @@ export class SettingComponent implements OnInit,AfterViewInit {
         {
           this.selectedOption = ['Subscription'];
         }else{
-          this.selectedOption = ['Account Info']
+           this.subscriptionService.getSettingTab().subscribe(result => {
+            this.selectedOption = result ? [result] : ['Account Info']
+          })
+
         }
-        console.log('response',response);
         this.loading = false;
-
-
       },
       error: (err: HttpErrorResponse) => {
           // this.errorHandler.handleError(err);

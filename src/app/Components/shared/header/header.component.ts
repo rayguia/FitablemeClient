@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
+import { SubscriptionService } from '../services/subscription.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,8 @@ export class HeaderComponent implements OnInit {
   menuStatus:boolean = false;
   isLogged:boolean =false;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService,private router:Router,
+    private subscriptionService: SubscriptionService) {
 
     userService.getLoggedUser$.subscribe((user: UserModel) => {
       //this check is required only if the initial user is null
@@ -39,7 +42,12 @@ export class HeaderComponent implements OnInit {
    console.log('isLogged2',this.isLogged);
 
   }
-
+  goToSettingTab(){
+    setTimeout( () => {
+      this.subscriptionService.setSettingTab('Subscription')
+      this.router.navigate(['settings']);
+    }, 500);
+  }
   sideNavToggleFunction(){
 
     this.menuStatus = !this.menuStatus

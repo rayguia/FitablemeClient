@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {passwordMatchValidator} from "../custom-validators/password-validator";
 import {AuthResultModel} from "../../../models/auth.result.model";
@@ -11,12 +11,14 @@ import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  encapsulation : ViewEncapsulation.None,
 })
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   genders = [''];
+  registerError:string = ''
   credentials: LoginModel = {name:'',email: '', password: '',c_password:''};
   // selectedGender: string;
 
@@ -26,14 +28,13 @@ export class RegisterComponent implements OnInit {
               private toastrService: ToastrService) {
 
     this.registerForm = new FormGroup({
-      name: new FormControl(''),
-      username: new FormControl(''),
-      password: new FormControl(''),
-      c_password: new FormControl(''),
-      gender: new FormControl(''),
-      terms: new FormControl('')
+      full_name: new FormControl('', [Validators.required]),
+      email: new FormControl('',[Validators.required,Validators.email]),
+      password: new FormControl('',[Validators.required]),
+      c_password: new FormControl('',[Validators.required]),
+      terms: new FormControl('',[Validators.requiredTrue])
     }, {validators: passwordMatchValidator});
-    this.genders = ['F', 'M'];
+
   }
 
   ngOnInit(): void {
@@ -44,18 +45,19 @@ export class RegisterComponent implements OnInit {
       return;
 
     await this.spinnerService.show();
-    this.credentials.email = this.registerForm.get('username').value;
+    this.credentials.email = this.registerForm.get('email').value;
     this.credentials.password = this.registerForm.get('password').value;
     this.credentials.c_password = this.registerForm.get('c_password').value;
-    this.credentials.name = this.registerForm.get('name').value;
+    this.credentials.name = this.registerForm.get('full_name').value;
 
     this.userService.register(this.credentials).subscribe( {
       next: (result: AuthResultModel) => {
         console.log('result', result);
         if (result.success)
+        this.toastrService.success('User register completed!, redirecting....');
+        this.userService.saveSession(result);
+        this.awaitForRedirection(1000, 'dashboard');
         this.spinnerService.hide();
-        this.toastrService.success('User register completed!, please log in.');
-        this.awaitForRedirection(5000, '/auth/login');
       },
       error: () =>  {
         this.spinnerService.hide();

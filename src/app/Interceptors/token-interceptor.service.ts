@@ -39,7 +39,7 @@ export class TokenInterceptorService implements HttpInterceptor {
             console.log('entro intercempto to change to subscription',res);
             setTimeout( () => {
               obj.subscriptionService.setSettingTab('Subscription')
-            obj.router.navigate(['settings']);
+              obj.router.navigate(['settings']);
             }, 200);
 
             return;

@@ -13,7 +13,7 @@
         *ngFor="let link of navLinks"
         [routerLink]="link.link"
         routerLinkActive #rla="routerLinkActive"
-        [active]="link.index == activeLinkIndex">
+        [active]="link.index === activeLinkIndex">
         {{link.label}}
         </a>
         </nav>

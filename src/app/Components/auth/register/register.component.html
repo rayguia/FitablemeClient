@@ -1,4 +1,163 @@
-<div class="d-flex flex-column align-items-center justify-content-center"
+<ngx-spinner type="ball-spin-fade"><p style="color: white" > Loading... </p></ngx-spinner>
+<div class="container mt-5 display-container" style="
+border: 1px solid #ffffff;
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+padding: 25px 10px;
+max-width: 500px;
+">
+  <div class="d-flex flex-column align-items-center justify-content-center"
+       style="margin-top: 20px;">
+    <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
+    <div class="d-flex flex-row my-4">
+      <div class="col-12 justify-content-center align-items-center text-center" style="margin-top: 15px;">
+          <span class="font-middle-size primary-color">
+            Create Account
+          </span>
+      </div>
+    </div>
+  </div>
+
+
+  <form [formGroup]="registerForm" class="px-3">
+
+    <div class="row justify-content-center align-items-center">
+
+      <div class="col-12 my-3" *ngIf="registerError">
+        <mat-error class="text-center">{{registerError}}</mat-error>
+      </div>
+
+      <div class="col mt-3 text-center">
+        <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">Full Name</mat-label>
+          <input type="text" style="padding-left: 12px;" formControlName="full_name" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row justify-content-center align-items-center">
+
+      <div class="col text-center">
+        <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">Email Address</mat-label>
+          <input type="email" style="padding-left: 12px;"
+                 formControlName="email" matInput
+                 >
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <div class="col mt-1 text-center">
+        <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">Password</mat-label>
+          <input type="password" style="padding-left: 12px;"
+                 class="input-styles" formControlName="password"
+                 matInput>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <mat-error class="text-left"
+    *ngIf="registerForm.errors?.passwordNoMatch &&
+    registerForm.controls['password'].touched &&
+    registerForm.controls['c_password'].valid"
+    >Password do not match!</mat-error>
+
+    <div class="d-flex flex-row justify-content-center align-items-center">
+
+      <div class="col mt-1 text-center">
+        <mat-form-field appearance="outline" class="m-0 w-100 input-styles">
+          <mat-label style="margin-left: 12px;">Repeat Password</mat-label>
+          <input type="password" style="padding-left: 12px;"
+                 class="input-styles" formControlName="c_password"
+                 matInput>
+        </mat-form-field>
+
+
+      </div>
+    </div>
+
+
+
+    <mat-checkbox color="primary" class="example-margin"
+    formControlName="terms">By checking this box, you confirm that you’ve read and accepted our
+      Terms of Use and Privacy Policy.</mat-checkbox>
+    <!-- <div class="form-check mt-3">
+      <input class="form-check-input" required type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Do you accept terms?
+      </label>
+    </div> -->
+
+
+
+    <div class="d-flex flex-row justify-content-center align-items-center mt-3">
+      <div class="col mt-1 text-center">
+        <button (click)="register()"
+
+        [disabled]="!registerForm.controls['terms'].valid"
+                class="primary-color button-style button"
+                mat-raised-button>
+          Create Account
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- <div class="d-flex flex-row justify-content-around mt-4">
+    <div class="col text-center">
+      <a style="cursor: pointer; text-decoration: none;" routerLink="/forgot-password"
+         class="primary-color font-family font-regular-size">Forgot the password?
+      </a>
+    </div>
+  </div> -->
+
+  <!-- <div class="d-flex flex-row justify-content-center align-items-center">
+    <div class="col mt-3">
+      <h5 class="text-center">
+        <span class="font-family font-regular-size">or continue with</span>
+      </h5>
+    </div>
+  </div> -->
+
+  <div class="d-flex flex-row justify-content-around">
+    <div class="col text-center">
+      <i class="bi bi-facebook i-external-login"></i>
+      <i class="bi bi-google i-external-login m-5"></i>
+      <i class="bi bi-apple i-external-login"></i>
+    </div>
+  </div>
+
+
+  <div class="d-flex flex-row justify-content-around mt-3">
+    <div class="col text-center">
+    <span class="font-family font-regular-size">Already a member?
+      <a style="cursor: pointer; text-decoration: none;" routerLink="/auth/login"
+         class="primary-color">Log In
+      </a>
+    </span>
+    </div>
+  </div>
+</div>
+
+
+<!--------------End new register----------------->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="d-flex flex-column align-items-center justify-content-center"
      style="margin-top: 30px;">
   <img src="assets/images/temp-logo.png" style="height: 100px; width: 100px;">
   <div class="col">
@@ -76,7 +235,7 @@
       </button>
     </div>
   </div>
-</form>
+</form> -->
 
 <!--<div class="d-flex flex-column align-items-center" style="margin-top: 20px;">-->
 <!--  <div class="text-style">-->

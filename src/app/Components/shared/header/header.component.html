@@ -121,16 +121,16 @@
                 <a class="dropdown-item py-2">Log In</a>
               </li>
 
-               <li routerLink="/calculator/dashboard" *ngIf="isLoggedIn$ | async">
+               <!-- <li routerLink="/calculator/dashboard" *ngIf="isLoggedIn$ | async">
                   <a  class="dropdown-item py-2">Dashboard</a>
-                </li>
+                </li> -->
 
                 <li routerLink="/settings" *ngIf="isLoggedIn$ | async">
                   <a  class="dropdown-item py-2">Settings</a>
                 </li>
 
-                <li routerLink="/subscription" *ngIf="isLoggedIn$ | async">
-                  <a  class="dropdown-item py-2">Subscription</a>
+                <li  *ngIf="isLoggedIn$ | async">
+                  <a (click)="goToSettingTab('subscription')" class="dropdown-item py-2">Subscription</a>
                 </li>
 
                 <li routerLink="/calculator" *ngIf="isLoggedIn$ | async">
