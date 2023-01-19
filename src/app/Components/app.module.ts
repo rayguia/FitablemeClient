@@ -62,13 +62,13 @@ export function tokenGetter() {
         disallowedRoutes: []
       }
     }),
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-right'
-    }),
 
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    }),
     NgxSpinnerModule,
     ReactiveFormsModule,
   ],

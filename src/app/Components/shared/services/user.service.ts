@@ -9,6 +9,7 @@ import { IAuthInfo } from 'src/app/_interfaces/IAuthInfo';
 import { IAuthResponse } from 'src/app/_interfaces/IAuthenticateResponse';
 import { AuthResultModel } from 'src/app/models/auth.result.model';
 import { LocalService } from './local.service';
+import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,27 @@ export class UserService {
 
 
   constructor(private httpClient: HttpClient,private router: Router,private jwtHelper: JwtHelperService,
-    private http:HttpClient, private localService:LocalService) {
+    private http:HttpClient, private localService:LocalService,
+    private envUrl: EnvironmentUrlService) {
     this.baseUrl = environment.apiUrl;
+  }
+
+
+
+  public forgotPassword = ( email: any) => {
+    return this.http.post<any>(this.createCompleteRoute('forgotPassword', this.envUrl.urlAddress), email, this.generateHeaders());
+  }
+  public recoverPassword = ( email: any) => {
+    return this.http.post<any>(this.createCompleteRoute('recoverPassword', this.envUrl.urlAddress), email, this.generateHeaders());
+  }
+
+  private createCompleteRoute = (route: string, envAddress: string) => {
+    return `${envAddress}${route}`;
+  }
+  private generateHeaders = () => {
+    return {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
   }
 
   auth(authInfo: IAuthInfo) {
@@ -157,6 +177,11 @@ export class UserService {
 
     return isRefreshSuccess;
   }
+
+
+  //New
+
+
 
   // public isAuth() {
   //   const loggedUser: UserModel = this.getLoggedUser();
