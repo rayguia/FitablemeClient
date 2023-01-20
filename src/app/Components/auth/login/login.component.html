@@ -66,10 +66,11 @@ max-width: 500px;
       </div>
     </form> -->
 
+    <!-- [disabled]="!form.valid || !loginForm.valid" -->
     <div class="d-flex flex-row justify-content-center align-items-center">
       <div class="col mt-1 text-center">
         <button (click)="login()"
-        [disabled]="!form.valid || !loginForm.valid"
+        [disabled]="!loginForm.valid"
                 class="primary-color button-style button"
                 mat-raised-button>
           Log In
