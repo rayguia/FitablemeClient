@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup
   returnUrl: string = '/dashboard';
   loginError:string = ''
-
+  token: string|undefined;
   constructor(private router: Router,
     private route: ActivatedRoute,
               private userService: UserService,
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
               private spinnerService: NgxSpinnerService) {
 
 
-
+                this.token = undefined;
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
@@ -50,6 +50,18 @@ export class LoginComponent implements OnInit {
 
 
   }
+
+  // RECAPCHA VALIDATOR
+  // public send(form: NgForm): void {
+  //   if (form.invalid) {
+  //     for (const control of Object.keys(form.controls)) {
+  //       form.controls[control].markAsTouched();
+  //     }
+  //     return;
+  //   }
+
+  //   console.debug(`Token [${this.token}] generated`);
+  // }
 
   async login() {
     this.loginError = '';

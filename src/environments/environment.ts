@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   // apiUrl: 'http://local.calculator.com/api/'
-   apiUrl: 'http://127.0.0.1:8000/api/'
+   apiUrl: 'http://127.0.0.1:8000/api/',
+   recaptcha: {
+    siteKey: "6Ld6agwkAAAAAEkRWh29OuJGOVmrzr-LNhFsnSzi",
+  },
   //apiUrl:'http://carcalculatorebsapi-env.eba-ectty9jm.us-east-1.elasticbeanstalk.com/api/'
 };
 

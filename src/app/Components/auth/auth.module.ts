@@ -16,7 +16,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RecoverPassswordComponent } from './recover-passsword/recover-passsword.component';
 import { AuthComponent } from './auth/auth.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 
+import { environment } from '../../../environments/environment'
 
 @NgModule({
   declarations: [
@@ -36,9 +38,17 @@ import { NgxSpinnerModule } from "ngx-spinner";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
   ],
   exports: [NgxSpinnerModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [ {
+    provide: RECAPTCHA_SETTINGS,
+    useValue: {
+      siteKey: environment.recaptcha.siteKey,
+    } as RecaptchaSettings,
+  }]
 })
 export class AuthModule { }
